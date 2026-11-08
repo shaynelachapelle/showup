@@ -1,0 +1,8 @@
+# Author: Shayne Lachapelle
+node_modules/
+client/dist/
+.env
+*.log
+.DS_Store
+.vscode/
+.idea/

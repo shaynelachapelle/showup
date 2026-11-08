@@ -1,0 +1,10 @@
+{
+  "name": "showup",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Showup! - McGill campus events platform",
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}
