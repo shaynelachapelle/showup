@@ -6,5 +6,8 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "dependencies": {
+    "react-router-dom": "^7.18.5"
+  }
 }
