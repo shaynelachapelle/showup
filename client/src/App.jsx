@@ -4,11 +4,10 @@ import './App.css'
 import { Routes, Route } from "react-router-dom"
 
 function App() {
-  const [count, setCount] = useState(0) // Keep this if your team is using the counter
+  const [count, setCount] = useState(0)
 
   return (
     <Routes>
-      {/* You can start putting your route outlines right here */}
     </Routes>
   )
 }
