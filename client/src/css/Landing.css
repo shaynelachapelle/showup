@@ -1,58 +1,124 @@
+/* Author: Rachel Ha */
 .landing-container {
+  background-color: #FAFAFA;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  text-align: center;
   padding: 2rem;
+  position: relative;
+}
+
+/* Polished Logo */
+.logo-section {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #333333;
+}
+
+.logo-text {
+  color: #ED1B2F; 
+  font-weight: bold;
+}
+
+.text-section {
+  text-align: center;
+  margin-top: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 .text-section h1 {
-  color: #ED1B2F; 
-  font-size: 3rem;
+  color: #222222;
+  font-size: 2.8rem;
+  font-weight: 800;
   margin-bottom: 0.5rem;
+  letter-spacing: 1px;
 }
 
 .text-section h2 {
-  color: #222222; 
-  font-weight: normal;
-  font-style: italic;
-  margin-bottom: 2rem;
+  color: #666666;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
-.button-group {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
+/* Image Placeholder as a Card */
+.image-section {
+  width: 100%;
+  max-width: 800px;
   margin-bottom: 3rem;
 }
 
-.login-btn, .signup-btn {
-  padding: 10px 24px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border: 2px solid #ED1B2F;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
+.image-placeholder {
+  width: 100%;
+  height: 350px;
+  background-color: #F5F5F5; 
+  border-radius: 12px; /* Soft rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Depth */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-/* Red Login Button */
+.image-placeholder p {
+  color: #ED1B2F;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Authentication Card */
+.auth-box {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 2rem 3.5rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid #EAEAEA;
+}
+
+.auth-box p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333333;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.login-btn, .signup-btn {
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Login Button */
 .login-btn {
   background-color: #ED1B2F;
   color: #FFFFFF;
+  border: 2px solid #ED1B2F;
 }
 
 .login-btn:hover {
-  background-color: #c91425; /* Darker red for hover */
-  border-color: #c91425;
+  background-color: #C91425;
+  border-color: #C91425;
+  box-shadow: 0 4px 8px rgba(237, 27, 47, 0.3);
 }
 
-/* White Sign Up Button */
+/* Sign Up Button */
 .signup-btn {
   background-color: #FFFFFF;
   color: #ED1B2F;
+  border: 2px solid #ED1B2F;
 }
 
 .signup-btn:hover {
