@@ -1,0 +1,60 @@
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.text-section h1 {
+  color: #ED1B2F; 
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.text-section h2 {
+  color: #222222; 
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.login-btn, .signup-btn {
+  padding: 10px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 2px solid #ED1B2F;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+/* Red Login Button */
+.login-btn {
+  background-color: #ED1B2F;
+  color: #FFFFFF;
+}
+
+.login-btn:hover {
+  background-color: #c91425; /* Darker red for hover */
+  border-color: #c91425;
+}
+
+/* White Sign Up Button */
+.signup-btn {
+  background-color: #FFFFFF;
+  color: #ED1B2F;
+}
+
+.signup-btn:hover {
+  background-color: #F5F5F5;
+}
