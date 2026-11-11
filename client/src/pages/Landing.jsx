@@ -6,7 +6,7 @@ export default function Landing() {
     <div className="landing-container">
       
       <div className="logo-section">
-        <span className="logo-text">McGill</span> Events
+        <span className="logo-text">Show</span>up
       </div>
 
       <div className="text-section">
