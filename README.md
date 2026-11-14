@@ -6,27 +6,32 @@ Campus-wide events platform for McGill clubs and orgs. COMP 307, Fall 2026.
 ## Layout
 
 ```
-client/                 React + Vite (JavaScript), currently the generic Vite starter page
+client/                 React + Vite (JavaScript)
   index.html            HTML entry
   vite.config.js        Vite config (React plugin)
   src/main.jsx          React entry, mounts <App />
-  src/App.jsx           starter page (counter), to be replaced by our pages
+  src/App.jsx           starter page
   src/assets/           static assets imported by components
   public/               files served as-is
 server/                 Express (ES modules)
   src/index.js          app entry, mounts routes, serves client/dist in prod
-  src/routes/           auth, orgs, events, follows, rsvps, ics  (stubs, return 501)
+  src/db.js             shared MongoDB connection
+  src/routes/           auth, orgs, events, follows, rsvps, ics
   src/middleware/       requireAuth, requireOrgAdmin, errorHandler
 ```
 
-Database (MongoDB) setup is not added yet.
-
 ## Setup
 
-Needs Node 20.19+ or 22.12+ (required by Vite 8).
+Needs Node 20.19+ or 22.12+ (required by Vite 8) and a local MongoDB: install
+[MongoDB Community Server](https://www.mongodb.com/try/download/community) and leave it running.
+We host our own MongoDB (no Atlas).
 
 ```bash
 npm install
+```
+
+```bash
+cp server/.env.example server/.env
 ```
 
 Client (http://localhost:5173):

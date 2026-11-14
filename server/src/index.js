@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { connectDb } from './db.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
 import orgRoutes from './routes/orgs.js';
@@ -36,4 +37,5 @@ app.get(/^\/(?!api\/|ics\/).*/, (req, res) => res.sendFile(path.join(clientDist,
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
+await connectDb();
 app.listen(port, () => console.log(`Showup! server on http://localhost:${port}`));
