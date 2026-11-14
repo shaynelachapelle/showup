@@ -14,4 +14,7 @@ export const db = client.db();
 export async function connectDb() {
   await client.connect();
   await db.command({ ping: 1 });
+
+  // createIndex does nothing if the index already exists, so this is safe on every start.
+  await db.collection('users').createIndex({ email: 1 }, { unique: true });
 }
