@@ -1,5 +1,5 @@
 // Author: Grace Yuzwin
-import EventCard from "../components/EventCard"
+import EventCard from "../components/EventCard";
 
 function Home() {
     return (

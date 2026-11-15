@@ -1,6 +1,6 @@
 // Author: Grace Yuzwin
-import { onRSVPCLick } from "../helper-functions/rsvp"
 import "../css/EventCard.css"
+import RsvpButton from "./RsvpButton"
 
 function EventCard({event}) {
     /* pull out all assumed constants from a single event */
@@ -9,22 +9,15 @@ function EventCard({event}) {
     /* display those constants */
     return <div className="event-card">
         <div className="event-image">
-            <img src={"image.jpg"} alt={title}></img>
+            <img src={title}></img>
             <div className="event-overlay">
-                {can_rsvp && (
-                    <button
-                        className="rsvp-btn-small"
-                        onClick={onRSVPCLick}
-                    >
-                        RSVP
-                    </button>
-                )}
+                <RsvpButton />
             </div>
         </div>
         <div className="event-info">
             <h3>{title}</h3>
             <h4>hosted by {organization}</h4>
-            <p>Date: {date}</p>
+            <p>Date & time: {date}</p>
             <p>Cost: {cost}</p>
         </div>
     </div>
