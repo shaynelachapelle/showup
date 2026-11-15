@@ -15,6 +15,11 @@
 
 .eventCard:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.eventCard:hover .eventOverlay {
+    opacity: 1;
 }
 
 .eventImage {
@@ -32,20 +37,17 @@
     display: block;
 }
 
-.eventImage:hover .eventOverlay {
-    opacity: 1;
-}
-
 .eventOverlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 60px;
+    right: 1px;
+
     opacity: 0;
+    transition: opacity 0.2s ease;
+
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: 1rem;
 }
 

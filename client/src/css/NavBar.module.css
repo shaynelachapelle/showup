@@ -1,6 +1,10 @@
 .navBar {
-    background-color: rgb(255, 76, 76);
+    background-color: #ff4c4c;
     color: white;
     width: 100%;
     display: flex;
+}
+
+.logo {
+    height: 40px
 }
