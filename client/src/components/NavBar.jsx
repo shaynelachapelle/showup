@@ -1,9 +1,9 @@
 import styles from "../css/NavBar.module.css"
+import image from "../images/logo.png"
 
 function NavBar() {
     return <div className={styles.navBar}>
-        <div>Logo goes here</div>
-        <div>Then like a search bar</div>
+        <img className={styles.logo} src={image}/>
     </div>
 } 
 

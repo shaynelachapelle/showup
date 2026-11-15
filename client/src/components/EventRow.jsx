@@ -9,6 +9,8 @@ function EventRow({title, events}) {
 
             {events.map((event) => (
             <EventCard 
+                key={event.id}
+                id={event.id}
                 title={event.title} 
                 date={event.date}
                 organization={event.organization}

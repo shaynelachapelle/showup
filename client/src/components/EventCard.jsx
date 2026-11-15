@@ -8,13 +8,12 @@ function EventCard({title, date, organization, cost, image, can_rsvp}) {
     return <div className={styles.eventCard}>
 
         <div className={styles.eventImage}>
-
             <img src={image} alt={title}></img>
-            <div className={styles.eventOverlay}>
+        </div>
+        
+        <div className={styles.eventOverlay}>
                 <RsvpButton />
             </div>
-
-        </div>
 
         <div className={styles.eventInfo}>
 

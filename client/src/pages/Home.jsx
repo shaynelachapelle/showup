@@ -1,5 +1,8 @@
 // Author: Grace Yuzwin
 import EventRow from "../components/EventRow";
+import banner from "../images/banner.jpg"
+import styles from "../css/Home.module.css"
+
 import image1 from "../images/test-1.jpg"
 import image2 from "../images/test-2.jpg"
 import image3 from "../images/test-3.jpg"
@@ -24,7 +27,8 @@ function Home() {
     ]
 
     return (
-    <div className="home">
+    <div>
+        <img className={styles.banner} src={banner} />
         <EventRow title="Your RSVPs" events={rsvpedEvents} />
         <EventRow title="Check Out More Events!" events={moreEvents}/>
     </div>
