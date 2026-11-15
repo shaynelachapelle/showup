@@ -1,0 +1,20 @@
+.eventRow {
+    margin-bottom: 2rem;
+}
+
+.eventRow h1 {
+    margin-left: 1rem;
+    color:black;
+    font-size: 30px;
+}
+
+.eventRowCards {
+    display: flex;
+    gap: 1rem;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 1rem;
+}
+
