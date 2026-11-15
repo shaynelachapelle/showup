@@ -1,24 +1,28 @@
 // Author: Grace Yuzwin
-import "../css/EventCard.css"
+import styles from "../css/EventCard.module.css"
 import RsvpButton from "./RsvpButton"
 
-function EventCard({event}) {
-    /* pull out all assumed constants from a single event */
-    const { title, date, organization, cost, can_rsvp } = event;
+function EventCard({title, date, organization, cost, image, can_rsvp}) {
     
     /* display those constants */
-    return <div className="event-card">
-        <div className="event-image">
-            <img src={title}></img>
-            <div className="event-overlay">
+    return <div className={styles.eventCard}>
+
+        <div className={styles.eventImage}>
+
+            <img src={image} alt={title}></img>
+            <div className={styles.eventOverlay}>
                 <RsvpButton />
             </div>
+
         </div>
-        <div className="event-info">
+
+        <div className={styles.eventInfo}>
+
             <h3>{title}</h3>
             <h4>hosted by {organization}</h4>
             <p>Date & time: {date}</p>
             <p>Cost: {cost}</p>
+            
         </div>
     </div>
 }
