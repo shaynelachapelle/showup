@@ -1,3 +1,3 @@
-export function onRSVPCLick(){
-
+export function onRSVPClick() {
+    window.alert("button clicked!");
 }
