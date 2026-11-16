@@ -2,9 +2,73 @@
     background-color: #ff4c4c;
     color: white;
     width: 100%;
+    gap: 15px;
     display: flex;
+    align-items: center;
+    font-size: 15px;
 }
 
 .logo {
-    height: 40px
+    height: 50px
+}
+
+.postAnEvent {
+    background-color: rgb(254, 0, 0);
+    padding:4px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-left: auto;
+    color: white;
+    text-decoration: none;
+}
+
+.postAnEvent:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.myEvents, .allEvents, .myOrgs {
+    display: block;
+    margin: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+.myOrgs {
+    margin-right: 20px
+}
+
+.myEvents:hover, .allEvents:hover, .myOrgs:hover, .logo:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.link {
+    text-decoration: 'none';
+    color: 'inherit' 
+}
+
+@media (max-width: 950px) {
+    .myOrgs, .allEvents {
+        display: none;
+    }
+
+    .myEvents {
+        margin-right: 20px
+    }
+}
+
+@media (max-width: 700px) {
+    .myEvents {
+        display: none;
+    }
+
+    .allEvents, .myOrgs {
+        display: none;
+    }
+
+    .postAnEvent {
+        margin-right: 20px
+    }
+
 }
