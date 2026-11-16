@@ -16,6 +16,8 @@ client/                 React + Vite (JavaScript)
 server/                 Express (ES modules)
   src/index.js          app entry, mounts routes, serves client/dist in prod
   src/db.js             shared MongoDB connection
+  src/categories.js     category list shared by orgs and events
+  src/seed.js           demo data
   src/routes/           auth, orgs, events, follows, rsvps, ics
   src/middleware/       requireAuth, requireOrgAdmin, errorHandler
 ```
@@ -32,6 +34,12 @@ npm install
 
 ```bash
 cp server/.env.example server/.env
+```
+
+Fill in demo data. It refuses to run on a database that already has data; add `-- --reset` to wipe and reseed. Log in as `demo@mail.mcgill.ca` / `showup-demo`.
+
+```bash
+npm run seed -w server
 ```
 
 Client (http://localhost:5173):
