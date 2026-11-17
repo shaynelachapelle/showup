@@ -52,11 +52,12 @@ router.get('/', async (req, res, next) => {
     }
 
     const collection = db.collection('events');
+    const filter = { start: { $gt: new Date() } };
 
     // Limited events: return a plain array.
     if (page === undefined) {
       const events = await collection
-        .find({})
+        .find(filter)
         .sort({ start: 1, _id: 1 })
         .limit(limitNumber)
         .toArray();
@@ -65,9 +66,9 @@ router.get('/', async (req, res, next) => {
     }
 
     // Paginated events: return an object with pagination metadata.
-    const total = await collection.countDocuments({});
+    const total = await collection.countDocuments(filter);
     const events = await collection
-      .find({})
+      .find(filter)
       .sort({ start: 1, _id: 1 })
       .skip((pageNumber - 1) * limitNumber)
       .limit(limitNumber)
@@ -112,7 +113,8 @@ router.get('/search', async (req, res, next) => {
     const escapedQuery = q.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
     const filter = {
-      title: { $regex: escapedQuery, $options: 'i' }
+      title: { $regex: escapedQuery, $options: 'i' },
+      start: { $gt: new Date() }
     };
 
     const collection = db.collection('events');
@@ -205,7 +207,10 @@ router.get('/my-events', async (req, res, next) => {
     const eventIds = rsvps.map(rsvp => rsvp.eventId);
 
     const collection = db.collection('events');
-    const filter = { _id: { $in: eventIds } };
+    const filter = {
+      _id: { $in: eventIds },
+      start: { $gt: new Date() }
+    };
 
     const total = await collection.countDocuments(filter);
 

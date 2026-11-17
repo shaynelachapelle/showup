@@ -207,9 +207,12 @@ router.get('/:id', async (req, res, next) => {
       orgId
     });
 
-    // Retrieve the organization's events.
+    // Retrieve only upcoming events for this organization.
     const events = await db.collection('events')
-      .find({ orgId })
+      .find({
+        orgId,
+        start: { $gt: new Date() }
+      })
       .sort({ start: 1, _id: 1 })
       .toArray();
 
