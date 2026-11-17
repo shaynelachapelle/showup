@@ -6,7 +6,7 @@ export default function Landing() {
   return (
     <div className="landing-container">
       
-      {/* Navigation Bar (Logo Only) */}
+      {/* Navigation Bar */}
       <nav className="navbar">
         <div className="logo-section">
           <span className="logo-text">Show</span>up
@@ -19,7 +19,7 @@ export default function Landing() {
           <h1>CAMPUS <span className="title-highlight">EVENTS</span></h1>
           <h2>Only for students. Browse events near you.</h2>
           
-          {/* Buttons placed perfectly above Marty */}
+          {/* Buttons placed above Marty */}
           <div className="auth-buttons-inline">
             <button className="login-btn">Log In</button>
             <button className="signup-btn">Sign Up</button>

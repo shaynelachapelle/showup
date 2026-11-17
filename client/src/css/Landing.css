@@ -1,5 +1,5 @@
 /* Author: Rachel Ha */
-/* Main Layout */
+/* Layout */
 .landing-container {
   background-color: #F0F2F5; 
   display: flex;
@@ -13,29 +13,29 @@
 .navbar {
   width: 100%;
   height: 75px;
-  background-color: #ED1B2F; /* Changed to your signature red */
+  background-color: #ED1B2F;
   display: flex;
   justify-content: flex-start; 
   align-items: center;
   padding: 0 4rem;
-  box-shadow: 0 4px 12px rgba(237, 27, 47, 0.2); /* Soft red shadow */
+  box-shadow: 0 4px 12px rgba(237, 27, 47, 0.2);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-/* Inverted Logo Styling */
+/* Logo */
 .logo-section {
   font-size: 2.2rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7); /* Makes "up" a softer, faded white */
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   letter-spacing: -1px;
   margin-left: 2rem;
 }
 
 .logo-text {
-  color: #FFFFFF; /* Makes "Show" pure, bold white */
+  color: #FFFFFF;
   font-weight: bold;
 }
 
@@ -72,10 +72,10 @@
   color: #666666;
   font-size: 1.2rem;
   font-weight: 400;
-  margin-bottom: 2rem; /* Creates breathing room between text and buttons */
+  margin-bottom: 2rem;
 }
 
-/* Inline Auth Buttons (Above Marty) */
+
 .auth-buttons-inline {
   display: flex;
   gap: 1rem;
@@ -113,7 +113,6 @@
   background-color: #F9F9F9;
 }
 
-/* Hero Image */
 .image-section {
   width: 100%;
   max-width: 900px;
