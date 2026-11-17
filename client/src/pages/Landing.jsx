@@ -1,30 +1,35 @@
 // Author: Rachel Ha
 import '../css/Landing.css';
+import martyImage from '../assets/alpha_marty.jpg';
 
 export default function Landing() {
   return (
     <div className="landing-container">
       
-      <div className="logo-section">
-        <span className="logo-text">Show</span>up
-      </div>
-
-      <div className="text-section">
-        <h1>CAMPUS EVENTS</h1>
-        <h2>Only for students. Browse events near you.</h2>
-      </div>
-
-      <div className="image-section">
-        <div className="image-placeholder">
-          <p>Image of Marty the Martlet</p>
+      {/* Navigation Bar (Logo Only) */}
+      <nav className="navbar">
+        <div className="logo-section">
+          <span className="logo-text">Show</span>up
         </div>
-      </div>
+      </nav>
 
-      <div className="auth-box">
-        <p>Are you a student?</p>
-        <div className="auth-buttons">
-          <button className="login-btn">Log In</button>
-          <button className="signup-btn">Sign Up</button>
+      {/* Main Page Content */}
+      <div className="content-wrapper">
+        <div className="text-section">
+          <h1>CAMPUS <span className="title-highlight">EVENTS</span></h1>
+          <h2>Only for students. Browse events near you.</h2>
+          
+          {/* Buttons placed perfectly above Marty */}
+          <div className="auth-buttons-inline">
+            <button className="login-btn">Log In</button>
+            <button className="signup-btn">Sign Up</button>
+          </div>
+        </div>
+
+        <div className="image-section">
+          <div className="image-placeholder">
+            <img src={martyImage} alt="Marty the Martlet" className="marty-hero-img" />
+          </div>
         </div>
       </div>
 

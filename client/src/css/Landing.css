@@ -1,107 +1,96 @@
 /* Author: Rachel Ha */
+/* Main Layout */
 .landing-container {
-  background-color: #FAFAFA;
+  background-color: #F0F2F5; 
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem;
-  position: relative;
+  overflow-x: hidden;
 }
 
-/* Polished Logo */
+/* White Navigation Bar */
+.navbar {
+  width: 100%;
+  height: 75px;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  padding: 0 4rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04); 
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Logo */
 .logo-section {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  font-size: 1.4rem;
+  font-size: 2.2rem;
   font-weight: 500;
-  color: #333333;
+  color: #555555;
+  cursor: pointer;
+  letter-spacing: -1px;
+  margin-left: 2rem;
 }
 
 .logo-text {
-  color: #ED1B2F; 
+  color: #ED1B2F;
   font-weight: bold;
 }
 
+/* Content Area */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* Typography */
 .text-section {
   text-align: center;
-  margin-top: 4rem;
-  margin-bottom: 2.5rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .text-section h1 {
   color: #222222;
-  font-size: 2.8rem;
-  font-weight: 800;
+  font-size: 3.5rem;
+  font-weight: 900;
   margin-bottom: 0.5rem;
-  letter-spacing: 1px;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.title-highlight {
+  color: #ED1B2F;
 }
 
 .text-section h2 {
   color: #666666;
   font-size: 1.2rem;
   font-weight: 400;
+  margin-bottom: 2rem; /* Creates breathing room between text and buttons */
 }
 
-/* Image Placeholder as a Card */
-.image-section {
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 3rem;
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 350px;
-  background-color: #F5F5F5; 
-  border-radius: 12px; /* Soft rounded corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Depth */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.image-placeholder p {
-  color: #ED1B2F;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-/* Authentication Card */
-.auth-box {
-  background-color: #FFFFFF;
-  border-radius: 12px;
-  padding: 2rem 3.5rem;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border: 1px solid #EAEAEA;
-}
-
-.auth-box p {
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #333333;
-}
-
-.auth-buttons {
+/* Inline Auth Buttons (Above Marty) */
+.auth-buttons-inline {
   display: flex;
   gap: 1rem;
   justify-content: center;
 }
 
 .login-btn, .signup-btn {
-  padding: 10px 28px;
-  font-size: 1rem;
+  padding: 10px 24px;
+  font-size: 0.95rem;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-/* Login Button */
 .login-btn {
   background-color: #ED1B2F;
   color: #FFFFFF;
@@ -111,10 +100,9 @@
 .login-btn:hover {
   background-color: #C91425;
   border-color: #C91425;
-  box-shadow: 0 4px 8px rgba(237, 27, 47, 0.3);
+  box-shadow: 0 4px 8px rgba(237, 27, 47, 0.25);
 }
 
-/* Sign Up Button */
 .signup-btn {
   background-color: #FFFFFF;
   color: #ED1B2F;
@@ -122,5 +110,37 @@
 }
 
 .signup-btn:hover {
-  background-color: #F5F5F5;
+  background-color: #F9F9F9;
+}
+
+/* Hero Image */
+.image-section {
+  width: 100%;
+  max-width: 900px;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 480px;
+  border-radius: 16px;
+  border: 6px solid #FFFFFF;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.image-placeholder:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.marty-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.image-placeholder:hover .marty-hero-img {
+  transform: scale(1.03); 
 }
