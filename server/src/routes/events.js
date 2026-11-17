@@ -52,7 +52,10 @@ router.get('/', async (req, res, next) => {
     }
 
     const collection = db.collection('events');
-    const filter = { start: { $gt: new Date() } };
+    const filter = {
+      start: { $gt: new Date() },
+      status: 'active'
+    };
 
     // Limited events: return a plain array.
     if (page === undefined) {
@@ -114,7 +117,8 @@ router.get('/search', async (req, res, next) => {
 
     const filter = {
       title: { $regex: escapedQuery, $options: 'i' },
-      start: { $gt: new Date() }
+      start: { $gt: new Date() },
+      status: 'active'
     };
 
     const collection = db.collection('events');
@@ -168,7 +172,8 @@ router.get('/my-rsvps', async (req, res, next) => {
     const events = await db.collection('events')
       .find({
         _id: { $in: eventIds },
-        start: { $gt: new Date() }
+        start: { $gt: new Date() },
+        status: 'active'
       })
       .sort({ start: 1, _id: 1 })
       .limit(limitNumber)
@@ -209,7 +214,8 @@ router.get('/my-events', async (req, res, next) => {
     const collection = db.collection('events');
     const filter = {
       _id: { $in: eventIds },
-      start: { $gt: new Date() }
+      start: { $gt: new Date() },
+      status: 'active'
     };
 
     const total = await collection.countDocuments(filter);
@@ -423,8 +429,234 @@ router.get('/:eventId/attendees', async (req, res, next) => {
   }
 });
 
-router.patch('/:eventId', notImplemented);
-router.post('/:eventId/cancel', notImplemented);
-router.delete('/:eventId', notImplemented);
+
+// PATCH /api/events/:eventId
+// Allow a club administrator to update an existing event.
+router.patch('/:eventId', async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+
+    // Validate the event ID.
+    if (!/^[0-9a-fA-F]{24}$/.test(eventId)) {
+      return res.status(400).json({ error: 'Invalid event ID.' });
+    }
+
+    const event = await db.collection('events').findOne({
+      _id: new ObjectId(eventId)
+    });
+
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found.' });
+    }
+
+    // Only administrators of this event's club can edit it.
+    const userId = new ObjectId(req.user.id);
+
+    const organization = await db.collection('orgs').findOne({
+      _id: event.orgId,
+      admins: userId
+    });
+
+    if (!organization) {
+      return res.status(403).json({
+        error: 'Only club administrators can edit this event.'
+      });
+    }
+
+    const allowedFields = [
+      'title', 'description', 'date', 'cost',
+      'location', 'capacity', 'image'
+    ];
+
+    const changes = req.body;
+
+    if (
+      !changes ||
+      typeof changes !== 'object' ||
+      Array.isArray(changes) ||
+      Object.keys(changes).length === 0 ||
+      Object.keys(changes).some(key => !allowedFields.includes(key))
+    ) {
+      return res.status(400).json({
+        error: 'Invalid event update.'
+      });
+    }
+
+    const updates = {};
+
+    if ('title' in changes) {
+      if (typeof changes.title !== 'string' || !changes.title.trim()) {
+        return res.status(400).json({ error: 'Invalid title.' });
+      }
+      updates.title = changes.title.trim();
+    }
+
+    if ('description' in changes) {
+      if (typeof changes.description !== 'string' || !changes.description.trim()) {
+        return res.status(400).json({ error: 'Invalid description.' });
+      }
+      updates.description = changes.description.trim();
+    }
+
+    if ('date' in changes) {
+      const start = new Date(changes.date);
+
+      if (typeof changes.date !== 'string' || !Number.isFinite(start.getTime())) {
+        return res.status(400).json({ error: 'Invalid date.' });
+      }
+
+      updates.start = start;
+      updates.end = start;
+    }
+
+    if ('cost' in changes) {
+      if (typeof changes.cost !== 'number' ||
+          !Number.isFinite(changes.cost) || changes.cost < 0) {
+        return res.status(400).json({ error: 'Invalid cost.' });
+      }
+      updates.cost = changes.cost;
+    }
+
+    if ('location' in changes) {
+      if (typeof changes.location !== 'string' || !changes.location.trim()) {
+        return res.status(400).json({ error: 'Invalid location.' });
+      }
+      updates['location.name'] = changes.location.trim();
+    }
+
+    if ('capacity' in changes) {
+      if (!Number.isSafeInteger(changes.capacity) ||
+          changes.capacity < 1 ||
+          changes.capacity < event.goingCount) {
+        return res.status(400).json({
+          error: 'Capacity must be at least the current attendee count.'
+        });
+      }
+      updates.capacity = changes.capacity;
+    }
+
+    if ('image' in changes) {
+      if (typeof changes.image !== 'string') {
+        return res.status(400).json({ error: 'Invalid image.' });
+      }
+      updates.imageUrl = changes.image;
+    }
+
+    await db.collection('events').updateOne(
+      { _id: event._id },
+      { $set: updates }
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// POST /api/events/:eventId/cancel
+// Allow a club administrator to cancel an existing event.
+router.post('/:eventId/cancel', async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+
+    // Validate the event ID.
+    if (!/^[0-9a-fA-F]{24}$/.test(eventId)) {
+      return res.status(400).json({
+        error: 'Invalid event ID.'
+      });
+    }
+
+    // Find the event.
+    const event = await db.collection('events').findOne({
+      _id: new ObjectId(eventId)
+    });
+
+    if (!event) {
+      return res.status(404).json({
+        error: 'Event not found.'
+      });
+    }
+
+    // Only administrators of this event's club can cancel it.
+    const userId = new ObjectId(req.user.id);
+
+    const organization = await db.collection('orgs').findOne({
+      _id: event.orgId,
+      admins: userId
+    });
+
+    if (!organization) {
+      return res.status(403).json({
+        error: 'Only club administrators can cancel this event.'
+      });
+    }
+
+    // Prevent cancelling an event that is already cancelled.
+    if (event.status === 'cancelled') {
+      return res.status(409).json({
+        error: 'This event is already cancelled.'
+      });
+    }
+
+    // Update the event status without deleting its information.
+    await db.collection('events').updateOne(
+      { _id: event._id },
+      { $set: { status: 'cancelled' } }
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// DELETE /api/events/:eventId
+// Allow a club administrator to permanently delete an event.
+router.delete('/:eventId', async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+
+    if (!/^[0-9a-fA-F]{24}$/.test(eventId)) {
+      return res.status(400).json({ error: 'Invalid event ID.' });
+    }
+
+    const event = await db.collection('events').findOne({
+      _id: new ObjectId(eventId)
+    });
+
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found.' });
+    }
+
+    const userId = new ObjectId(req.user.id);
+
+    const organization = await db.collection('orgs').findOne({
+      _id: event.orgId,
+      admins: userId
+    });
+
+    if (!organization) {
+      return res.status(403).json({
+        error: 'Only club administrators can delete this event.'
+      });
+    }
+
+    // Remove the event's RSVP records before deleting the event.
+    await db.collection('rsvps').deleteMany({
+      eventId: event._id
+    });
+
+    await db.collection('events').deleteOne({
+      _id: event._id
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export default router;

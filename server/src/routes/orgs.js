@@ -211,7 +211,8 @@ router.get('/:id', async (req, res, next) => {
     const events = await db.collection('events')
       .find({
         orgId,
-        start: { $gt: new Date() }
+        start: { $gt: new Date() },
+        status: 'active'
       })
       .sort({ start: 1, _id: 1 })
       .toArray();
