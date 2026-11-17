@@ -357,7 +357,74 @@ router.post('/:id/join', async (req, res, next) => {
 });
 
 router.post('/', notImplemented);
-router.patch('/:orgId', notImplemented);
+
+// PATCH /api/orgs/:orgId
+// Allow club administrators to edit their organization's information.
+router.patch('/:orgId', async (req, res, next) => {
+  try {
+    const { orgId } = req.params;
+
+    if (!/^[0-9a-fA-F]{24}$/.test(orgId)) {
+      return res.status(400).json({ error: 'Invalid organization ID.' });
+    }
+
+    const organization = await db.collection('orgs').findOne({
+      _id: new ObjectId(orgId)
+    });
+
+    if (!organization) {
+      return res.status(404).json({ error: 'Organization not found.' });
+    }
+
+    const userId = new ObjectId(req.user.id);
+
+    if (!organization.admins.some(id => id.equals(userId))) {
+      return res.status(403).json({
+        error: 'Only club administrators can edit this organization.'
+      });
+    }
+
+    const { name, description, image } = req.body;
+    const updates = {};
+
+    if (name !== undefined) {
+      if (typeof name !== 'string' || !name.trim()) {
+        return res.status(400).json({ error: 'Invalid organization name.' });
+      }
+      updates.name = name.trim();
+    }
+
+    if (description !== undefined) {
+      if (typeof description !== 'string') {
+        return res.status(400).json({ error: 'Invalid description.' });
+      }
+      updates.description = description;
+    }
+
+    if (image !== undefined) {
+      if (typeof image !== 'string') {
+        return res.status(400).json({ error: 'Invalid image.' });
+      }
+      updates.logoUrl = image;
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({
+        error: 'Provide at least one field to update.'
+      });
+    }
+
+    await db.collection('orgs').updateOne(
+      { _id: organization._id },
+      { $set: updates }
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete('/:orgId', notImplemented);
 router.post('/:orgId/admins', notImplemented);
 router.delete('/:orgId/admins/:userId', notImplemented);
