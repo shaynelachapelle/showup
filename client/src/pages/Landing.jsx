@@ -1,6 +1,6 @@
 function Landing() {
     return (
-        <>This is the landing page</>
+        <div>This is the landing page</div>
     );
 }
 

@@ -30,6 +30,11 @@
     overflow: hidden;
 }
 
+.eventImage:hover, .eventInfo .title:hover, .eventInfo .organization:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .eventImage img {
     width: 100%;
     height: 100%;
@@ -68,18 +73,22 @@
     overflow: hidden;
 }   
 
-.eventInfo h3 {
+.eventInfo .title {
     font-size: 1.2rem;
+    font-weight: 650;
+    text-decoration: none;
     margin: 0;
     padding: 0;
     color:black;
 }
 
-.eventInfo h4 {
+.eventInfo .organization {
     font-size: 0.9rem;
     color:black;
     margin: 0;
     padding: 0;
+    text-decoration: none;
+    font-weight: 500;
 }
 
 .eventInfo p {
