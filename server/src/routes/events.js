@@ -238,6 +238,70 @@ router.get('/my-events', async (req, res, next) => {
   }
 });
 
+// GET /api/events/my-orgs
+// Retrieve upcoming events from clubs the logged-in student follows.
+router.get('/my-orgs', async (req, res, next) => {
+  try {
+    const { page, limit } = req.query;
+
+    const pageNumber = page === undefined ? 1 : Number(page);
+    const limitNumber = limit === undefined ? 20 : Number(limit);
+
+    if (
+      !Number.isSafeInteger(pageNumber) || pageNumber < 1 ||
+      !Number.isSafeInteger(limitNumber) || limitNumber < 1 || limitNumber > 100
+    ) {
+      return res.status(400).json({
+        error: 'Page must be a positive integer and limit must be between 1 and 100.'
+      });
+    }
+
+    const userId = new ObjectId(req.user.id);
+
+    // Find organizations the student follows.
+    const follows = await db.collection('follows')
+      .find({ userId })
+      .toArray();
+
+    const orgIds = follows.map(follow => follow.orgId);
+
+    const collection = db.collection('events');
+    const filter = {
+      orgId: { $in: orgIds },
+      start: { $gt: new Date() },
+      status: 'active'
+    };
+
+    // Limited events: return a plain array.
+    if (page === undefined) {
+      const events = await collection
+        .find(filter)
+        .sort({ start: 1, _id: 1 })
+        .limit(limitNumber)
+        .toArray();
+
+      return res.json(await formatEvents(events));
+    }
+
+    // Paginated events: return an object with pagination metadata.
+    const total = await collection.countDocuments(filter);
+
+    const events = await collection
+      .find(filter)
+      .sort({ start: 1, _id: 1 })
+      .skip((pageNumber - 1) * limitNumber)
+      .limit(limitNumber)
+      .toArray();
+
+    res.json({
+      events: await formatEvents(events),
+      currentPage: pageNumber,
+      totalPages: Math.ceil(total / limitNumber)
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 // GET /api/events/:eventId
 // Retrieve an event's details, organization, and the student's RSVP status.
