@@ -353,6 +353,7 @@ router.get('/:eventId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const {
+      orgId,
       title,
       description,
       date,
@@ -366,13 +367,15 @@ router.post('/', async (req, res, next) => {
     const start = new Date(date);
 
     if (
+      typeof orgId !== 'string' || !/^[0-9a-fA-F]{24}$/.test(orgId) ||
       typeof title !== 'string' || !title.trim() ||
       typeof description !== 'string' || !description.trim() ||
       typeof date !== 'string' ||
       !Number.isFinite(start.getTime()) ||
       typeof location !== 'string' || !location.trim() ||
       typeof cost !== 'number' || !Number.isFinite(cost) || cost < 0 ||
-      !Number.isSafeInteger(capacity) || capacity < 1 ||
+      (capacity !== null &&
+        (!Number.isSafeInteger(capacity) || capacity < 1)) ||
       typeof image !== 'string'
     ) {
       return res.status(400).json({
@@ -380,28 +383,25 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-    // Find clubs administered by the logged-in user.
+    // Find the selected club.
     const userId = new ObjectId(req.user.id);
 
-    const organizations = await db.collection('orgs')
-      .find({ admins: userId })
-      .toArray();
+    const organization = await db.collection('orgs').findOne({
+      _id: new ObjectId(orgId)
+    });
 
-    if (organizations.length === 0) {
+    if (!organization) {
+      return res.status(404).json({
+        error: 'Organization not found.'
+      });
+    }
+
+    // Verify that the logged-in user administers the selected club.
+    if (!organization.admins.some(id => id.equals(userId))) {
       return res.status(403).json({
-        error: 'You must be a club administrator to create events.'
+        error: 'Only administrators of this club can create events for it.'
       });
     }
-
-    // An administrator manages one club.
-    // Reject ambiguous accounts instead of choosing the wrong club.
-    if (organizations.length > 1) {
-      return res.status(409).json({
-        error: 'This account administers multiple clubs. Cannot determine which club owns the event.'
-      });
-    }
-
-    const organization = organizations[0];
 
     const event = {
       orgId: organization._id,
@@ -589,13 +589,15 @@ router.patch('/:eventId', async (req, res, next) => {
     }
 
     if ('capacity' in changes) {
-      if (!Number.isSafeInteger(changes.capacity) ||
-          changes.capacity < 1 ||
-          changes.capacity < event.goingCount) {
+      if (changes.capacity !== null &&
+          (!Number.isSafeInteger(changes.capacity) ||
+           changes.capacity < 1 ||
+           changes.capacity < event.goingCount)) {
         return res.status(400).json({
-          error: 'Capacity must be at least the current attendee count.'
+          error: 'Capacity must be null or a positive integer at least equal to the current attendee count.'
         });
       }
+
       updates.capacity = changes.capacity;
     }
 
