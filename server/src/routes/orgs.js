@@ -107,7 +107,26 @@ router.get('/search', async (req, res, next) => {
 });
 
 
-router.get('/mine', notImplemented);
+// GET /api/orgs/administered
+// Retrieve clubs administered by the logged-in user.
+router.get('/administered', async (req, res, next) => {
+  try {
+    const userId = new ObjectId(req.user.id);
+
+    const organizations = await db.collection('orgs')
+      .find({ admins: userId })
+      .sort({ name: 1, _id: 1 })
+      .toArray();
+
+    res.json(organizations.map(org => ({
+      id: String(org._id),
+      name: org.name,
+      image: org.logoUrl ?? ''
+    })));
+  } catch (error) {
+    next(error);
+  }
+});
 
  // GET /api/orgs/my-organizations
 router.get('/my-organizations', async (req, res, next) => {
