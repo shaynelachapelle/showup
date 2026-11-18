@@ -27,7 +27,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/orgs", requireAuth, orgRoutes);
 app.use("/api/events", requireAuth, eventRoutes);
 app.use("/api/follows", requireAuth, followRoutes);
-app.use("/api/rsvps", requireAuth, rsvpRoutes);
+app.use("/api/events", requireAuth, rsvpRoutes);
 
 app.use("/ics", icsRoutes);
 

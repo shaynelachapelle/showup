@@ -17,4 +17,8 @@ export async function connectDb() {
 
   // createIndex does nothing if the index already exists, so this is safe on every start.
   await db.collection('users').createIndex({ email: 1 }, { unique: true });
+  // One RSVP per user per event; also makes "my RSVPs" lookups fast.
+  await db.collection('rsvps').createIndex({ userId: 1, eventId: 1 }, { unique: true });
+  // Fast lookups of an event's RSVPs
+  await db.collection('rsvps').createIndex({ eventId: 1 });
 }
