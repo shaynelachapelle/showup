@@ -1,20 +1,32 @@
 .rsvpBttn {
-    position: absolute;
-    color: rgb(0, 0, 0);
-    bottom: 0.5rem;
-    right: 0.5rem;
-    font-size: 0.7rem;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10%;
-    width: 3rem;
-    height: 2rem;
+    border-radius: 5px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     transition: background-color 0.2s;
 }
 
+.card {
+    width: 3rem;
+    height: 2rem;
+    font-size: 0.7rem;
+
+    background-color: white;
+    color: black;
+}
+
+.page {
+    width: 75px;
+    height: 40px;
+    font-size: 15px;
+
+    background-color: #ed1b2f;
+    color: white;
+}
+
 .rsvpBttn:hover {
-    background-color: rgb(255, 85, 85);
+    background-color: #ed1b2f;
     color: white;
 }

@@ -2,13 +2,17 @@
 
 import './App.css'
 import {Routes, Route} from "react-router-dom"
-import Layout from "./components/Layout.jsx"
+import NavLayout from "./components/Nav-Layout.jsx"
+import LogoLayout from "./components/Logo-Layout.jsx"
 
 // Pages w/o NavBar and Footer
 import Landing from './pages/Landing.jsx';
-import Login from './pages/Login.jsx';
 
-// Pages with NavBard and Footer
+// Pages with just logo in nav bar
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+
+// Pages with NavBar and Footer
 import Home from './pages/Home.jsx';
 import AllEvents from './pages/AllEvents.jsx';
 import AllOrgs from './pages/AllOrgs.jsx';
@@ -21,9 +25,13 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/login" element={<Login />} />
 
-    <Route element={<Layout />}>
+    <Route element={<LogoLayout />}>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Route>  
+
+    <Route element={<NavLayout />}>
         <Route path="/home" element={<Home />} />
         <Route path="/allevents" element={<AllEvents />} />
         <Route path="/allorgs" element={<AllOrgs />} />
