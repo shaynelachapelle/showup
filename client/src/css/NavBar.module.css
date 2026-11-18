@@ -1,5 +1,5 @@
 .navBar {
-    background-color: #ff4c4c;
+    background-color: #ed1b2f;
     color: white;
     width: 100%;
     gap: 15px;
@@ -13,7 +13,7 @@
 }
 
 .postAnEvent {
-    background-color: rgb(254, 0, 0);
+    background-color: rgb(207, 0, 0);
     padding:4px;
     border-radius: 8px;
     font-weight: 600;
@@ -32,6 +32,10 @@
     margin: 5px;
     color: white;
     text-decoration: none;
+}
+
+.active {
+    text-decoration: underline;
 }
 
 .myOrgs {

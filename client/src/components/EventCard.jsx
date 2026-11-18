@@ -13,8 +13,8 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
         </Link>
 
         <div className={styles.eventOverlay}>
-                <RsvpButton />
-            </div>
+            <RsvpButton variant="card"/>
+        </div>
 
         <div className={styles.eventInfo}>
             {/* the event name is a link to that event page */}
@@ -24,7 +24,7 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
             <Link to={`/organization/${organizationId}`} className={styles.organization}>hosted by {organization}</Link>
 
             {/* no links for the date and cost */}
-            <p>Date & time: {date}</p>
+            <p>Date: {date}</p>
             <p>Cost: {cost}</p>
             
         </div>

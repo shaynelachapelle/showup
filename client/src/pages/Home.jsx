@@ -10,6 +10,7 @@ import image4 from "../images/test-4.jpg"
 import image5 from "../images/test-5.jpg"
 
 function Home() {
+    // have to use fetch, for now use these to populate 
     const events = [
         {title:"Picnic", date:"Aug. 21, 2026", organization:"CSUS", cost:"$5", can_rsvp:true, image:image1, id:1, organizationId:6},
         {title:"Study Session", date:"Sept. 27, 2026", organization:"MSUS", cost:"FREE", can_rsvp:true, image:image2, id:2, organizationId:7},

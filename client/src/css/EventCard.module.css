@@ -44,8 +44,8 @@
 
 .eventOverlay {
     position: absolute;
-    top: 60px;
-    right: 1px;
+    top: 30px;
+    right: 0px;
 
     opacity: 0;
     transition: opacity 0.2s ease;
