@@ -3,8 +3,19 @@ import styles from "../css/EventCard.module.css"
 import RsvpButton from "./RsvpButton"
 import { Link } from "react-router-dom";
 
-function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp}) {
+function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
     
+    // compute the status for button appearance
+    let status = "rsvp";
+
+    if (isRsvped) {
+        status = "going";
+    }
+    else if (!can_rsvp) {
+        status = "full";
+    }
+
+
     /* display those constants */
     return <div className={styles.eventCard}>
         {/* the image is a link to that event page */}
@@ -13,7 +24,11 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
         </Link>
 
         <div className={styles.eventOverlay}>
-            <RsvpButton variant="card"/>
+            <RsvpButton 
+                variant="card" 
+                status={status}
+                onClick={() => handleRsvp(id)}
+            />
         </div>
 
         <div className={styles.eventInfo}>

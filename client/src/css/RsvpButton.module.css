@@ -1,5 +1,5 @@
 .rsvpBttn {
-    border-radius: 5px;
+    border-radius: 10px;
 
     display: flex;
     align-items: center;
@@ -29,4 +29,25 @@
 .rsvpBttn:hover {
     background-color: #ed1b2f;
     color: white;
+}
+
+.rsvp {
+    background-color: #ed1b2f;
+    color: white;
+}
+
+.going {
+    background-color: #ff7281;
+    color: white;
+    border-radius: 10px;
+}
+
+.going:hover {
+    background-color: #ff949e;
+}
+
+.full {
+    background-color: #909090;
+    color: #1f1f1f;
+    cursor: not-allowed;
 }
