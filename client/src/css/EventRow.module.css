@@ -2,10 +2,30 @@
     margin-bottom: 2rem;
 }
 
-.eventRow h1 {
+.eventRow .title {
     margin-left: 1rem;
     color:black;
+    font-weight: 600;
     font-size: 30px;
+    margin-bottom: 0px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seeMore {
+    text-decoration: none;
+    color: #ed1b2f;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 20px;
+}
+
+.seeMore:hover {
+    text-decoration: underline;
 }
 
 .eventRowCards {
@@ -17,4 +37,3 @@
 
     padding: 1rem;
 }
-

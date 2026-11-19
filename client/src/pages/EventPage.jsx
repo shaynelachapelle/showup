@@ -25,8 +25,19 @@ function EventPage() {
             organizationId: 2,
             attendeeCount: 21,
             capacity: 40,
-            isRsvped: true
+            isRsvped: false,
+            can_rsvp: false
         }
+    
+    // compute the status for button appearance
+    let status = "rsvp";
+
+    if (event.isRsvped) {
+        status = "going";
+    }
+    else if (!(event.can_rsvp)) {
+        status = "full";
+    }
 
     //calculate spots left forcing calculating only once
     const spotsLeft = Math.max(0, event.capacity - event.attendeeCount);
@@ -67,7 +78,11 @@ function EventPage() {
 
                     <div className={`${styles.divider} ${styles.containerCentered}`}>
                         {/* RSVP section */}
-                        <RsvpButton variant="page"/>
+                        <RsvpButton 
+                            variant="page" 
+                            status={status}
+                            onClick={() => handleRsvp(id)}
+                        />
                         <div className={styles.text}>{spotsLeft} spots left!</div>
 
                     </div>
