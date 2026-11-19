@@ -1,0 +1,23 @@
+.pageContainer {
+    margin: 15px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: rgb(71, 71, 71);
+    font-size: 13px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    flex: 1;
+}
