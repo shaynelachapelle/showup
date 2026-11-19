@@ -360,6 +360,7 @@ router.get('/:eventId', async (req, res, next) => {
       organizationId: String(event.orgId),
       organizationName: organization?.name ?? '',
       attendeeCount: event.goingCount,
+      capacity: event.capacity,
       isRsvped: rsvp !== null,
       can_rsvp:
         event.status === 'active' &&
