@@ -388,6 +388,49 @@ router.post('/:id/join', async (req, res, next) => {
   }
 });
 
+// DELETE /api/orgs/:id/join
+// Unfollow a club.
+router.delete('/:id/join', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return res.status(400).json({
+        error: 'Invalid organization ID.'
+      });
+    }
+
+    const orgId = new ObjectId(id);
+    const userId = new ObjectId(req.user.id);
+
+    const organization = await db.collection('orgs').findOne({
+      _id: orgId
+    });
+
+    if (!organization) {
+      return res.status(404).json({
+        error: 'Organization not found.'
+      });
+    }
+
+    const result = await db.collection('follows').deleteOne({
+      userId,
+      orgId
+    });
+
+    if (result.deletedCount > 0) {
+      await db.collection('orgs').updateOne(
+        { _id: orgId },
+        { $inc: { followerCount: -1 } }
+      );
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/', notImplemented);
 
 // PATCH /api/orgs/:orgId
