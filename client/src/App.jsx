@@ -21,16 +21,16 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/Login" element={<Login />} />
+      <Route path="/login" element={<Login />} />
 
     <Route element={<Layout />}>
-        <Route path="/Home" element={<Home />} />
-        <Route path="/AllEvents" element={<AllEvents />} />
-        <Route path="/AllOrgs" element={<AllOrgs />} />
-        <Route path="/MyOrgs" element={<MyOrgs />} />
-        <Route path="/MyEvents" element={<MyEvents />} />
-        <Route path="/EventPage" element={<EventPage />} />
-        <Route path="/OrganizationPage" element={<OrganizationPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/allevents" element={<AllEvents />} />
+        <Route path="/allorgs" element={<AllOrgs />} />
+        <Route path="/myorgs" element={<MyOrgs />} />
+        <Route path="/myevents" element={<MyEvents />} />
+        <Route path="/events/:id" element={<EventPage />} />
+        <Route path="/organization/:organizationId" element={<OrganizationPage />} />
       </Route>
     </Routes>
   )

@@ -1,7 +1,11 @@
-function EventsPage() {
+import { useParams } from "react-router-dom";
+
+function EventPage() {
+    const { id } = useParams();
+
     return (
-        <>This is the event page</>
+        <h1>This is the event page for topic: { id }</h1>
     );
 }
 
-export default EventsPage;
+export default EventPage;

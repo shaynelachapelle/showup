@@ -25,7 +25,7 @@ app.use("/api/auth", authRoutes);
 // Everything below requires a login. Handlers can rely on req.user = { id, email }.
 app.use("/api/orgs", requireAuth, orgRoutes);
 app.use("/api/events", requireAuth, eventRoutes);
-app.use("/api/rsvps", requireAuth, rsvpRoutes);
+app.use("/api/events", requireAuth, rsvpRoutes);
 
 app.use("/ics", icsRoutes);
 
