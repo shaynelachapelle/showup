@@ -17,4 +17,5 @@ export async function connectDb() {
 
   // createIndex does nothing if the index already exists, so this is safe on every start.
   await db.collection('users').createIndex({ email: 1 }, { unique: true });
+  await db.collection('orgs').createIndex({ slug: 1 }, { unique: true });
 }

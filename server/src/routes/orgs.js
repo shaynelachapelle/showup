@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { ObjectId } from 'mongodb';
+import { CATEGORIES } from '../categories.js';
 
 const router = Router();
 const notImplemented = (req, res) => res.status(501).json({ error: 'Not implemented' });
@@ -431,7 +432,76 @@ router.delete('/:id/join', async (req, res, next) => {
   }
 });
 
-router.post('/', notImplemented);
+// POST /api/orgs
+// Create a club and assign the logged-in user as its administrator.
+router.post('/', async (req, res, next) => {
+  try {
+    const { name, description, category, image } = req.body ?? {};
+
+    // Validate the organization information.
+    if (
+      typeof name !== 'string' || !name.trim() ||
+      typeof description !== 'string' || !description.trim() ||
+      !CATEGORIES.includes(category) ||
+      (image !== undefined && image !== null && typeof image !== 'string')
+    ) {
+      return res.status(400).json({
+        error: 'Invalid organization information.'
+      });
+    }
+
+    const userId = new ObjectId(req.user.id);
+    const collection = db.collection('orgs');
+
+    // Generate a slug from the organization name.
+    const slug = name.trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+    if (!slug) {
+      return res.status(400).json({
+        error: 'Invalid organization name.'
+      });
+    }
+
+    // Prevent duplicate organization slugs.
+    const existing = await collection.findOne({ slug });
+
+    if (existing) {
+      return res.status(409).json({
+        error: 'An organization with this name or slug already exists.'
+      });
+    }
+
+    const organization = {
+      name: name.trim(),
+      slug,
+      description: description.trim(),
+      logoUrl: image?.trim() || null,
+      category,
+      links: {},
+      admins: [userId],
+      followerCount: 0,
+      createdAt: new Date()
+    };
+
+    const result = await collection.insertOne(organization);
+
+    res.status(201).json({
+      success: true,
+      organizationId: String(result.insertedId)
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({
+        error: 'An organization with this name or slug already exists.'
+      });
+    }
+
+    next(error);
+  }
+});
 
 // PATCH /api/orgs/:orgId
 // Allow club administrators to edit their organization's information.
