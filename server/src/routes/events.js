@@ -196,7 +196,6 @@ router.get('/my-rsvps', async (req, res, next) => {
       .find({
         _id: { $in: eventIds },
         start: { $gt: new Date() },
-        status: 'active'
       })
       .sort({ start: 1, _id: 1 })
       .limit(limitNumber)
@@ -238,7 +237,6 @@ router.get('/my-events', async (req, res, next) => {
     const filter = {
       _id: { $in: eventIds },
       start: { $gt: new Date() },
-      status: 'active'
     };
 
     const total = await collection.countDocuments(filter);
@@ -736,10 +734,16 @@ router.delete('/:eventId', async (req, res, next) => {
       });
     }
 
-    // Remove the event's RSVP records before deleting the event.
-    await db.collection('rsvps').deleteMany({
+    // Prevent deletion if students have RSVP'd to the event.
+    const rsvpCount = await db.collection('rsvps').countDocuments({
       eventId: event._id
     });
+
+    if (rsvpCount > 0) {
+      return res.status(409).json({
+        error: 'Events with existing RSVPs cannot be deleted. Cancel the event instead.'
+      });
+    }
 
     await db.collection('events').deleteOne({
       _id: event._id
