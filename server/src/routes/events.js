@@ -165,8 +165,6 @@ router.get('/search', async (req, res, next) => {
 });
 
 
-router.get('/feed', notImplemented);
-
  // GET /api/events/my-rsvps?limit=5
 router.get('/my-rsvps', async (req, res, next) => {
   try {

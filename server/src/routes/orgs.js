@@ -570,7 +570,6 @@ router.patch('/:orgId', async (req, res, next) => {
   }
 });
 
-router.delete('/:orgId', notImplemented);
 router.post('/:orgId/admins', notImplemented);
 router.delete('/:orgId/admins/:userId', notImplemented);
 

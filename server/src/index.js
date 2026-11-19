@@ -11,7 +11,6 @@ import { requireAuth } from "./middleware/requireAuth.js";
 import authRoutes from "./routes/auth.js";
 import orgRoutes from "./routes/orgs.js";
 import eventRoutes from "./routes/events.js";
-import followRoutes from "./routes/follows.js";
 import rsvpRoutes from "./routes/rsvps.js";
 import icsRoutes from "./routes/ics.js";
 
@@ -26,7 +25,6 @@ app.use("/api/auth", authRoutes);
 // Everything below requires a login. Handlers can rely on req.user = { id, email }.
 app.use("/api/orgs", requireAuth, orgRoutes);
 app.use("/api/events", requireAuth, eventRoutes);
-app.use("/api/follows", requireAuth, followRoutes);
 app.use("/api/rsvps", requireAuth, rsvpRoutes);
 
 app.use("/ics", icsRoutes);
