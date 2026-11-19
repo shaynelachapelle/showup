@@ -1,5 +1,5 @@
 .pageContainer {
-    margin: 15px;
+    margin: 25px;
 }
 
 .title {
@@ -20,4 +20,10 @@
 
 .item {
     flex: 1;
+}
+
+@media (min-width: 800px) {
+    .container {
+        width: 60%;
+    }
 }
