@@ -27,6 +27,12 @@ function Home() {
         events[0], events[1], events[3]
     ]
 
+    //replace above with:
+
+    // call to get RSVPed events
+
+    // call to get non-RSVPed events
+
     return (
     <div>
         {/* show the banner  */}
@@ -35,10 +41,10 @@ function Home() {
         {/* add the icons for all of the organization types */}
 
         {/* The first row is the events RSVPed to */}
-        <EventRow title="Your RSVPs" events={rsvpedEvents} />
+        <EventRow title="Your RSVPs" events={rsvpedEvents} linkTo="/myevents" />
 
         {/* The second row is all events */}
-        <EventRow title="Check Out More Events!" events={moreEvents}/>
+        <EventRow title="Check Out More Events!" events={moreEvents} linkTo="/allevents"/>
 
         {/* The third row will be events by the organizations they have joined */}
     </div>
