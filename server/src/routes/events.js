@@ -9,7 +9,7 @@ const notImplemented = (req, res) =>
   res.status(501).json({ error: 'Not implemented' });
 
 // Convert MongoDB event documents into the API contract format.
-async function formatEvents(events) {
+async function formatEvents(events, userId) {
   const orgIds = [...new Set(events.map(event => String(event.orgId)))];
 
   const orgs = await db.collection('orgs')
@@ -20,6 +20,18 @@ async function formatEvents(events) {
     orgs.map(org => [String(org._id), org.name])
   );
 
+  // Find which of these events the logged-in student has RSVP'd to.
+  const rsvps = await db.collection('rsvps')
+    .find({
+      userId: new ObjectId(userId),
+      eventId: { $in: events.map(event => event._id) }
+    })
+    .toArray();
+
+  const rsvpedIds = new Set(
+    rsvps.map(rsvp => String(rsvp.eventId))
+  );
+
   return events.map(event => ({
     id: String(event._id),
     title: event.title,
@@ -27,6 +39,7 @@ async function formatEvents(events) {
     organization: orgNames.get(String(event.orgId)) ?? '',
     image: event.imageUrl,
     cost: event.cost,
+    isRsvped: rsvpedIds.has(String(event._id)),
     can_rsvp:
       event.status === 'active' &&
       new Date(event.start) > new Date() &&
@@ -51,8 +64,18 @@ router.get('/', async (req, res, next) => {
       });
     }
 
+    // Find events the logged-in student has already RSVP'd to.
+    const userId = new ObjectId(req.user.id);
+
+    const rsvps = await db.collection('rsvps')
+      .find({ userId })
+      .toArray();
+
+    const eventIds = rsvps.map(rsvp => rsvp.eventId);
+
     const collection = db.collection('events');
     const filter = {
+      _id: { $nin: eventIds },
       start: { $gt: new Date() },
       status: 'active'
     };
@@ -65,7 +88,7 @@ router.get('/', async (req, res, next) => {
         .limit(limitNumber)
         .toArray();
 
-      return res.json(await formatEvents(events));
+      return res.json(await formatEvents(events, req.user.id));
     }
 
     // Paginated events: return an object with pagination metadata.
@@ -78,7 +101,7 @@ router.get('/', async (req, res, next) => {
       .toArray();
 
     res.json({
-      events: await formatEvents(events),
+      events: await formatEvents(events, req.user.id),
       currentPage: pageNumber,
       totalPages: Math.ceil(total / limitNumber)
     });
@@ -132,7 +155,7 @@ router.get('/search', async (req, res, next) => {
       .toArray();
 
     res.json({
-      events: await formatEvents(events),
+      events: await formatEvents(events, req.user.id),
       currentPage: pageNumber,
       totalPages: Math.ceil(total / limitNumber)
     });
@@ -179,7 +202,7 @@ router.get('/my-rsvps', async (req, res, next) => {
       .limit(limitNumber)
       .toArray();
 
-    res.json(await formatEvents(events));
+    res.json(await formatEvents(events, req.user.id));
   } catch (error) {
     next(error);
   }
@@ -229,7 +252,7 @@ router.get('/my-events', async (req, res, next) => {
       .toArray();
 
     res.json({
-      events: await formatEvents(events),
+      events: await formatEvents(events, req.user.id),
       currentPage: pageNumber,
       totalPages: Math.ceil(total / limitNumber)
     });
@@ -280,7 +303,7 @@ router.get('/my-orgs', async (req, res, next) => {
         .limit(limitNumber)
         .toArray();
 
-      return res.json(await formatEvents(events));
+      return res.json(await formatEvents(events, req.user.id));
     }
 
     // Paginated events: return an object with pagination metadata.
@@ -294,7 +317,7 @@ router.get('/my-orgs', async (req, res, next) => {
       .toArray();
 
     res.json({
-      events: await formatEvents(events),
+      events: await formatEvents(events, req.user.id),
       currentPage: pageNumber,
       totalPages: Math.ceil(total / limitNumber)
     });
@@ -341,7 +364,11 @@ router.get('/:eventId', async (req, res, next) => {
       organizationId: String(event.orgId),
       organizationName: organization?.name ?? '',
       attendeeCount: event.goingCount,
-      isRsvped: rsvp !== null
+      isRsvped: rsvp !== null,
+      can_rsvp:
+        event.status === 'active' &&
+        new Date(event.start) > new Date() &&
+        (event.capacity === null || event.goingCount < event.capacity)
     });
   } catch (error) {
     next(error);

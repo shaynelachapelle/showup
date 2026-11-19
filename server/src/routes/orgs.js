@@ -235,6 +235,18 @@ router.get('/:id', async (req, res, next) => {
       })
       .sort({ start: 1, _id: 1 })
       .toArray();
+    
+    // Find which of these events the logged-in student has RSVP'd to.
+    const rsvps = await db.collection('rsvps')
+      .find({
+        userId: new ObjectId(req.user.id),
+        eventId: { $in: events.map(event => event._id) }
+      })
+      .toArray();
+
+    const rsvpedIds = new Set(
+      rsvps.map(rsvp => String(rsvp.eventId))
+    );  
 
     res.json({
       id: String(organization._id),
@@ -249,6 +261,7 @@ router.get('/:id', async (req, res, next) => {
         organization: organization.name,
         image: event.imageUrl,
         cost: event.cost,
+        isRsvped: rsvpedIds.has(String(event._id)),
         can_rsvp:
           event.status === 'active' &&
           new Date(event.start) > new Date() &&
