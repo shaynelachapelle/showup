@@ -6,7 +6,7 @@ function RsvpButton({ variant = "card", status = "rsvp" , onClick }) {
     let text = "RSVP";
 
     if (status === "going") {
-        text = "going!";
+        text = "✓ going";
     }
     else if (status === "full") {
         text = "FULL";

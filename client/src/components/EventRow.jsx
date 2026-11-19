@@ -6,7 +6,30 @@ import SeeMoreCard from "./SeeMoreCard";
 import styles from "../css/EventRow.module.css"
 import EventCard from "./EventCard"
 
-function EventRow({title, events, linkTo}) {
+function EventRow({ title, events, linkTo, emptyMessage }) {
+    
+    // if there are no events passed, send the proper message
+    if (events.length === 0) {
+        return (
+            <div className={styles.eventRow}>
+                <div className={styles.header}>
+                    <div className={styles.title}>{title}</div>
+
+                    <Link to={linkTo} className={styles.seeMore}>
+                        See All →
+                    </Link>
+                </div>
+
+                <Link
+                    to={linkTo}
+                    className={styles.emptyState}>
+                    {emptyMessage}
+                </Link>
+            </div>
+        );
+    }
+    
+    // if there are events to display, display them
     return <div className={styles.eventRow}>
         {/* title for the row below */}
         <div className={styles.header}>

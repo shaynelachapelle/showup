@@ -37,13 +37,13 @@
 }
 
 .going {
-    background-color: #ff7281;
+    background-color: #ef45565f;
     color: white;
-    border-radius: 10px;
+    border-radius: 25px;
 }
 
 .going:hover {
-    background-color: #ff949e;
+    background-color: #ed1b2f;
 }
 
 .full {
