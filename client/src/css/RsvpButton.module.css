@@ -9,8 +9,8 @@
 }
 
 .card {
-    width: 3rem;
-    height: 2rem;
+    width: 60px;
+    height: 30px;
     font-size: 0.7rem;
 
     background-color: white;
@@ -37,13 +37,13 @@
 }
 
 .going {
-    background-color: #ef45565f;
-    color: white;
+    background-color: #f88b96e3;
+    color: #ed1b2f;
     border-radius: 25px;
 }
 
 .going:hover {
-    background-color: #ed1b2f;
+    background-color: rgb(212, 57, 72);
 }
 
 .full {
