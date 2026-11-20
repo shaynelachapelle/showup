@@ -37,6 +37,7 @@ async function formatEvents(events, userId) {
     title: event.title,
     date: event.start,
     organization: orgNames.get(String(event.orgId)) ?? '',
+    category: event.category,
     image: event.imageUrl,
     cost: event.cost,
     isRsvped: rsvpedIds.has(String(event._id)),
