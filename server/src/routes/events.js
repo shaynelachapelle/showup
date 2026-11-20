@@ -112,6 +112,75 @@ router.get('/', async (req, res, next) => {
 });
 
 
+// GET /api/events/category/:category
+// Retrieve upcoming, non-RSVPed events in a specific category.
+router.get('/category/:category', async (req, res, next) => {
+  try {
+    const { page, limit } = req.query;
+    const { category } = req.params;
+
+    const pageNumber = page === undefined ? 1 : Number(page);
+    const limitNumber = limit === undefined ? 20 : Number(limit);
+
+    if (
+      !Number.isSafeInteger(pageNumber) || pageNumber < 1 ||
+      !Number.isSafeInteger(limitNumber) || limitNumber < 1 || limitNumber > 100
+    ) {
+      return res.status(400).json({
+        error: 'Page must be a positive integer and limit must be between 1 and 100.'
+      });
+    }
+
+    // Exclude events the logged-in student has already RSVP'd to.
+    const userId = new ObjectId(req.user.id);
+
+    const rsvps = await db.collection('rsvps')
+      .find({ userId })
+      .toArray();
+
+    const eventIds = rsvps.map(rsvp => rsvp.eventId);
+
+    const collection = db.collection('events');
+
+    const filter = {
+      _id: { $nin: eventIds },
+      category,
+      start: { $gt: new Date() },
+      status: 'active'
+    };
+
+    // Limited response: return a plain array.
+    if (page === undefined) {
+      const events = await collection
+        .find(filter)
+        .sort({ start: 1, _id: 1 })
+        .limit(limitNumber)
+        .toArray();
+
+      return res.json(await formatEvents(events, req.user.id));
+    }
+
+    // Paginated response: include pagination metadata.
+    const total = await collection.countDocuments(filter);
+
+    const events = await collection
+      .find(filter)
+      .sort({ start: 1, _id: 1 })
+      .skip((pageNumber - 1) * limitNumber)
+      .limit(limitNumber)
+      .toArray();
+
+    res.json({
+      events: await formatEvents(events, req.user.id),
+      currentPage: pageNumber,
+      totalPages: Math.ceil(total / limitNumber)
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 // GET /api/events/search?q=query&page=1&limit=20
 router.get('/search', async (req, res, next) => {
   try {
