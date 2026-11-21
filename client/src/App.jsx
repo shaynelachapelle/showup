@@ -16,8 +16,7 @@ import MyOrgs from './pages/MyOrgs.jsx';
 import MyEvents from './pages/MyEvents.jsx';
 import EventPage from './pages/EventPage.jsx';
 import OrganizationPage from './pages/OrganizationPage.jsx';
-import Landing from './pages/Landing';
-import MyClubs from './pages/My-Clubs';
+import MyClubs from './pages/My-Clubs'; 
 
 function App() {
   return (
@@ -33,6 +32,7 @@ function App() {
         <Route path="/myevents" element={<MyEvents />} />
         <Route path="/events/:id" element={<EventPage />} />
         <Route path="/organization/:organizationId" element={<OrganizationPage />} />
+        <Route path="/my-clubs" element={<MyClubs />} />
       </Route>
     </Routes>
   )
