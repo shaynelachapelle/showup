@@ -20,11 +20,9 @@ function EventRow({ title, events, linkTo, emptyMessage, moreMessage }) {
                     </Link>
                 </div>
 
-                <Link
-                    to={linkTo}
-                    className={styles.emptyState}>
+                <div className={styles.emptyState}>
                     {emptyMessage}
-                </Link>
+                </div>
             </div>
         );
     }

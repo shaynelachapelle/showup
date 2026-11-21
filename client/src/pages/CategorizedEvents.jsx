@@ -71,11 +71,12 @@ function CategorizedEvents() {
 
     return (
         <div className={styles.page}>
-            {/* link to go back */}
-            <Link to="/allevents" className={styles.link}>Back to all events...</Link>
 
             {/* headings and grid */}
             <div className={styles.content}>
+                {/* link to go back */}
+                <Link to="/allevents" className={styles.link}>Back to all events...</Link>
+
                 {/* headings */}
                 <div className={styles.subheading}>Here you can find all events related to:</div>
 

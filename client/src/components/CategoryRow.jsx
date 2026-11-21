@@ -24,7 +24,7 @@ function CategoryRow () {
             <CategoryIcon title="Athletics and Recreation" icon={imageRunning} link="/allevents/Athletics+and+Recreation" />
             <CategoryIcon title="Charity and Environment" icon={imageCharity} link="/allevents/Charity+and+Environment" />
             <CategoryIcon title="Community Outreach and Volunteering" icon={imageCommunity} link="/allevents/Community+Outreach+and+Volunteering" />
-            <CategoryIcon title="Fine Arts, Dance and Performance" icon={imageArts} link="/allevents/Fine Arts,+Dance+and+Performance" />
+            <CategoryIcon title="Fine Arts, Dance and Performance" icon={imageArts} link="/allevents/Fine+Arts,+Dance+and+Performance" />
             <CategoryIcon title="Health and Wellness" icon={imageHealth} link="/allevents/Health+and+Wellness" />
             <CategoryIcon title="Language and Publications" icon={imageLanguage} link="/allevents/Language+and+Publications" />
             <CategoryIcon title="Leisure and Hobbies" icon={imageLeisure} link="/allevents/Leisure+and+Hobbies" />   

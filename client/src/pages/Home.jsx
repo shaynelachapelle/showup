@@ -54,10 +54,22 @@ function Home() {
         {/* event rows */}
         <div className={styles.events}>
             {/* The first row is the events RSVPed to */}
-            <EventRow title="Your RSVPs" events={rsvpedEvents} linkTo="/myevents" emptyMessage="Find an event to attend!" moreMessage="More of your events"/>
+            <EventRow 
+                title="Your RSVPs" 
+                events={rsvpedEvents} 
+                linkTo="/myevents" 
+                emptyMessage="You are currently not attending any events!" 
+                moreMessage="More of your events"
+            />
 
             {/* The second row is all events */}
-            <EventRow title="Check Out More Events!" events={moreEvents} linkTo="/allevents" emptyMessage="There are no more events for you to see!" moreMessage="Find more events!"/>
+            <EventRow 
+                title="Check Out Some Events!" 
+                events={moreEvents} 
+                linkTo="/allevents" 
+                emptyMessage="You are RSVP'd to all events!!"
+                 moreMessage="Find more events!"
+            />
 
             {/* The third row will be events by the organizations they have joined */}
         </div>
