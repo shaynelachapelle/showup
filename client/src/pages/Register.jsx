@@ -1,5 +1,9 @@
 // Author: Grace Yuzwin
+
+// needed import for link
 import { Link } from "react-router-dom";
+
+// css styling
 import styles from "../css/Login.module.css"
 
 function Register() {

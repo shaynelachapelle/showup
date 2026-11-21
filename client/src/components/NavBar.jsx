@@ -113,7 +113,9 @@ function NavBar() {
                     </Link>
 
                     {/* this is the logout button !! */}
-                    <LogoutButton className={styles.hamburgerLogout} />
+                    <div className={styles.centerButton}>
+                        <LogoutButton className={styles.hamburgerLogout} />
+                    </div>
 
                 </div>
             )}

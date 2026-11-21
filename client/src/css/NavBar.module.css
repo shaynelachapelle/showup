@@ -84,8 +84,9 @@
 
     margin-right: 20px;
 
-    width: 40px;
+    width: 50px;
     height: 40px;
+    padding-bottom: 40px;
 
     font-size: 30px;
 }
@@ -108,7 +109,6 @@
     right: 0;
 
     width: 250px;
-    height: 270px;
 
     background-color: #ed1b2f;
 
@@ -127,7 +127,7 @@
     color: white;
     text-decoration: none;
 
-    padding: 15px;
+    padding: 10px;
 
     border-bottom: 1px solid rgba(255,255,255,.15);
 }
@@ -137,6 +137,9 @@
 }
 
 
+.centerButton {
+    display: flex;
+}
 
 .desktopLogout {
     margin-left: auto;
@@ -146,11 +149,10 @@
     width: 100%;
 
     text-align: center;
-
-    padding: 15px;
+    padding-left: 10px;
 
     border: none;
-    color: white;
+    color: rgb(134, 1, 1);
 }
 
 .hamburgerLogout:hover {
@@ -162,7 +164,7 @@
 
 
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
     .desktopLinks {
         display: none;
     }
@@ -176,7 +178,7 @@
     }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 801px) {
     .hamburgerMenu {
         display: none;
     }
