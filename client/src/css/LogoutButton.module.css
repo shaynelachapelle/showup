@@ -1,0 +1,22 @@
+.logout {
+    margin: 5px;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+
+    width: 60px;
+    height: 30px;
+
+    margin-left: auto;
+
+    background-color: transparent;
+}
+
+.logout:hover {
+    box-shadow: none;
+    outline: none;
+    border-color: transparent;
+
+    text-decoration: underline;
+}
+
