@@ -1,31 +1,32 @@
 // Author: Grace Yuzwin
-import { onRSVPCLick } from "../helper-functions/rsvp"
-import "../css/EventCard.css"
+import styles from "../css/EventCard.module.css"
+import RsvpButton from "./RsvpButton"
+import { Link } from "react-router-dom";
 
-function EventCard({event}) {
-    /* pull out all assumed constants from a single event */
-    const { title, date, organization, cost, can_rsvp } = event;
+function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp}) {
     
     /* display those constants */
-    return <div className="event-card">
-        <div className="event-image">
-            <img src={"image.jpg"} alt={title}></img>
-            <div className="event-overlay">
-                {can_rsvp && (
-                    <button
-                        className="rsvp-btn-small"
-                        onClick={onRSVPCLick}
-                    >
-                        RSVP
-                    </button>
-                )}
+    return <div className={styles.eventCard}>
+        {/* the image is a link to that event page */}
+        <Link to={`/events/${id}`} className={styles.eventImage}>
+            <img src={image} alt={title}></img>
+        </Link>
+
+        <div className={styles.eventOverlay}>
+                <RsvpButton />
             </div>
-        </div>
-        <div className="event-info">
-            <h3>{title}</h3>
-            <h4>hosted by {organization}</h4>
-            <p>Date: {date}</p>
+
+        <div className={styles.eventInfo}>
+            {/* the event name is a link to that event page */}
+            <Link to={`/events/${id}`} className={styles.title}>{title}</Link>
+
+            {/* the organization name is a link to that organization page */}
+            <Link to={`/organization/${organizationId}`} className={styles.organization}>hosted by {organization}</Link>
+
+            {/* no links for the date and cost */}
+            <p>Date & time: {date}</p>
             <p>Cost: {cost}</p>
+            
         </div>
     </div>
 }

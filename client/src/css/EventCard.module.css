@@ -1,0 +1,99 @@
+.eventCard {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fffbfb;
+    transition: transform 0.2s;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 auto;
+    width: 230px;
+    height: 230px;
+}
+
+.eventCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.eventCard:hover .eventOverlay {
+    opacity: 1;
+}
+
+.eventImage {
+    position: relative;
+    width: 100%;
+    height: 40%;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.eventImage:hover, .eventInfo .title:hover, .eventInfo .organization:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.eventImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.eventOverlay {
+    position: absolute;
+    top: 60px;
+    right: 1px;
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+}
+
+.eventInfo {
+    height: 60%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    min-height: 0;
+
+    padding-left: 0.3rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+
+    overflow: hidden;
+}   
+
+.eventInfo .title {
+    font-size: 1.2rem;
+    font-weight: 650;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color:black;
+}
+
+.eventInfo .organization {
+    font-size: 0.9rem;
+    color:black;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.eventInfo p {
+    color: #363636;
+    font-size: 0.7rem;
+    margin:0;
+    padding: 0;
+}
