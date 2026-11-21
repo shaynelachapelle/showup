@@ -1,9 +1,9 @@
 .eventRow {
-    margin-bottom: 2rem;
+    margin-bottom: 4px;
+    margin-left: 2%;
 }
 
 .eventRow .title {
-    margin-left: 1rem;
     color:black;
     font-weight: 600;
     font-size: 30px;
@@ -30,12 +30,14 @@
 
 .eventRowCards {
     display: flex;
-    gap: 1rem;
+    gap: 20px;
+
+    align-items: center;
 
     overflow-x: auto;
     overflow-y: hidden;
 
-    padding: 1rem;
+    padding: 2px;
 }
 
 .emptyState {

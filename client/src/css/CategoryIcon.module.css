@@ -1,0 +1,52 @@
+.circle {
+    height: 99px;
+    width: 99px;
+    border-radius: 50%;
+
+    background-color: rgb(245, 245, 245);
+    outline: #ed1b3087 solid 0.5px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    height: 50px;
+    width: 50px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+
+    width: 100px;
+
+    text-decoration: none;
+    color:black;
+}
+
+.text {
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    color:black;
+    text-decoration: none;
+
+    text-align: center;
+}
+
+.container:hover {
+    color: #ed1b3087;
+    
+    .circle {
+        background-color: #ed1b3087;
+    }
+
+    .text { 
+        color: #ed1b3087;
+    }
+}

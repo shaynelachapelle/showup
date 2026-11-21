@@ -15,6 +15,7 @@ import Register from './pages/Register.jsx';
 // Pages with NavBar and Footer
 import Home from './pages/Home.jsx';
 import AllEvents from './pages/AllEvents.jsx';
+import CategorizedEvents from './pages/CategorizedEvents.jsx';
 import AllOrgs from './pages/AllOrgs.jsx';
 import MyOrgs from './pages/MyOrgs.jsx';
 import MyEvents from './pages/MyEvents.jsx';
@@ -34,6 +35,7 @@ function App() {
     <Route element={<NavLayout />}>
         <Route path="/home" element={<Home />} />
         <Route path="/allevents" element={<AllEvents />} />
+        <Route path="/allevents/:category" element={<CategorizedEvents />} />
         <Route path="/allorgs" element={<AllOrgs />} />
         <Route path="/myorgs" element={<MyOrgs />} />
         <Route path="/myevents" element={<MyEvents />} />
