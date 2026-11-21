@@ -1,5 +1,6 @@
-/* Layout */
-.myclubs-container {
+/* Author: Rachel Ha */
+
+.myclubsContainer {
   background-color: #F0F2F5;
   min-height: 100vh;
   display: flex;
@@ -7,14 +8,14 @@
   align-items: center;
 }
 
-.myclubs-content {
+.myclubsContent {
   width: 100%;
   max-width: 1100px;
   padding: 4rem 2rem;
 }
 
 
-.page-title {
+.pageTitle {
   font-size: 2.8rem;
   font-weight: 900;
   color: #222222;
@@ -22,21 +23,21 @@
   letter-spacing: -1px;
 }
 
-.page-subtitle {
+.pageSubtitle {
   font-size: 1.1rem;
   color: #666666;
   margin-bottom: 3rem;
 }
 
 /* Grid Layout */
-.clubs-grid {
+.clubsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
 }
 
 /* Club Cards */
-.club-card {
+.clubCard {
   background-color: #FFFFFF;
   border-radius: 12px;
   padding: 2.5rem 1.5rem;
@@ -48,12 +49,12 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.club-card:hover {
+.clubCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.club-avatar {
+.clubAvatar {
   width: 80px;
   height: 80px;
   background-color: #ED1B2F;
@@ -68,16 +69,16 @@
   box-shadow: 0 4px 10px rgba(237, 27, 47, 0.2);
 }
 
-.club-name {
+.clubName {
   color: #222222;
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  flex-grow: 1; /* Keeps buttons aligned */
+  flex-grow: 1;
 }
 
 /* Following Button */
-.following-btn {
+.followingBtn {
   width: 100%;
   padding: 10px 0;
   background-color: #F0F2F5;
@@ -89,7 +90,7 @@
   transition: all 0.2s ease;
 }
 
-.following-btn:hover {
+.followingBtn:hover {
   background-color: #ED1B2F;
   color: #FFFFFF;
   border-color: #ED1B2F;

@@ -1,7 +1,6 @@
 /* Author: Rachel Ha */
-/* Layout */
-.landing-container {
-  background-color: #F0F2F5; 
+.landingContainer {
+  background-color: #F0F2F5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,13 +8,13 @@
   overflow-x: hidden;
 }
 
-/* Red Navigation Bar */
-.navbar {
+/* Red  Bar */
+.redBar {
   width: 100%;
   height: 75px;
   background-color: #ED1B2F;
   display: flex;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   align-items: center;
   padding: 0 4rem;
   box-shadow: 0 4px 12px rgba(237, 27, 47, 0.2);
@@ -24,8 +23,8 @@
   z-index: 100;
 }
 
-/* Logo */
-.logo-section {
+/* Inverted Logo Styling */
+.logoSection {
   font-size: 2.2rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
@@ -34,13 +33,13 @@
   margin-left: 2rem;
 }
 
-.logo-text {
+.logoText {
   color: #FFFFFF;
   font-weight: bold;
 }
 
 /* Content Area */
-.content-wrapper {
+.contentWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,13 +48,13 @@
 }
 
 /* Typography */
-.text-section {
+.textSection {
   text-align: center;
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
 
-.text-section h1 {
+.textSection h1 {
   color: #222222;
   font-size: 3.5rem;
   font-weight: 900;
@@ -64,25 +63,25 @@
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.title-highlight {
+.titleHighlight {
   color: #ED1B2F;
 }
 
-.text-section h2 {
+.textSection h2 {
   color: #666666;
   font-size: 1.2rem;
   font-weight: 400;
   margin-bottom: 2rem;
 }
 
-
-.auth-buttons-inline {
+/* Inline Auth Buttons */
+.authButtonsInline {
   display: flex;
   gap: 1rem;
   justify-content: center;
 }
 
-.login-btn, .signup-btn {
+.loginBtn, .signupBtn {
   padding: 10px 24px;
   font-size: 0.95rem;
   font-weight: bold;
@@ -91,55 +90,56 @@
   transition: all 0.2s ease-in-out;
 }
 
-.login-btn {
+.loginBtn {
   background-color: #ED1B2F;
   color: #FFFFFF;
   border: 2px solid #ED1B2F;
 }
 
-.login-btn:hover {
+.loginBtn:hover {
   background-color: #C91425;
   border-color: #C91425;
   box-shadow: 0 4px 8px rgba(237, 27, 47, 0.25);
 }
 
-.signup-btn {
+.signupBtn {
   background-color: #FFFFFF;
   color: #ED1B2F;
   border: 2px solid #ED1B2F;
 }
 
-.signup-btn:hover {
+.signupBtn:hover {
   background-color: #F9F9F9;
 }
 
-.image-section {
+/* Hero Image */
+.imageSection {
   width: 100%;
   max-width: 900px;
 }
 
-.image-placeholder {
+.imagePlaceholder {
   width: 100%;
   height: 480px;
   border-radius: 16px;
   border: 6px solid #FFFFFF;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); 
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
 }
 
-.image-placeholder:hover {
+.imagePlaceholder:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
 }
 
-.marty-hero-img {
+.martyHeroImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.image-placeholder:hover .marty-hero-img {
-  transform: scale(1.03); 
+.imagePlaceholder:hover .martyHeroImg {
+  transform: scale(1.03);
 }

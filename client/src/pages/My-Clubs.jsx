@@ -1,4 +1,5 @@
-import '../css/MyClubs.css';
+// Author: Rachel Ha
+import styles from '../css/MyClubs.module.css';
 
 export default function MyClubs() {
   // Default data until MongoDB is connected
@@ -11,31 +12,21 @@ export default function MyClubs() {
   ];
 
   return (
-    <div className="myclubs-container">
-      
-      {/* Red Navigation Bar */}
-      <nav className="navbar">
-        <div className="logo-section">
-          <span className="logo-text">Show</span>up
-        </div>
-      </nav>
+    <div className={styles.myclubsContainer}>
+      <div className={styles.myclubsContent}>
+        <h1 className={styles.pageTitle}>My Clubs</h1>
+        <p className={styles.pageSubtitle}>Organizations you are currently following.</p>
 
-      {/* Main Content */}
-      <div className="myclubs-content">
-        <h1 className="page-title">My Clubs</h1>
-        <p className="page-subtitle">Organizations you are currently following.</p>
-
-        <div className="clubs-grid">
+        <div className={styles.clubsGrid}>
           {followedClubs.map((club) => (
-            <div key={club.id} className="club-card">
-              <div className="club-avatar">{club.initials}</div>
-              <h3 className="club-name">{club.name}</h3>
-              <button className="following-btn">Following</button>
+            <div key={club.id} className={styles.clubCard}>
+              <div className={styles.clubAvatar}>{club.initials}</div>
+              <h3 className={styles.clubName}>{club.name}</h3>
+              <button className={styles.followingBtn}>Following</button>
             </div>
           ))}
         </div>
       </div>
-
     </div>
   );
 }
