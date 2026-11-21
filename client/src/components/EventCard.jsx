@@ -1,6 +1,15 @@
 // Author: Grace Yuzwin
+
+// css styling
 import styles from "../css/EventCard.module.css"
+
+// components
 import RsvpButton from "./RsvpButton"
+
+//helper functions
+import { getFormattedDate } from "../helper-functions/dates"
+
+// other needed imports
 import { Link } from "react-router-dom";
 
 function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
@@ -39,7 +48,7 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
             <Link to={`/organization/${organizationId}`} className={styles.organization}>hosted by {organization}</Link>
 
             {/* no links for the date and cost */}
-            <p>Date: {date}</p>
+            <p>Date: {getFormattedDate(date)}</p>
             <p>Cost: {cost}</p>
             
         </div>

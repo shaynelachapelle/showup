@@ -6,7 +6,7 @@ import SeeMoreCard from "./SeeMoreCard";
 import styles from "../css/EventRow.module.css"
 import EventCard from "./EventCard"
 
-function EventRow({ title, events, linkTo, emptyMessage }) {
+function EventRow({ title, events, linkTo, emptyMessage, moreMessage }) {
     
     // if there are no events passed, send the proper message
     if (events.length === 0) {
@@ -55,8 +55,8 @@ function EventRow({ title, events, linkTo, emptyMessage }) {
                 can_rsvp={event.can_rsvp}
                 isRsvped={event.isRsvped}
             />
-        ))}
-        <SeeMoreCard to={linkTo} />
+            ))}
+        <SeeMoreCard to={linkTo} moreMessage={moreMessage} />
         </div>
     </div>
 }

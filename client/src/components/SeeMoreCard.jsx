@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import styles from "../css/SeeMoreCard.module.css";
 
-function SeeMoreCard ({ to }) {
+function SeeMoreCard ({ to, moreMessage }) {
     return (
         <Link
             to={to}
             className={styles.card}
         >
             <div className={styles.text}>
-                See More
+                {moreMessage}
             </div>
         </Link>
 
