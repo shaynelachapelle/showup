@@ -1,8 +1,8 @@
 SHOWUP! - COMP 307 Fall 2026 Final Project
 
-Running site URL: TODO (Mimi server URL)
+Running site URL: https://fall2026-comp307-group07.cs.mcgill.ca (requires McGill VPN or campus network)
 
-Demo account: TODO email / TODO password
+Demo account: demo@mail.mcgill.ca / TODO password
 
 TEAM
 

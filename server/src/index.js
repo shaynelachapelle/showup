@@ -44,6 +44,10 @@ app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 await connectDb();
-app.listen(port, () =>
-  console.log(`Showup! server on http://localhost:${port}`),
-);
+// Loopback only, so nginx (HTTPS) is the only way in on the server.
+// Both addresses, because "localhost" can resolve to either one.
+for (const host of ["127.0.0.1", "::1"]) {
+  app.listen(port, host, () =>
+    console.log(`Showup! server listening on ${host} port ${port}`),
+  );
+}

@@ -36,7 +36,7 @@ npm install
 cp server/.env.example server/.env
 ```
 
-Fill in demo data. It refuses to run on a database that already has data; add `-- --reset` to wipe and reseed. Log in as `demo@mail.mcgill.ca` / `showup-demo`.
+Fill in demo data. It refuses to run on a database that already has data; add `-- --reset` to wipe and reseed. Log in as `demo@mail.mcgill.ca` with the `SEED_PASSWORD` from `server/.env`.
 
 ```bash
 npm run seed -w server
@@ -63,6 +63,32 @@ npm run build -w client
 ```bash
 npm start -w server
 ```
+
+## Deployment
+
+https://fall2026-comp307-group07.cs.mcgill.ca (McGill VPN or campus network only).
+The group server's `server/.env` must have `COOKIE_SECURE=true` and a private `SEED_PASSWORD`.
+
+To deploy `main`:
+
+1. Save the group SSH key as `~/.ssh/cs307-group07-key` (first time only, on macOS/Linux also run `chmod 400` on it).
+2. Connect to the McGill VPN, then log in to the server:
+
+   ```bash
+   ssh -i ~/.ssh/cs307-group07-key cs307-user@fall2026-comp307-group07.cs.mcgill.ca
+   ```
+
+   Without the VPN, add `-J <cs-username>@mimi.cs.mcgill.ca` right after `ssh` to go through Mimi.
+
+3. On the server, run:
+
+   ```bash
+   cd ~/showup && git pull --ff-only && npm ci && npm run build -w client && systemctl --user restart showup
+   ```
+
+4. Type `exit` to log out. The app keeps running.
+
+- Check `/api/health` when the app is down, nginx serves a placeholder page.
 
 ## Conventions
 

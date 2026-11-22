@@ -9,7 +9,12 @@ import { ObjectId } from "mongodb";
 import { db, connectDb } from "./db.js";
 
 // Every seeded account uses this password. The demo login is demo@mail.mcgill.ca.
-const SEED_PASSWORD = "showup-demo";
+const SEED_PASSWORD = process.env.SEED_PASSWORD;
+if (!SEED_PASSWORD) {
+  throw new Error(
+    "SEED_PASSWORD is not set. Add it to server/.env (see server/.env.example).",
+  );
+}
 
 const COLLECTIONS = ["users", "orgs", "events", "follows", "rsvps"];
 
@@ -583,7 +588,7 @@ async function seed() {
     );
   }
   console.log(
-    `\nSeeded "${db.databaseName}". Log in as ${users.demo.email} / ${SEED_PASSWORD}`,
+    `\nSeeded "${db.databaseName}". Log in as ${users.demo.email} with your SEED_PASSWORD.`,
   );
 }
 
