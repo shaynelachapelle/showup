@@ -1,0 +1,106 @@
+/* Author: Rachel Ha */
+.pageContainer {
+  background-color: #F0F2F5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.formCard {
+  background-color: #FFFFFF;
+  width: 100%;
+  max-width: 560px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #222222;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.5px;
+}
+
+.highlight {
+  color: #ED1B2F;
+}
+
+.subtitle {
+  color: #666666;
+  font-size: 1rem;
+  margin: 0 0 2rem 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #333333;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222222;
+  background-color: #FAFAFA;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 6px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #ED1B2F;
+  background-color: #FFFFFF;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.submitBtn {
+  width: 100%;
+  height: auto;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding: 12px 24px;
+  background-color: #ED1B2F;
+  color: #FFFFFF;
+  border: 2px solid #ED1B2F;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.submitBtn:hover {
+  background-color: #C91425;
+  border-color: #C91425;
+  box-shadow: 0 4px 10px rgba(237, 27, 47, 0.25);
+}
