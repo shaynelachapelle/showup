@@ -11,6 +11,7 @@ export default function Landing() {
         <div className={styles.logoSection}>
           <span className={styles.logoText}>Show</span>up
         </div>
+        <button className={styles.contactBtn}>Contact Us</button>
       </nav>
 
       {/* Main Page Content */}

@@ -8,13 +8,14 @@
   overflow-x: hidden;
 }
 
-/* Red  Bar */
+/* Red Bar */
 .redBar {
   width: 100%;
+  box-sizing: border-box;
   height: 75px;
   background-color: #ED1B2F;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   padding: 0 4rem;
   box-shadow: 0 4px 12px rgba(237, 27, 47, 0.2);
@@ -23,7 +24,32 @@
   z-index: 100;
 }
 
-/* Inverted Logo Styling */
+.contactBtn {
+  width: auto;
+  flex: none;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.contactBtn:hover {
+  background-color: #FFFFFF;
+  color: #ED1B2F;
+  border-color: #FFFFFF;
+}
+
+/* Inverted Logo */
 .logoSection {
   font-size: 2.2rem;
   font-weight: 500;
@@ -82,6 +108,12 @@
 }
 
 .loginBtn, .signupBtn {
+  width: auto;
+  flex: none;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 24px;
   font-size: 0.95rem;
   font-weight: bold;
