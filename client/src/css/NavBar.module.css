@@ -1,5 +1,5 @@
 .navBar {
-    background-color: #ff4c4c;
+    background-color: #ed1b2f;
     color: white;
     width: 100%;
     gap: 15px;
@@ -8,18 +8,33 @@
     font-size: 15px;
 }
 
+.navWrapper {
+    position: relative;
+}
+
 .logo {
     height: 50px
 }
 
+.desktopLinks {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .postAnEvent {
-    background-color: rgb(254, 0, 0);
+    background-color: rgb(207, 0, 0);
     padding:4px;
     border-radius: 8px;
     font-weight: 600;
-    margin-left: auto;
+
+    margin-right: 2%;
+
     color: white;
     text-decoration: none;
+
+    flex-wrap: nowrap;
+    min-width: fit-content;
 }
 
 .postAnEvent:hover {
@@ -27,15 +42,21 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.myEvents, .allEvents, .myOrgs {
+.myEvents, .allEvents, .myOrgs{
     display: block;
     margin: 5px;
+
     color: white;
     text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+
+    flex-wrap: nowrap;
+    min-width: fit-content;
 }
 
-.myOrgs {
-    margin-right: 20px
+.active {
+    text-decoration: underline;
 }
 
 .myEvents:hover, .allEvents:hover, .myOrgs:hover, .logo:hover {
@@ -48,27 +69,121 @@
     color: 'inherit' 
 }
 
-@media (max-width: 950px) {
-    .myOrgs, .allEvents {
+
+
+.hamburger {
+    display: none;
+
+    background: none;
+    border: none;
+
+    margin-left: auto;
+
+    color: white;
+    font-size: 20px;
+
+    margin-right: 20px;
+
+    width: 50px;
+    height: 40px;
+    padding-bottom: 40px;
+
+    font-size: 30px;
+}
+
+.hamburger:hover {
+    box-shadow: none;
+
+    background-color: #df182b;
+}
+
+.hamburger:active {
+    background-color: #ed1b2f;
+}
+
+
+.hamburgerMenu {
+    position: absolute;
+
+    top: 100%;
+    right: 0;
+
+    width: 250px;
+
+    background-color: #ed1b2f;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    z-index: 2;
+
+    border-radius: 0 0 8px 8px;
+
+    box-shadow: 0 5px 10px rgba(0,0,0,.3);
+}
+
+.hamburgerLink {
+    color: white;
+    text-decoration: none;
+
+    padding: 10px;
+
+    border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.hamburgerLink:hover {
+    background-color: #ff3549;
+}
+
+
+.centerButton {
+    display: flex;
+}
+
+.desktopLogout {
+    margin-left: auto;
+}
+
+.hamburgerLogout {
+    width: 100%;
+
+    text-align: center;
+    padding-left: 10px;
+
+    border: none;
+    color: rgb(134, 1, 1);
+}
+
+.hamburgerLogout:hover {
+    background-color: #ed1b2f;
+}
+
+
+
+
+
+
+@media (max-width: 800px) {
+    .desktopLinks {
         display: none;
     }
 
-    .myEvents {
-        margin-right: 20px
+    .hamburger {
+        display: block;
+    }
+
+    .desktopLogout {
+        display: none;
     }
 }
 
-@media (max-width: 700px) {
-    .myEvents {
+@media (min-width: 801px) {
+    .hamburgerMenu {
         display: none;
     }
 
-    .allEvents, .myOrgs {
+    .hamburgerLogout {
         display: none;
     }
-
-    .postAnEvent {
-        margin-right: 20px
-    }
-
 }

@@ -1,8 +1,23 @@
 // Author: Grace Yuzwin
+
+// needed import for link
+import { Link } from "react-router-dom";
+
+// css styling
+import styles from "../css/Login.module.css"
+
 function Login() {
     return (
-        <div>
-            <h2>Login here!</h2>
+        <div className={styles.loginBox}>
+            <h2>Log in to your account</h2>
+
+            <input className={styles.input} name="email" type="email" placeholder="email" required></input>
+
+            <input className={styles.input} name="password" type="password" placeholder="password" required></input>
+
+            <button type="submit">Login</button>
+
+            <Link to="/register" className={styles.text}>Don't have an account? Register for one here!</Link>
         </div>
     );
 }

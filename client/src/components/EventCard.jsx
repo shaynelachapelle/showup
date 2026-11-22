@@ -1,10 +1,43 @@
 // Author: Grace Yuzwin
+
+// css styling
 import styles from "../css/EventCard.module.css"
+
+// components
 import RsvpButton from "./RsvpButton"
+
+//helper functions
+import { getFormattedDate } from "../helper-functions/dates"
+
+// other needed imports
 import { Link } from "react-router-dom";
 
-function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp}) {
+// stock image import
+import stock from "../assets/no-image.webp"
+
+function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
     
+    // compute the status for button appearance
+    let status = "rsvp";
+
+    if (isRsvped) {
+        status = "going";
+    }
+    else if (!can_rsvp) {
+        status = "full";
+    }
+
+    // if there is no image, use the stock image
+    if (image === null) {
+        image = stock;
+    }
+
+    // if the cost is 0, say free
+    const strCost =
+        cost === 0
+            ? "Free!"
+            : "$" + cost.toString();
+
     /* display those constants */
     return <div className={styles.eventCard}>
         {/* the image is a link to that event page */}
@@ -13,8 +46,12 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
         </Link>
 
         <div className={styles.eventOverlay}>
-                <RsvpButton />
-            </div>
+            <RsvpButton 
+                variant="card" 
+                status={status}
+                onClick={() => handleRsvp(id)}
+            />
+        </div>
 
         <div className={styles.eventInfo}>
             {/* the event name is a link to that event page */}
@@ -24,8 +61,8 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
             <Link to={`/organization/${organizationId}`} className={styles.organization}>hosted by {organization}</Link>
 
             {/* no links for the date and cost */}
-            <p>Date & time: {date}</p>
-            <p>Cost: {cost}</p>
+            <p>Date: {getFormattedDate(date)}</p>
+            <p>Cost: {strCost}</p>
             
         </div>
     </div>
