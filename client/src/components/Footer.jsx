@@ -1,3 +1,5 @@
+// Author: Grace Yuzwin
+
 import styles from "../css/Footer.module.css"
 
 function Footer() {

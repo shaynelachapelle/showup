@@ -1,30 +1,58 @@
 // Author: Grace Yuzwin
+
+// components
 import EventRow from "../components/EventRow";
-import banner from "../images/banner.jpg"
+import CategoryRow from "../components/CategoryRow";
+
+// needed images
+import banner from "../assets/banner.jpg"
+
+// css styles
 import styles from "../css/Home.module.css"
 
-import image1 from "../images/test-1.jpg"
-import image2 from "../images/test-2.jpg"
-import image3 from "../images/test-3.jpg"
-import image4 from "../images/test-4.jpg"
-import image5 from "../images/test-5.jpg"
+// api needed
+import { useEffect, useState } from "react";
+import { api } from "../api/client";
 
 function Home() {
-    const events = [
-        {title:"Picnic", date:"Aug. 21, 2026", organization:"CSUS", cost:"$5", can_rsvp:true, image:image1, id:1, organizationId:6},
-        {title:"Study Session", date:"Sept. 27, 2026", organization:"MSUS", cost:"FREE", can_rsvp:true, image:image2, id:2, organizationId:7},
-        {title:"Hangout", date:"Sept. 29, 2026", organization:"Girls Who Code", cost:"$3", can_rsvp:false, image:image3, id:3, organizationId:8},
-        {title:"Pre-Halloween", date:"Oct. 15, 2026", organization:"Yay", cost:"$20", can_rsvp:true, image:image4, id:4, organizationId:9},
-        {title:"Spooky Season", date:"Oct. 31, 2026", organization:"Place", cost:"$100", can_rsvp:false, image:image5, id:5, organizationId:10}
-    ]
+    // use state for the events
+    const [rsvpedEvents, setRsvpedEvents] = useState([]);
+    const [moreEvents, setMoreEvents] = useState([]);
 
-    const rsvpedEvents = [
-        events[2], events[4]
-    ]
+    // GET call
+    useEffect(() => {
 
-    const moreEvents = [
-        events[0], events[1], events[3]
-    ]
+        async function loadEvents() {   
+
+            try {
+
+                // GET the rsvp data
+                const rsvpData =
+                    await api.get(
+                        "/api/events/my-rsvps?limit=10"
+                    );
+                
+                // GET the all events data
+                const allEventsData =
+                    await api.get(
+                        "/api/events?limit=10"
+                    );
+            
+                // set the events data
+                setRsvpedEvents(rsvpData);
+                setMoreEvents(allEventsData);
+            
+            // if there is an error, log it
+            // WILL BE CHANGING THIS LATER
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        loadEvents();
+
+    }, []);
+
 
     return (
     <div>
@@ -32,14 +60,31 @@ function Home() {
         <img className={styles.banner} src={banner} alt={"image of McGIll mascot"}/>
         
         {/* add the icons for all of the organization types */}
+        <div className={styles.events}>
+            <CategoryRow />
+        </div>
+        {/* event rows */}
+        <div className={styles.events}>
+            {/* The first row is the events RSVPed to */}
+            <EventRow 
+                title="Your RSVPs" 
+                events={rsvpedEvents} 
+                linkTo="/myevents" 
+                emptyMessage="You are currently not attending any events!" 
+                moreMessage="More of your events"
+            />
 
-        {/* The first row is the events RSVPed to */}
-        <EventRow title="Your RSVPs" events={rsvpedEvents} />
+            {/* The second row is all events */}
+            <EventRow 
+                title="Check Out Some Events!" 
+                events={moreEvents} 
+                linkTo="/allevents" 
+                emptyMessage="You are RSVP'd to all events!!"
+                 moreMessage="Find more events!"
+            />
 
-        {/* The second row is all events */}
-        <EventRow title="Check Out More Events!" events={moreEvents}/>
-
-        {/* The third row will be events by the organizations they have joined */}
+            {/* The third row will be events by the organizations they have joined */}
+        </div>
     </div>
     );
 }

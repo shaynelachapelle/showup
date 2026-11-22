@@ -1,0 +1,57 @@
+.loginBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: black;
+}
+
+h2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.input {
+    background-color: rgb(234, 234, 234);
+    border-radius: 8px;
+    width: 400px;
+    height: 40px;
+    color: black;
+    padding: 2px 14px;
+
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.input::placeholder {
+    color: rgb(112, 112, 112);
+}
+
+button {
+    background-color: #ed1b2f;
+
+    height: 30px;
+    width: 430px;
+
+    padding: 3px;
+}
+
+button:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    background-color: rgb(189, 0, 0);
+}
+
+.text {
+    color: black;
+    font-size: 12px;
+}
+
