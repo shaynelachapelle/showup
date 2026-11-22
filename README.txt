@@ -20,7 +20,7 @@ FEATURES
 1. Auth + landing + route protection - TODO owner
 2. Orgs: create/edit, admins, follow/unfollow - TODO owner
 3. Events: create/edit, cancel, RSVP with capacity - TODO owner
-4. My events: feed, list/calendar, .ics download + subscription - TODO owner
+4. My events: feed, list/calendar, .ics download + Google Calendar link - TODO owner
 5. Explore/search + map (external API: Leaflet + OpenStreetMap/Nominatim) - TODO owner
 
 HOW TO RUN

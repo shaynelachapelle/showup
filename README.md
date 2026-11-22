@@ -16,9 +16,10 @@ client/                 React + Vite (JavaScript)
 server/                 Express (ES modules)
   src/index.js          app entry, mounts routes, serves client/dist in prod
   src/db.js             shared MongoDB connection
+  src/calendar.js       builds .ics files and Google Calendar links
   src/categories.js     category list shared by orgs and events
   src/seed.js           demo data
-  src/routes/           auth, orgs, events, follows, rsvps, ics
+  src/routes/           auth, orgs, events, follows, rsvps, calendar
   src/middleware/       requireAuth, requireOrgAdmin, errorHandler
 ```
 

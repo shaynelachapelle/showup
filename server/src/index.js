@@ -13,7 +13,7 @@ import orgRoutes from "./routes/orgs.js";
 import eventRoutes from "./routes/events.js";
 import followRoutes from "./routes/follows.js";
 import rsvpRoutes from "./routes/rsvps.js";
-import icsRoutes from "./routes/ics.js";
+import calendarRoutes, { downloadMyCalendar } from "./routes/calendar.js";
 
 const app = express();
 app.use(express.json());
@@ -29,14 +29,15 @@ app.use("/api/events", requireAuth, eventRoutes);
 app.use("/api/follows", requireAuth, followRoutes);
 app.use("/api/events", requireAuth, rsvpRoutes);
 
-app.use("/ics", icsRoutes);
+app.use("/api/events", requireAuth, calendarRoutes);
+app.get("/api/calendar.ics", requireAuth, downloadMyCalendar);
 
 // Serve the built React app. Any other non-API path returns index.html
 // so React Router can handle it in the browser.
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const clientDist = path.resolve(__dirname, "../../client/dist");
 app.use(express.static(clientDist));
-app.get(/^\/(?!api\/|ics\/).*/, (req, res) =>
+app.get(/^\/(?!api\/).*/, (req, res) =>
   res.sendFile(path.join(clientDist, "index.html")),
 );
 
