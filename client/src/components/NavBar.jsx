@@ -4,7 +4,7 @@
 import styles from "../css/NavBar.module.css"
 
 // logo
-import image from "../images/logo.png"
+import image from "../assets/logo.png"
 
 // needed for routing
 import { NavLink, Link } from 'react-router-dom';

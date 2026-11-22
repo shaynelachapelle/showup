@@ -5,7 +5,7 @@ import EventRow from "../components/EventRow";
 import CategoryRow from "../components/CategoryRow";
 
 // needed images
-import banner from "../images/banner.jpg"
+import banner from "../assets/banner.jpg"
 
 // css styles
 import styles from "../css/Home.module.css"

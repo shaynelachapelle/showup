@@ -1,10 +1,14 @@
 // Author: Grace Yuzwin
-import { Link } from "react-router-dom";
-import SeeMoreCard from "./SeeMoreCard";
 
-// The netflix-like event row
+// link import
+import { Link } from "react-router-dom";
+
+// css styling
 import styles from "../css/EventRow.module.css"
+
+// components
 import EventCard from "./EventCard"
+import SeeMoreCard from "./SeeMoreCard";
 
 function EventRow({ title, events, linkTo, emptyMessage, moreMessage }) {
     

@@ -1,11 +1,18 @@
+// Author: Grace Yuzwin
+
+// link imports
 import {Outlet} from "react-router-dom";
+
+// components
 import NavBar from "./Login-Navbar"
-import "../css/Layout.css"
+
+// css styling
+import styles from "../css/Layout.module.css"
 
 function Layout() {
-    return <div className="app-container">
+    return <div className={styles.appContainer}>
         <NavBar />
-        <main className="main-content">
+        <main className={styles.mainContent}>
             <Outlet />
         </main>
     </div>

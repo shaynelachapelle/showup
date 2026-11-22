@@ -1,6 +1,12 @@
 // Author: Grace Yuzwin
+
+// css styling
 import styles from "../css/NavBar.module.css"
-import image from "../images/logo.png"
+
+// logo
+import image from "../assets/logo.png"
+
+// link import
 import { Link } from 'react-router-dom';
 
 function LoginNavbar() {

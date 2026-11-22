@@ -1,4 +1,9 @@
+// Author: Grace Yuzwin
+
+// link import
 import { Link } from "react-router-dom";
+
+// css styling
 import styles from "../css/SeeMoreCard.module.css";
 
 function SeeMoreCard ({ to, moreMessage }) {

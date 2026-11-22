@@ -15,9 +15,6 @@ import styles from "../css/EventPage.module.css"
 // components
 import RsvpButton from "../components/RsvpButton"
 
-// get rid of once backend is connected
-import image1 from "../images/test-3.jpg"
-
 function EventPage() {
     const { id } = useParams();
 

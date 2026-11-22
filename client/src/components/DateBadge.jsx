@@ -1,4 +1,9 @@
+// Author: Grace Yuzwin
+
+// css styles
 import styles from "../css/DateBadge.module.css"
+
+// helper functions
 import { getMonthAbbreviation, getDayOfMonth } from "../helper-functions/dates"
 
 function DateBadge({ date }) {
