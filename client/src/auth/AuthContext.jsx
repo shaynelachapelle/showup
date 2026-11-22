@@ -1,5 +1,11 @@
 // Author: Shayne Lachapelle
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  startTransition,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "../api/client.js";
 
 const AuthContext = createContext(null);
@@ -34,7 +40,9 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     await api.post("/api/auth/logout");
-    setUser(null);
+    // Same priority as React Router's navigate(), so logout + navigate("/") render together.
+    // Otherwise ProtectedRoute redirects to /login first.
+    startTransition(() => setUser(null));
   }
 
   return (
