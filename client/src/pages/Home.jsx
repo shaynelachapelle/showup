@@ -10,19 +10,45 @@ import banner from "../assets/banner.jpg"
 // css styles
 import styles from "../css/Home.module.css"
 
+// api needed
+import { useEffect, useState } from "react";
+import { api } from "../api/client";
+
 function Home() {
+    // use state for the events
+    const [rsvpedEvents, setRsvpedEvents] = useState([]);
+    const [moreEvents, setMoreEvents] = useState([]);
 
+    // get call
+    useEffect(() => {
 
-    // GET calls for RSVP'd events and all events
-    const events = []
+        async function loadEvents() {   
 
-    const rsvpedEvents = events.filter(
-        event => event.isRsvped
-    );
+        try {
 
-    const moreEvents = events.filter(
-        event => !event.isRsvped
-    );
+        const rsvpData =
+        await api.get(
+        "/api/events/my-rsvps?limit=10"
+        );
+
+        console.log("RSVP Data:", rsvpData);
+
+        const allEventsData =
+        await api.get(
+        "/api/events?limit=10"
+        );
+
+        console.log(
+        "All Events Data:",
+        allEventsData
+        );
+
+        } catch (err) {
+
+        console.error(err);
+        }}
+        loadEvents();
+        }, []);
 
 
     return (
