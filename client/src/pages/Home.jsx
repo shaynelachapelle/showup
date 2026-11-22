@@ -19,36 +19,39 @@ function Home() {
     const [rsvpedEvents, setRsvpedEvents] = useState([]);
     const [moreEvents, setMoreEvents] = useState([]);
 
-    // get call
+    // GET call
     useEffect(() => {
 
         async function loadEvents() {   
 
-        try {
+            try {
 
-        const rsvpData =
-        await api.get(
-        "/api/events/my-rsvps?limit=10"
-        );
+                // GET the rsvp data
+                const rsvpData =
+                    await api.get(
+                        "/api/events/my-rsvps?limit=10"
+                    );
+                
+                // GET the all events data
+                const allEventsData =
+                    await api.get(
+                        "/api/events?limit=10"
+                    );
+            
+                // set the events data
+                setRsvpedEvents(rsvpData);
+                setMoreEvents(allEventsData);
+            
+            // if there is an error, log it
+            // WILL BE CHANGING THIS LATER
+            } catch (err) {
+                console.error(err);
+            }
+        }
 
-        console.log("RSVP Data:", rsvpData);
-
-        const allEventsData =
-        await api.get(
-        "/api/events?limit=10"
-        );
-
-        console.log(
-        "All Events Data:",
-        allEventsData
-        );
-
-        } catch (err) {
-
-        console.error(err);
-        }}
         loadEvents();
-        }, []);
+
+    }, []);
 
 
     return (

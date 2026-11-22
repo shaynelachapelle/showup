@@ -32,6 +32,11 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
         image = stock;
     }
 
+    // if the cost is 0, say free
+    const strCost =
+        cost === 0
+            ? "Free!"
+            : "$" + cost.toString();
 
     /* display those constants */
     return <div className={styles.eventCard}>
@@ -57,7 +62,7 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
 
             {/* no links for the date and cost */}
             <p>Date: {getFormattedDate(date)}</p>
-            <p>Cost: {cost}</p>
+            <p>Cost: {strCost}</p>
             
         </div>
     </div>

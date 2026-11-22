@@ -1,19 +1,42 @@
 // Author: Grace Yuzwin
 
 // Css styles
-import styles from "../css/MyEvents.module.css"
+import styles from "../css/MyEvents.module.css";
 
 // other components
-import EventColumn from "../components/EventColumn"
+import EventColumn from "../components/EventColumn";
 
 // functions that sort events into the day categories
-import { getEventCategory } from "../helper-functions/dates"
+import { getEventCategory } from "../helper-functions/dates";
+
+// for api
+import { useEffect, useState } from "react";
+import {api} from "../api/client"
 
 
 function MyEvents() {
+    // GET call
+    const [events, setEvents] = useState([]);
 
-    // to be replaced with a GET
-    const events = []
+    useEffect (() => {
+
+        async function loadEvents() {
+
+            try {
+                // Start by using 200 as a limit, if we see fit, will use pagnation
+                const data = await api.get(
+                    "/api/events/my-rsvps?limit=100"
+                );
+
+                setEvents(data);
+            } catch (err) {
+                console.error(err);
+            }
+
+        }
+        loadEvents();
+    }
+    , []);
 
     // sort the events into today, this week, and later
     const todayEvents = events.filter(

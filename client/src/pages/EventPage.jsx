@@ -15,26 +15,38 @@ import styles from "../css/EventPage.module.css"
 // components
 import RsvpButton from "../components/RsvpButton"
 
+// for api
+import { useEffect, useState } from "react";
+import {api} from "../api/client"
+
 function EventPage() {
     const { id } = useParams();
 
-    // have to do fetch, for now use defined
-    const event = 
-        {
-            id: id,
-            title: "Potluck",
-            description: "Join the community at the potluck! Cost will cover the stuff! Woooooo!",
-            date: "2026-11-19T16:30:00",
-            cost: 10,
-            image: null,
-            location: "Trottier Institue",
-            organizationName: "CSUS",
-            organizationId: 2,
-            attendeeCount: 21,
-            capacity: 50,
-            isRsvped: false,
-            can_rsvp: true
+    // GET call
+    const [event, setEvent] = useState({});
+
+    useEffect(() => {
+
+        async function loadEvents() {
+
+            try {
+
+                const data = await api.get(
+                    `/api/events/${id}`
+                );
+
+                setEvent(data);
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
         }
+
+        loadEvents();
+
+    }, [id]);
     
     // compute the status for button appearance
     let status = "rsvp";
@@ -47,22 +59,29 @@ function EventPage() {
     }
 
     // if no image was passed, make image the stock image
-    if (event.image === null) {
-        event.image = stock;
-    }
+    const imageSrc = event.image ?? stock;
+
+    // if the cost is 0, say free
+    const strCost =
+        event.cost === 0
+            ? "Free!"
+            : `$${event.cost ?? 0}`;
 
     //calculate spots left 
     // if there are unlimited spots, unlimited, if not, calulate remaining
     const spotsLeft =
-    event.capacity === null
-        ? "unlimited"
-        : Math.max(0, event.capacity - event.attendeeCount).toString();
+        event.capacity == null
+            ? "unlimited"
+            : Math.max(
+                0,
+                event.capacity - event.attendeeCount
+            ).toString();
 
     return (
         <div className={styles.page}>
             <Link to="/allevents" className={styles.back}>Back to all events...</Link>
 
-            <img className={styles.banner} src={event.image} alt={event.title}></img>
+            <img className={styles.banner} src={imageSrc} alt={event.title}></img>
             
             <div className={styles.outerContainer}>
                 {/* top section/left setion */}
@@ -106,7 +125,7 @@ function EventPage() {
                     {/* Cost section */}
                     <div className={styles.container}> 
                         <div className={styles.subheading}>COST:</div>
-                        <div className={styles.text}>${event.cost}</div>
+                        <div className={styles.text}>{strCost}</div>
                     </div>
 
                 </div>

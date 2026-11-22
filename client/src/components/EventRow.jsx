@@ -58,7 +58,6 @@ function EventRow({ title, events, linkTo, emptyMessage, moreMessage }) {
                 isRsvped={event.isRsvped}
             />
             ))}
-        <SeeMoreCard to={linkTo} moreMessage={moreMessage} />
         </div>
     </div>
 }

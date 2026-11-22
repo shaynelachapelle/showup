@@ -9,6 +9,10 @@ import styles from "../css/CategorizedEvents.module.css"
 //components
 import EventCard from "../components/EventCard.jsx"
 
+// for api
+import { useEffect, useState } from "react";
+import {api} from "../api/client"
+
 
 function CategorizedEvents() {
     // get the requested category
@@ -17,25 +21,36 @@ function CategorizedEvents() {
     // tranform into passable parameter
     const formatted = category.replace(/\+/g, " ")
 
-    // Have an error check for is the parameter passed is valid
-    const isValid = true;
+    // GET and pagnation
+    const [events, setEvents] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-    // if the parameter passed is not valid, redirect to the all events page
-    if (!isValid) {
-        return <Navigate to="/home" replace />
-    }
-
-
-    
     // GET call
-    const allEvents = []
+    useEffect(() => {
 
-    const events =  allEvents.filter(
-        event => (event.category === formatted)
-    );
+        async function loadEvents() {
 
+            try {
 
-    // above is replaced
+                const data = await api.get(
+                    `/api/events/category/${formatted}?page=${page}&limit=12`
+                );
+
+                setEvents(data.events);
+                setTotalPages(data.totalPages);
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+        }
+
+        loadEvents();
+
+    }, [formatted, page]);
+    
 
     // if we get no events in a category
     if (events.length === 0) {
@@ -81,6 +96,31 @@ function CategorizedEvents() {
                     />
                     ))}
                 </div>
+            </div>
+            {/* PAGES */}
+            <div className={styles.pagination}>
+                
+                {/* previous button, not active when on page 1, moves page back when pressed */}
+                <button
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                >
+                    Previous
+                </button>
+                
+                {/* says page _ of _ */}
+                <span>
+                    Page {page} of {totalPages}
+                </span>
+
+                {/* nexr button, not active when on last page, moves page forwaed when pressed */}
+                <button
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                >
+                    Next
+                </button>
+
             </div>
         </div>
     );

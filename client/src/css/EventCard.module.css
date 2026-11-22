@@ -28,7 +28,7 @@
 .eventImage {
     position: relative;
     width: 100%;
-    height: 45%;
+    height: 40%;
     flex-shrink: 0;
     overflow: hidden;
 }
@@ -47,7 +47,7 @@
 
 .eventOverlay {
     position: absolute;
-    top: 70px;
+    top: 55px;
     right: -10px;
 
     opacity: 0;
@@ -60,7 +60,7 @@
 }
 
 .eventInfo {
-    height: 55%;
+    height: 60%;
     flex-shrink: 0;
     box-sizing: border-box;
     min-height: 0;

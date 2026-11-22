@@ -26,6 +26,12 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
         status = "full";
     }
 
+    // if the cost is 0, say free
+    const strCost =
+    cost === 0
+        ? "Free!"
+        : "$" + cost.toString();
+
     return (
         <div className={styles.section}>
 
@@ -40,7 +46,7 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                     <Link to={`/events/${id}`} className={styles.cardTitle}>{title}</Link>
                     {/* subheading div, which has a link to the organization */}
                     <div className={styles.cardSubtitle}>
-                        <Link to={`/organization/${organizationId}`} className={styles.cardSubtitleOrg}>{organization}</Link> • {getFormattedTime(date)} • {cost}</div>
+                        <Link to={`/organization/${organizationId}`} className={styles.cardSubtitleOrg}>{organization}</Link> • {getFormattedTime(date)} • {strCost}</div>
                 </div>
                 
                 {/* RSVP button and put it on RHS */}
