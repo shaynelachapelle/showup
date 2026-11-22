@@ -55,3 +55,8 @@ button:active {
     font-size: 12px;
 }
 
+.error {
+    color: #c8102e;
+    font-size: 14px;
+    max-width: 430px;
+}
