@@ -1,7 +1,18 @@
 // Author: Grace Yuzwin
 
+// needed router imports
 import { useParams, Link } from "react-router-dom";
+
+// stock image
+import stock from "../assets/no-image.webp"
+
+//helper functions
+import { getFormattedDate, getFormattedTime } from "../helper-functions/dates"
+
+// css styling
 import styles from "../css/EventPage.module.css"
+
+// components
 import RsvpButton from "../components/RsvpButton"
 
 // get rid of once backend is connected
@@ -16,17 +27,16 @@ function EventPage() {
             id: id,
             title: "Potluck",
             description: "Join the community at the potluck! Cost will cover the stuff! Woooooo!",
-            date: "Jan 5, 2017",
-            time: "4pm",
+            date: "2026-11-19T16:30:00",
             cost: 10,
-            image: image1,
+            image: null,
             location: "Trottier Institue",
             organizationName: "CSUS",
             organizationId: 2,
             attendeeCount: 21,
-            capacity: 40,
+            capacity: 50,
             isRsvped: false,
-            can_rsvp: false
+            can_rsvp: true
         }
     
     // compute the status for button appearance
@@ -39,8 +49,17 @@ function EventPage() {
         status = "full";
     }
 
-    //calculate spots left forcing calculating only once
-    const spotsLeft = Math.max(0, event.capacity - event.attendeeCount);
+    // if no image was passed, make image the stock image
+    if (event.image === null) {
+        event.image = stock;
+    }
+
+    //calculate spots left 
+    // if there are unlimited spots, unlimited, if not, calulate remaining
+    const spotsLeft =
+    event.capacity === null
+        ? "unlimited"
+        : Math.max(0, event.capacity - event.attendeeCount).toString();
 
     return (
         <div className={styles.page}>
@@ -64,8 +83,8 @@ function EventPage() {
                         {/* left side */}
                         <div className={styles.item}>
                             <div className={styles.subheading}>WHEN</div>
-                            <div className={styles.text}>{event.date}</div>
-                            <div className={styles.text}>{event.time}</div>
+                            <div className={styles.text}>{getFormattedDate(event.date)}</div>
+                            <div className={styles.text}>{getFormattedTime(event.date)}</div>
                         </div>
 
                         {/* right side */}

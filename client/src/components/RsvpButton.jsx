@@ -1,8 +1,17 @@
-import styles from "../css/RsvpButton.module.css"
-import { onRSVPClick } from "../helper-functions/rsvp"
+// Author: Grace Yuzwin
 
-function RsvpButton({ variant = "card", status = "rsvp" , onClick }) {
+// css styling
+import styles from "../css/RsvpButton.module.css"
+
+
+
+// to make the RSVP work, need to implement an onClick!!!
+
+
+
+function RsvpButton({ variant = "card", status = "rsvp" }) {
     
+    // decide text on button by passed status
     let text = "RSVP";
 
     if (status === "going") {
@@ -17,8 +26,10 @@ function RsvpButton({ variant = "card", status = "rsvp" , onClick }) {
         ${styles[variant]} 
         ${styles[status]}
         `} 
+
         disabled={status === "full"}
-        onClick={onClick}>{text}
+        
+        >{text}
     </button>
 }
 

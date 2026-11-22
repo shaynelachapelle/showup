@@ -12,6 +12,9 @@ import { getFormattedDate } from "../helper-functions/dates"
 // other needed imports
 import { Link } from "react-router-dom";
 
+// stock image import
+import stock from "../assets/no-image.webp"
+
 function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
     
     // compute the status for button appearance
@@ -22,6 +25,11 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
     }
     else if (!can_rsvp) {
         status = "full";
+    }
+
+    // if there is no image, use the stock image
+    if (image === null) {
+        image = stock;
     }
 
 

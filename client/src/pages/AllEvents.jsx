@@ -7,32 +7,10 @@ import EventRow from "../components/EventRow";
 import styles from "../css/AllEvents.module.css"
 
 
-// test images
-import image1 from "../images/test-1.jpg"
-import image2 from "../images/test-2.jpg"
-import image3 from "../images/test-3.jpg"
-import image4 from "../images/test-4.jpg"
-import image5 from "../images/test-5.jpg"
-
 function AllEvents() {
-    // have to use fetch, for now use these to populate 
-    const allEvents = [
-            {title:"Picnic", date:"Aug. 21, 2026", organization:"CSUS", cost:"$5", can_rsvp:true, image:image1, id:1, organizationId:6, isRsvped:false, category:"Athletics and Recreation"},
-            {title:"Study Session", date:"Sept. 27, 2026", organization:"MSUS", cost:"FREE", can_rsvp:true, image:image2, id:2, organizationId:7, isRsvped:true, category:"Charity and Environment"},
-            {title:"Hangout", date:"Sept. 29, 2026", organization:"Girls Who Code", cost:"$3", can_rsvp:false, image:image3, id:3, organizationId:8, isRsvped:false, category:"Community Outreach and Volunteering"},
-            {title:"Pre-Halloween", date:"Oct. 15, 2026", organization:"Yay", cost:"$20", can_rsvp:true, image:image4, id:4, organizationId:9, isRsvped:false, category:"Fine Arts, Dance and Performance"},
-            {title:"Spooky Season", date:"Oct. 31, 2026", organization:"Place", cost:"$100", can_rsvp:false, image:image5, id:5, organizationId:10, isRsvped:true, category:"Health and Wellness"},
-            {title:"Picnic", date:"Aug. 21, 2026", organization:"CSUS", cost:"$5", can_rsvp:true, image:image1, id:1, organizationId:6, isRsvped:false, category:"Language and Publications"},
-            {title:"Study Session", date:"Sept. 27, 2026", organization:"MSUS", cost:"FREE", can_rsvp:true, image:image2, id:2, organizationId:7, isRsvped:true, category:"Leisure and Hobbies "},
-            {title:"Hangout", date:"Sept. 29, 2026", organization:"Girls Who Code", cost:"$3", can_rsvp:false, image:image3, id:3, organizationId:8, isRsvped:false, category:"Networking and Leadership"},
-            {title:"Pre-Halloween", date:"Oct. 15, 2026", organization:"Yay", cost:"$20", can_rsvp:true, image:image4, id:4, organizationId:9, isRsvped:false, category:"Political and Social Activism"},
-            {title:"Spooky Season", date:"Oct. 31, 2026", organization:"Place", cost:"$100", can_rsvp:false, image:image5, id:5, organizationId:10, isRsvped:true, category:"Athletics and Recreation"},
-            {title:"Picnic", date:"Aug. 21, 2026", organization:"CSUS", cost:"$5", can_rsvp:true, image:image1, id:1, organizationId:6, isRsvped:false, category:"Athletics and Recreation"},
-            {title:"Study Session", date:"Sept. 27, 2026", organization:"MSUS", cost:"FREE", can_rsvp:true, image:image2, id:2, organizationId:7, isRsvped:true, category:"Athletics and Recreation"},
-            {title:"Hangout", date:"Sept. 29, 2026", organization:"Girls Who Code", cost:"$3", can_rsvp:false, image:image3, id:3, organizationId:8, isRsvped:false, category:"Networking and Leadership"},
-            {title:"Pre-Halloween", date:"Oct. 15, 2026", organization:"Yay", cost:"$20", can_rsvp:true, image:image4, id:4, organizationId:9, isRsvped:false, category:"Religion and Culture"},
-            {title:"Spooky Season", date:"Oct. 31, 2026", organization:"Place", cost:"$100", can_rsvp:false, image:image5, id:5, organizationId:10, isRsvped:true, category:"Political and Social Activism "}
-        ]
+
+    // GET call
+    const allEvents = []
     const noEvents =[]
     
     
