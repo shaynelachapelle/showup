@@ -1,4 +1,4 @@
-// Author: Grace Yuzwin
+// Author: Grace Yuzwin, Shayne Lachapelle
 
 // css styling
 import styles from "../css/EventCard.module.css"
@@ -8,6 +8,7 @@ import RsvpButton from "./RsvpButton"
 
 //helper functions
 import { getFormattedDate } from "../helper-functions/dates"
+import { useRsvp } from "../helper-functions/rsvp"
 
 // other needed imports
 import { Link } from "react-router-dom";
@@ -17,15 +18,8 @@ import stock from "../assets/no-image.webp"
 
 function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
     
-    // compute the status for button appearance
-    let status = "rsvp";
-
-    if (isRsvped) {
-        status = "going";
-    }
-    else if (!can_rsvp) {
-        status = "full";
-    }
+    // button appearance and action
+    const { status, pending, toggleRsvp } = useRsvp({ id, can_rsvp, isRsvped });
 
     // if there is no image, use the stock image
     if (image === null) {
@@ -49,7 +43,8 @@ function EventCard({id, organizationId, title, date, organization, cost, image, 
             <RsvpButton 
                 variant="card" 
                 status={status}
-                onClick={() => handleRsvp(id)}
+                pending={pending}
+                onClick={toggleRsvp}
             />
         </div>
 

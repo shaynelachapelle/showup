@@ -1,4 +1,4 @@
-// Author: Grace Yuzwin
+// Author: Grace Yuzwin, Shayne Lachapelle
 
 // other components
 import RsvpButton from "../components/RsvpButton"
@@ -12,19 +12,13 @@ import { Link } from "react-router-dom";
 
 // function to get the time of event
 import { getFormattedTime } from "../helper-functions/dates"
+import { useRsvp } from "../helper-functions/rsvp"
 
 
 function EventCard ( { id, organizationId, title, date, organization, cost, can_rsvp, isRsvped} ) {
     
-    // compute the status for button appearance
-    let status = "rsvp";
-
-    if (isRsvped) {
-        status = "going";
-    }
-    else if (!can_rsvp) {
-        status = "full";
-    }
+    // button appearance and action
+    const { status, pending, toggleRsvp } = useRsvp({ id, can_rsvp, isRsvped });
 
     // if the cost is 0, say free
     const strCost =
@@ -54,7 +48,8 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                     <RsvpButton 
                         variant="page" 
                         status={status}
-                        onClick={() => handleRsvp(id)}
+                        pending={pending}
+                        onClick={toggleRsvp}
                     />
                 </div>
 
