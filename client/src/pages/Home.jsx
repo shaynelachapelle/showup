@@ -3,6 +3,7 @@
 // components
 import EventRow from "../components/EventRow";
 import CategoryRow from "../components/CategoryRow";
+import ClubCard from "../components/ClubCard"; // <-- ADDED
 
 // needed images
 import banner from "../assets/banner.jpg"
@@ -19,10 +20,18 @@ function Home() {
     const [rsvpedEvents, setRsvpedEvents] = useState([]);
     const [moreEvents, setMoreEvents] = useState([]);
 
+    // ADDED: temporary mock data for "Your Clubs"
+    // TODO (Backend): Replace with api.get("/api/organizations/my-orgs?limit=10") inside loadEvents()
+    const [followedClubs, setFollowedClubs] = useState([
+        { _id: "csus", name: "Computer Science Undergraduate Society", initials: "CSUS", category: "Academic" },
+        { _id: "drivesafe", name: "DriveSafe", initials: "DS", category: "Service" },
+        { _id: "esports", name: "McGill Esports", initials: "ME", category: "Gaming" }
+    ]);
+
     // GET call
     useEffect(() => {
 
-        async function loadEvents() {   
+        async function loadEvents() {
 
             try {
 
@@ -31,17 +40,17 @@ function Home() {
                     await api.get(
                         "/api/events/my-rsvps?limit=10"
                     );
-                
+
                 // GET the all events data
                 const allEventsData =
                     await api.get(
                         "/api/events?limit=10"
                     );
-            
+
                 // set the events data
                 setRsvpedEvents(rsvpData);
                 setMoreEvents(allEventsData);
-            
+
             // if there is an error, log it
             // WILL BE CHANGING THIS LATER
             } catch (err) {
@@ -58,35 +67,48 @@ function Home() {
     <div>
         {/* show the banner  */}
         <img className={styles.banner} src={banner} alt={"image of McGIll mascot"}/>
-        
+
         {/* add the icons for all of the organization types */}
         <div className={styles.events}>
             <CategoryRow />
         </div>
+
         {/* event rows */}
         <div className={styles.events}>
             {/* The first row is the events RSVPed to */}
-            <EventRow 
-                title="Your RSVPs" 
-                events={rsvpedEvents} 
-                linkTo="/myevents" 
-                emptyMessage="You are currently not attending any events!" 
+            <EventRow
+                title="Your RSVPs"
+                events={rsvpedEvents}
+                linkTo="/myevents"
+                emptyMessage="You are currently not attending any events!"
                 moreMessage="More of your events"
             />
 
             {/* The second row is all events */}
-            <EventRow 
-                title="Check Out Some Events!" 
-                events={moreEvents} 
-                linkTo="/allevents" 
+            <EventRow
+                title="Check Out Some Events!"
+                events={moreEvents}
+                linkTo="/allevents"
                 emptyMessage="You are RSVP'd to all events!!"
-                 moreMessage="Find more events!"
+                moreMessage="Find more events!"
             />
 
-            {/* The third row will be events by the organizations they have joined */}
+            {/* ADDED: The third row: Your Clubs */}
+            <section style={{ marginTop: "2rem", paddingLeft: "1rem", paddingRight: "1rem" }}>
+                <h2 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Your Clubs</h2>
+                {followedClubs.length === 0 ? (
+                    <p>You haven't followed any clubs yet!</p>
+                ) : (
+                    <div style={{ display: "flex", gap: "1rem", overflowX: "auto", padding: "8px 4px 0.75rem" }}>
+                        {followedClubs.map((club) => (
+                            <ClubCard key={club._id || club.id} club={club} />
+                        ))}
+                    </div>
+                )}
+            </section>
         </div>
     </div>
     );
 }
 
-export default Home
+export default Home;
