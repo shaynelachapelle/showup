@@ -330,7 +330,7 @@ router.get('/my-events', async (req, res, next) => {
 });
 
 // GET /api/events/my-orgs
-// Retrieve upcoming events from clubs the logged-in student follows.
+// Retrieve upcoming events from followed clubs or events the student has RSVP'd to.
 router.get('/my-orgs', async (req, res, next) => {
   try {
     const { page, limit } = req.query;
@@ -356,9 +356,19 @@ router.get('/my-orgs', async (req, res, next) => {
 
     const orgIds = follows.map(follow => follow.orgId);
 
+    // Find events the student has RSVP'd to.
+    const rsvps = await db.collection('rsvps')
+      .find({ userId })
+      .toArray();
+
+    const rsvpedEventIds = rsvps.map(rsvp => rsvp.eventId);
+
     const collection = db.collection('events');
     const filter = {
-      orgId: { $in: orgIds },
+      $or: [
+        { orgId: { $in: orgIds } },
+        { _id: { $in: rsvpedEventIds } }
+      ],
       start: { $gt: new Date() },
       status: 'active'
     };
