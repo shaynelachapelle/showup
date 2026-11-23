@@ -37,6 +37,8 @@ async function formatEvents(events, userId) {
     title: event.title,
     date: event.start,
     organization: orgNames.get(String(event.orgId)) ?? '',
+    organizationId: String(event.orgId),
+    status: event.status,
     category: event.category,
     image: event.imageUrl,
     cost: event.cost,
@@ -424,6 +426,7 @@ router.get('/:eventId', async (req, res, next) => {
       title: event.title,
       description: event.description,
       date: event.start,
+      end: event.end,
       cost: event.cost,
       image: event.imageUrl,
       location: event.location?.name ?? '',
@@ -432,6 +435,7 @@ router.get('/:eventId', async (req, res, next) => {
       attendeeCount: event.goingCount,
       capacity: event.capacity,
       isRsvped: rsvp !== null,
+      status: event.status,
       can_rsvp:
         event.status === 'active' &&
         new Date(event.start) > new Date() &&
@@ -470,7 +474,7 @@ router.post('/', async (req, res, next) => {
       typeof cost !== 'number' || !Number.isFinite(cost) || cost < 0 ||
       (capacity !== null &&
         (!Number.isSafeInteger(capacity) || capacity < 1)) ||
-      typeof image !== 'string'
+      (image !== undefined && image !== null && typeof image !== 'string')
     ) {
       return res.status(400).json({
         error: 'Invalid event information.'
@@ -497,13 +501,19 @@ router.post('/', async (req, res, next) => {
       });
     }
 
+    const end = req.body.end === undefined
+      ? new Date(start.getTime() + 60 * 60 * 1000)
+      : new Date(req.body.end);
+    if (!Number.isFinite(end.getTime()) || end <= start) {
+      return res.status(400).json({ error: 'End must be after the start.' });
+    }
     const event = {
       orgId: organization._id,
       title: title.trim(),
       description: description.trim(),
       category: organization.category,
       start,
-      end: start,
+      end,
       location: {
         name: location.trim(),
         address: '',
@@ -513,7 +523,7 @@ router.post('/', async (req, res, next) => {
       capacity,
       goingCount: 0,
       cost,
-      imageUrl: image,
+      imageUrl: image || null,
       status: 'active',
       createdBy: userId,
       createdAt: new Date()
@@ -622,7 +632,7 @@ router.patch('/:eventId', async (req, res, next) => {
     }
 
     const allowedFields = [
-      'title', 'description', 'date', 'cost',
+      'title', 'description', 'date', 'end', 'cost',
       'location', 'capacity', 'image'
     ];
 
@@ -664,7 +674,19 @@ router.patch('/:eventId', async (req, res, next) => {
       }
 
       updates.start = start;
-      updates.end = start;
+      updates.end = new Date(start.getTime() + (event.end - event.start));
+    }
+
+    if ('end' in changes) {
+      const end = new Date(changes.end);
+
+      if (typeof changes.end !== 'string' ||
+          !Number.isFinite(end.getTime()) ||
+          end <= (updates.start ?? event.start)) {
+        return res.status(400).json({ error: 'End must be after the start.' });
+      }
+
+      updates.end = end;
     }
 
     if ('cost' in changes) {
@@ -679,7 +701,10 @@ router.patch('/:eventId', async (req, res, next) => {
       if (typeof changes.location !== 'string' || !changes.location.trim()) {
         return res.status(400).json({ error: 'Invalid location.' });
       }
-      updates['location.name'] = changes.location.trim();
+      const name = changes.location.trim();
+      if (name !== event.location?.name) {
+        updates.location = { name, address: '', lat: null, lng: null };
+      }
     }
 
     if ('capacity' in changes) {
@@ -696,16 +721,26 @@ router.patch('/:eventId', async (req, res, next) => {
     }
 
     if ('image' in changes) {
-      if (typeof changes.image !== 'string') {
+      if (changes.image !== null && typeof changes.image !== 'string') {
         return res.status(400).json({ error: 'Invalid image.' });
       }
-      updates.imageUrl = changes.image;
+      updates.imageUrl = changes.image || null;
     }
 
-    await db.collection('events').updateOne(
-      { _id: event._id },
+    const filter = { _id: event._id };
+    // Check again while writing, in case someone RSVP'd since the event was read.
+    if (updates.capacity != null) {
+      filter.goingCount = { $lte: updates.capacity };
+    }
+    const { matchedCount } = await db.collection('events').updateOne(
+      filter,
       { $set: updates }
     );
+    if (!matchedCount) {
+      return res.status(409).json({
+        error: 'The attendee count changed. Reload and try again.'
+      });
+    }
 
     res.json({ success: true });
   } catch (error) {
@@ -803,20 +838,16 @@ router.delete('/:eventId', async (req, res, next) => {
       });
     }
 
-    // Prevent deletion if students have RSVP'd to the event.
-    const rsvpCount = await db.collection('rsvps').countDocuments({
-      eventId: event._id
+    // Delete only if nobody is going. A single step, so an RSVP can't land in between.
+    const { deletedCount } = await db.collection('events').deleteOne({
+      _id: event._id,
+      goingCount: 0
     });
-
-    if (rsvpCount > 0) {
+    if (!deletedCount) {
       return res.status(409).json({
         error: 'Events with existing RSVPs cannot be deleted. Cancel the event instead.'
       });
     }
-
-    await db.collection('events').deleteOne({
-      _id: event._id
-    });
 
     res.json({ success: true });
   } catch (error) {

@@ -260,6 +260,9 @@ router.get('/:id', async (req, res, next) => {
         title: event.title,
         date: event.start,
         organization: organization.name,
+        organizationId: String(event.orgId),
+        status: event.status,
+        category: event.category,
         image: event.imageUrl,
         cost: event.cost,
         isRsvped: rsvpedIds.has(String(event._id)),
@@ -529,7 +532,7 @@ router.patch('/:orgId', async (req, res, next) => {
       });
     }
 
-    const { name, description, image } = req.body;
+    const { name, description, image } = req.body ?? {};
     const updates = {};
 
     if (name !== undefined) {
