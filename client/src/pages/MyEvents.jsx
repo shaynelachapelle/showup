@@ -23,9 +23,9 @@ function MyEvents() {
         async function loadEvents() {
 
             try {
-                // Start by using 200 as a limit, if we see fit, will use pagnation
+                // Start by using 100 as a limit, if we see fit, will use pagnation
                 const data = await api.get(
-                    "/api/events/my-rsvps?limit=100"
+                    "/api/events/my-orgs?limit=100"
                 );
 
                 setEvents(data);
