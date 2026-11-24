@@ -43,7 +43,6 @@ function Home() {
                 setMoreEvents(allEventsData);
             
             // if there is an error, log it
-            // WILL BE CHANGING THIS LATER
             } catch (err) {
                 console.error(err);
             }
@@ -67,7 +66,7 @@ function Home() {
         <div className={styles.events}>
             {/* The first row is the events RSVPed to */}
             <EventRow 
-                title="Your RSVPs" 
+                title="My RSVPs" 
                 events={rsvpedEvents} 
                 linkTo="/myevents" 
                 emptyMessage="You are currently not attending any events!" 
@@ -80,7 +79,7 @@ function Home() {
                 events={moreEvents} 
                 linkTo="/allevents" 
                 emptyMessage="You are RSVP'd to all events!!"
-                 moreMessage="Find more events!"
+                moreMessage="Find more events!"
             />
 
             {/* The third row will be events by the organizations they have joined */}
