@@ -1,4 +1,4 @@
-// Author: Grace Yuzwin
+// Author: Grace Yuzwin, Shayne Lachapelle
 
 // needed router imports
 import { useParams, Link, Navigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import stock from "../assets/no-image.webp"
 
 //helper functions
 import { getFormattedDate, getFormattedTime } from "../helper-functions/dates"
+import { useRsvp } from "../helper-functions/rsvp"
 
 // css styling
 import styles from "../css/EventPage.module.css"
@@ -53,6 +54,8 @@ function EventPage() {
     if(notFound) {
         return (<Navigate to="/home" replace />)
     }
+    // button appearance and action, plus the live attendee count
+    const { status, attendeeCount, pending, toggleRsvp } = useRsvp(event);
 
     // if no image was passed, make image the stock image
     const imageSrc = event.image ?? stock;
@@ -70,7 +73,7 @@ function EventPage() {
             ? "unlimited"
             : Math.max(
                 0,
-                event.capacity - event.attendeeCount
+                event.capacity - attendeeCount
             ).toString();
 
     return (
@@ -112,7 +115,8 @@ function EventPage() {
                         <RsvpButton 
                             variant="page" 
                             status={status}
-                            onClick={() => handleRsvp(id)}
+                            pending={pending}
+                            onClick={toggleRsvp}
                         />
                         <div className={styles.text}>{spotsLeft} spots left!</div>
 
