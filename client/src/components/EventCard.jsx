@@ -16,16 +16,6 @@ import { Link } from "react-router-dom";
 import stock from "../assets/no-image.webp"
 
 function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
-    
-    // compute the status for button appearance
-    let status = "rsvp";
-
-    if (isRsvped) {
-        status = "going";
-    }
-    else if (!can_rsvp) {
-        status = "full";
-    }
 
     // if there is no image, use the stock image
     if (image === null) {
