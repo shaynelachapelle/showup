@@ -12,7 +12,7 @@ import { useState } from "react";
 
 // components
 import LogoutButton from "./LogoutButton";
-
+import SearchBar from "./SearchBar";
 
 function NavBar() {
 
@@ -67,9 +67,12 @@ function NavBar() {
                         to="" className={styles.postAnEvent}>Post an Event!
                     </Link>
                 </div>
+
+                <SearchBar />
                 
                 {/* this is the logout button !! */}
                 <LogoutButton className={styles.desktopLogout} />
+
                 
                 {/* hamburger button */}
                 <button 
