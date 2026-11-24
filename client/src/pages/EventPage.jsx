@@ -54,16 +54,6 @@ function EventPage() {
         return (<Navigate to="/home" replace />)
     }
 
-    // compute the status for button appearance
-    let status = "rsvp";
-
-    if (event.isRsvped) {
-        status = "going";
-    }
-    else if (!(event.can_rsvp)) {
-        status = "full";
-    }
-
     // if no image was passed, make image the stock image
     const imageSrc = event.image ?? stock;
 
