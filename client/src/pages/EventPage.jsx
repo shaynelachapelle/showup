@@ -50,12 +50,14 @@ function EventPage() {
 
     }, [id]);
     
+    
+    // button appearance and action, plus the live attendee count
+    const { status, attendeeCount, pending, toggleRsvp } = useRsvp(event);
+
     // if the event was not found, return to home page
     if(notFound) {
         return (<Navigate to="/home" replace />)
     }
-    // button appearance and action, plus the live attendee count
-    const { status, attendeeCount, pending, toggleRsvp } = useRsvp(event);
 
     // if no image was passed, make image the stock image
     const imageSrc = event.image ?? stock;
