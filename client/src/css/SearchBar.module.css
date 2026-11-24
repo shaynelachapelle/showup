@@ -5,6 +5,8 @@
     justify-content: center;
     align-items: center;
 
+    width: 50%;
+
     gap: 10px;
 }
 
@@ -15,6 +17,7 @@
     padding: 0px 4px;
 
     height: 30px;
+    width: 90%;
 
     border: 1px solid rgb(125, 125, 125);
 }
@@ -29,4 +32,10 @@
     font-weight: 300;
 
     background-color: transparent;
+}
+
+@media (min-width: 971px) {
+    .container {
+        width: 30%;
+    }
 }

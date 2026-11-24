@@ -167,7 +167,7 @@
 
 
 
-@media (max-width: 900px) {
+@media (max-width: 970px) {
     .desktopLinks {
         display: none;
     }
@@ -181,7 +181,7 @@
     }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 971px) {
     .hamburgerMenu {
         display: none;
     }
