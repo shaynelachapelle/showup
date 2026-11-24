@@ -22,6 +22,9 @@ function SearchBar() {
 
         // if we have something to send, navigate to the page
         navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+
+        // clear the search bar
+        setSearchTerm("");
     }
 
     return (

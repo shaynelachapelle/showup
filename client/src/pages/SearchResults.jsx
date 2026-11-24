@@ -57,7 +57,12 @@ function SearchResults() {
 
     // if no events are found, return no matches found
     if (events.length === 0) {
-        return (<div>No matches found!</div>)
+        return (
+        <div className={styles.page}>
+            <div className={styles.subheading}>No matches found for: {query}</div>
+            <Link to="/allevents" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
+        </div>
+    )
     }
     
     return (
