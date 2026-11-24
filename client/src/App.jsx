@@ -50,7 +50,7 @@ function App() {
         <Route path="/myclubs" element={<MyClubs />} />
         <Route path="/joinclub" element={<JoinClub/>} />
         <Route path="postevent" element={<PostEvent/>} />
-        <Route path="eventattendees" element={<EventAttendees/>} />
+        <Route path="/events/:id/eventattendees" element={<EventAttendees />} />
       </Route>
     </Route>
     </Routes>

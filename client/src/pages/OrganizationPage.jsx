@@ -116,7 +116,7 @@ export default function OrganizationPage() {
           <div className={styles.headerActions}>
             {isOwner ? (
               <>
-                <Link to="/post-event" className={styles.primaryBtn}>
+                <Link to="/postevent" className={styles.primaryBtn}>
                   + Post Event
                 </Link>
                 <button
@@ -216,7 +216,7 @@ export default function OrganizationPage() {
                   <div className={styles.eventActions}>
                     {isOwner && (
                       <Link
-                        to={`/events/${event.id}/attendees`}
+                        to={`/events/${event.id}/eventattendees`}
                         className={styles.attendeesBtn}
                       >
                         Attendees
