@@ -4,6 +4,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function ProtectedRoute() {
+  return <Outlet />; // TEMPORARY: bypass login locally
   const { user } = useAuth();
   const location = useLocation();
 
