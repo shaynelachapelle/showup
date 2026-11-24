@@ -1,7 +1,8 @@
-// Authors: Grace Yuzwin
+// Author: Grace Yuzwin, Shayne Lachapelle
 
 import './App.css'
 import {Routes, Route} from "react-router-dom"
+import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import NavLayout from "./components/Nav-Layout.jsx"
 import LogoLayout from "./components/Logo-Layout.jsx"
 
@@ -36,6 +37,7 @@ function App() {
       <Route path="/register" element={<Register />} />
     </Route>  
 
+    <Route element={<ProtectedRoute />}>
     <Route element={<NavLayout />}>
         <Route path="/home" element={<Home />} />
         <Route path="/allevents" element={<AllEvents />} />
@@ -50,6 +52,7 @@ function App() {
         <Route path="postevent" element={<PostEvent/>} />
         <Route path="eventattendees" element={<EventAttendees/>} />
       </Route>
+    </Route>
     </Routes>
   )
 }

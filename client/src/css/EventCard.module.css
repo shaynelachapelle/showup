@@ -59,6 +59,17 @@
     padding: 1rem;
 }
 
+/* show for keyboard users, and on touch screens, where an invisible button could be tapped by accident */
+.eventOverlay:has(:focus-visible) {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .eventOverlay {
+        opacity: 1;
+    }
+}
+
 .eventInfo {
     height: 60%;
     flex-shrink: 0;
