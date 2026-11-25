@@ -1,7 +1,7 @@
 // Author: Grace Yuzwin, Shayne Lachapelle
 
 // needed router imports
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 
 // stock image
 import stock from "../assets/no-image.webp"
@@ -25,6 +25,7 @@ function EventPage() {
 
     // GET call
     const [event, setEvent] = useState({});
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
 
@@ -39,9 +40,9 @@ function EventPage() {
                 setEvent(data);
 
             } catch (err) {
-
+                // if there is an error, log it and set not found
                 console.error(err);
-
+                setNotFound(true);
             }
         }
 
@@ -49,8 +50,14 @@ function EventPage() {
 
     }, [id]);
     
+    
     // button appearance and action, plus the live attendee count
     const { status, attendeeCount, pending, toggleRsvp } = useRsvp(event);
+
+    // if the event was not found, return to home page
+    if(notFound) {
+        return (<Navigate to="/home" replace />)
+    }
 
     // if no image was passed, make image the stock image
     const imageSrc = event.image ?? stock;

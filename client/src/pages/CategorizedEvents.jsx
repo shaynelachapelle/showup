@@ -7,7 +7,7 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import styles from "../css/CategorizedEvents.module.css"
 
 //components
-import EventCard from "../components/EventCard.jsx"
+import EventCard from "../components/EventCard.jsx";
 
 // for api
 import { useEffect, useState } from "react";
@@ -20,6 +20,24 @@ function CategorizedEvents() {
 
     // tranform into passable parameter
     const formatted = category.replace(/\+/g, " ")
+
+    // check if the category is valid
+    const validCategories = [
+        "Athletics and Recreation",
+        "Charity and Environment",
+        "Community Outreach and Volunteering",
+        "Fine Arts, Dance and Performance",
+        "Health and Wellness",
+        "Language and Publications",
+        "Leisure and Hobbies",
+        "Networking and Leadership",
+        "Political and Social Activism",
+        "Religion and Culture"
+    ]
+    // if the category is not valid, send back to allevents page
+    if (!validCategories.includes(formatted)) {
+        return <Navigate to="/allevents" replace/>
+    }
 
     // GET and pagnation
     const [events, setEvents] = useState([]);
