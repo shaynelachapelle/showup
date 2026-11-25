@@ -1,0 +1,177 @@
+/* Author: Rachel Ha */
+.landingContainer {
+  background-color: #F0F2F5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Red Bar */
+.redBar {
+  width: 100%;
+  box-sizing: border-box;
+  height: 75px;
+  background-color: #ED1B2F;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4rem;
+  box-shadow: 0 4px 12px rgba(237, 27, 47, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.contactBtn {
+  width: auto;
+  flex: none;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.contactBtn:hover {
+  background-color: #FFFFFF;
+  color: #ED1B2F;
+  border-color: #FFFFFF;
+}
+
+/* Inverted Logo */
+.logoSection {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  letter-spacing: -1px;
+  margin-left: 2rem;
+}
+
+.logoText {
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+/* Content Area */
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* Typography */
+.textSection {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.textSection h1 {
+  color: #222222;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.titleHighlight {
+  color: #ED1B2F;
+}
+
+.textSection h2 {
+  color: #666666;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+/* Inline Auth Buttons */
+.authButtonsInline {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.loginBtn, .signupBtn {
+  width: auto;
+  flex: none;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.loginBtn {
+  background-color: #ED1B2F;
+  color: #FFFFFF;
+  border: 2px solid #ED1B2F;
+}
+
+.loginBtn:hover {
+  background-color: #C91425;
+  border-color: #C91425;
+  box-shadow: 0 4px 8px rgba(237, 27, 47, 0.25);
+}
+
+.signupBtn {
+  background-color: #FFFFFF;
+  color: #ED1B2F;
+  border: 2px solid #ED1B2F;
+}
+
+.signupBtn:hover {
+  background-color: #F9F9F9;
+}
+
+/* Hero Image */
+.imageSection {
+  width: 100%;
+  max-width: 900px;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 480px;
+  border-radius: 16px;
+  border: 6px solid #FFFFFF;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.imagePlaceholder:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.martyHeroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.imagePlaceholder:hover .martyHeroImg {
+  transform: scale(1.03);
+}

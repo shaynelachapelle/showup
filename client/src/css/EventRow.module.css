@@ -1,0 +1,47 @@
+.eventRow {
+    margin-bottom: 4px;
+    margin-left: 2%;
+}
+
+.eventRow .title {
+    color:black;
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 0px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seeMore {
+    text-decoration: none;
+    color: #ed1b2f;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 20px;
+}
+
+.seeMore:hover {
+    text-decoration: underline;
+}
+
+.eventRowCards {
+    display: flex;
+    gap: 20px;
+
+    align-items: center;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 2px;
+}
+
+.emptyState {
+    color: rgb(131, 131, 131);
+    text-decoration: none;
+    margin-left: 2rem;
+}

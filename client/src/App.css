@@ -1,1 +1,9 @@
 /* Author: Shayne Lachapelle */
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}

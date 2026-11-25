@@ -1,31 +1,64 @@
-// Author: Grace Yuzwin
-import { onRSVPCLick } from "../helper-functions/rsvp"
-import "../css/EventCard.css"
+// Author: Grace Yuzwin, Shayne Lachapelle
 
-function EventCard({event}) {
-    /* pull out all assumed constants from a single event */
-    const { title, date, organization, cost, can_rsvp } = event;
+// css styling
+import styles from "../css/EventCard.module.css"
+
+// components
+import RsvpButton from "./RsvpButton"
+
+//helper functions
+import { getFormattedDate } from "../helper-functions/dates"
+import { useRsvp } from "../helper-functions/rsvp"
+
+// other needed imports
+import { Link } from "react-router-dom";
+
+// stock image import
+import stock from "../assets/no-image.webp"
+
+function EventCard({id, organizationId, title, date, organization, cost, image, can_rsvp, isRsvped}) {
     
+    // button appearance and action
+    const { status, pending, toggleRsvp } = useRsvp({ id, can_rsvp, isRsvped });
+
+    // if there is no image, use the stock image
+    if (image === null) {
+        image = stock;
+    }
+
+    // if the cost is 0, say free
+    const strCost =
+        cost === 0
+            ? "Free!"
+            : "$" + cost.toString();
+
     /* display those constants */
-    return <div className="event-card">
-        <div className="event-image">
-            <img src={"image.jpg"} alt={title}></img>
-            <div className="event-overlay">
-                {can_rsvp && (
-                    <button
-                        className="rsvp-btn-small"
-                        onClick={onRSVPCLick}
-                    >
-                        RSVP
-                    </button>
-                )}
-            </div>
+    return <div className={styles.eventCard}>
+        {/* the image is a link to that event page */}
+        <Link to={`/events/${id}`} className={styles.eventImage}>
+            <img src={image} alt={title}></img>
+        </Link>
+
+        <div className={styles.eventOverlay}>
+            <RsvpButton 
+                variant="card" 
+                status={status}
+                pending={pending}
+                onClick={toggleRsvp}
+            />
         </div>
-        <div className="event-info">
-            <h3>{title}</h3>
-            <h4>hosted by {organization}</h4>
-            <p>Date: {date}</p>
-            <p>Cost: {cost}</p>
+
+        <div className={styles.eventInfo}>
+            {/* the event name is a link to that event page */}
+            <Link to={`/events/${id}`} className={styles.title}>{title}</Link>
+
+            {/* the organization name is a link to that organization page */}
+            <Link to={`/organization/${organizationId}`} className={styles.organization}>hosted by {organization}</Link>
+
+            {/* no links for the date and cost */}
+            <p>Date: {getFormattedDate(date)}</p>
+            <p>Cost: {strCost}</p>
+            
         </div>
     </div>
 }
