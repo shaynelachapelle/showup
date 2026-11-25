@@ -48,6 +48,10 @@ function App() {
         <Route path="/myevents" element={<MyEvents />} />
         <Route path="/events/:id" element={<EventPage />} />
         <Route path="/organization/:organizationId" element={<OrganizationPage />} />
+        <Route path="/myclubs" element={<MyClubs />} />
+        <Route path="/joinclub" element={<JoinClub/>} />
+        <Route path="postevent" element={<PostEvent/>} />
+        <Route path="/events/:id/eventattendees" element={<EventAttendees />} />
       </Route>
     </Route>
     </Routes>
