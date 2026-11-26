@@ -1,5 +1,8 @@
+/* Author: Grace Yuzwin */
+
 .page{
     padding-left: 30px;
+    background-color: #F0F2F5;
 }
 
 .link {
@@ -19,7 +22,7 @@
 .content {
     max-width: 1240px;
     margin: 0 auto;
-
+    background-color: #F0F2F5;
 }
 
 .subheading {
