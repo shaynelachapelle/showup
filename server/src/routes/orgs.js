@@ -88,6 +88,8 @@ router.get('/search', async (req, res, next) => {
       name: { $regex: escapedQuery, $options: 'i' }
     };
 
+    const total = await db.collection('orgs').countDocuments(filter);
+
     const organizations = await db.collection('orgs')
       .find(filter)
       .sort({ name: 1, _id: 1 })
@@ -100,7 +102,9 @@ router.get('/search', async (req, res, next) => {
         id: String(org._id),
         name: org.name,
         image: org.logoUrl ?? ''
-      }))
+      })),
+    currentPage: pageNumber,
+    totalPages: Math.ceil(total / limitNumber)
     });
   } catch (error) {
     next(error);
