@@ -42,10 +42,6 @@ function SearchBar() {
                 }}
                 placeholder="Search..."
             />  
-            {/* the search button */}
-            <button className={styles.search} onClick={handleSearch}>
-                Go
-            </button>
         </div>
     )
 }

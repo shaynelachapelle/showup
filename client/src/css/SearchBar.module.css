@@ -1,5 +1,5 @@
 .container {
-    margin-left: 50px;
+    margin-left: 20px;
 
     display: flex;
     justify-content: center;
@@ -22,18 +22,10 @@
     border: 1px solid rgb(125, 125, 125);
 }
 
-.search {
-    width: 40px;
-    height: 25px;
-    outline: rgb(214, 214, 214) solid 1px;
-
-    color: rgb(214, 214, 214);
-
-    background-color: transparent;
-}
 
 @media (min-width: 971px) {
     .container {
         width: 30%;
+        margin-left: 50px;
     }
 }

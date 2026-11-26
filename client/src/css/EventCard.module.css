@@ -20,7 +20,7 @@
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(237, 27, 47, 0.12);
 
-    outline: #ED1B2F solid 2px;
+    outline: #ED1B2F solid 1.5px;
 }
 
 .eventCard:hover .eventOverlay {

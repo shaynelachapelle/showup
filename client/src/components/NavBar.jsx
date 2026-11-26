@@ -49,7 +49,7 @@ function NavBar() {
                                 : styles.allEvents
                         }
                     >
-                        Explore
+                        Explore events
                     </NavLink>
 
                     <NavLink
@@ -60,7 +60,7 @@ function NavBar() {
                                 : styles.myOrgs
                         }
                     >
-                        My organizations
+                        My Organizations
                     </NavLink>
 
                 </div>
@@ -97,7 +97,7 @@ function NavBar() {
                         className={styles.hamburgerLink}
                         onClick={() => setMenuOpen(false)}
                     >
-                        Explore
+                        Explore events
                     </NavLink>
 
                     <NavLink

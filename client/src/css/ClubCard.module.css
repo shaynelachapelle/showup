@@ -6,6 +6,7 @@
   border: 1.5px solid #EAECEF;
   border-radius: 12px;
   padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
