@@ -3,8 +3,8 @@
     width: 99px;
     border-radius: 50%;
 
-    background-color: rgb(245, 245, 245);
-    outline: #ed1b3087 solid 0.5px;
+    background-color: rgb(255, 255, 255);
+    outline: #ED1B2F solid 0.5px;
 
     display: flex;
 
@@ -40,13 +40,12 @@
 }
 
 .container:hover {
-    color: #ed1b3087;
     
     .circle {
-        background-color: #ed1b3087;
+        background-color: #ed1b30d1;
     }
 
     .text { 
-        color: #ed1b3087;
+        color: #ed1b30d1;
     }
 }

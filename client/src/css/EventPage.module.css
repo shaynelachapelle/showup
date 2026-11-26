@@ -1,10 +1,17 @@
 .page {
     padding: 20px;
+    background-color: #F0F2F5;
 }
 
 .back {
     color: rgb(109, 109, 109);
-    font-size: 11px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: red;
 }
 
 .banner {
@@ -14,7 +21,6 @@
     box-sizing: border-box;
     border-radius: 8px;
     margin-bottom: 10px;
-    outline: rgb(172, 172, 172) solid 1px;
 }
 
 .divider {
@@ -25,13 +31,14 @@
 
 .section {
     color: black;
-    background-color: rgb(245, 245, 245);
-    outline: rgb(172, 172, 172) solid 1px;
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
 
     flex: 100%;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 .title {
@@ -40,8 +47,8 @@
 }
 
 .organization {
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 450;
     color: black;
     text-decoration: none;
 }
@@ -74,18 +81,18 @@
 }
 
 .subheading {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: rgb(85, 85, 85);
 }
 
 .subtitle {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 600;
 }
 
 .text {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
     color: black;
 }

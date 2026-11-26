@@ -30,7 +30,7 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
         <div className={styles.section}>
 
             {/* actual event card */}
-            <div className={styles.card}>
+            <Link to={`/events/${id}`} className={styles.card}>
 
                 <DateBadge date={date}/>
 
@@ -40,7 +40,8 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                     <Link to={`/events/${id}`} className={styles.cardTitle}>{title}</Link>
                     {/* subheading div, which has a link to the organization */}
                     <div className={styles.cardSubtitle}>
-                        <Link to={`/organization/${organizationId}`} className={styles.cardSubtitleOrg}>{organization}</Link> • {getFormattedTime(date)} • {strCost}</div>
+                        <Link to={`/organization/${organizationId}`} className={styles.cardSubtitleOrg}>{organization}</Link> • {getFormattedTime(date)} • {strCost}
+                    </div>
                 </div>
                 
                 {/* RSVP button and put it on RHS */}
@@ -53,7 +54,7 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                     />
                 </div>
 
-            </div>
+            </Link>
         </div>
     );
 }
