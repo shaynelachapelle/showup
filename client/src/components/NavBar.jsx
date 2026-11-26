@@ -63,9 +63,6 @@ function NavBar() {
                         My organizations
                     </NavLink>
 
-                    <Link 
-                        to="" className={styles.postAnEvent}>Post an Event!
-                    </Link>
                 </div>
 
                 <SearchBar />
@@ -110,10 +107,6 @@ function NavBar() {
                     >
                         My organizations
                     </NavLink>
-
-                    <Link 
-                        to="" className={styles.hamburgerLink}>Post an Event!
-                    </Link>
 
                     {/* this is the logout button !! */}
                     <div className={styles.centerButton}>
