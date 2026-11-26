@@ -1,5 +1,8 @@
+/* Author: Grace Yuzwin */
+
 .pageContainer {
-    margin: 25px;
+    padding: 25px;
+    background-color: #F0F2F5;
 }
 
 .title {
@@ -10,7 +13,8 @@
 
 .subtitle {
     color: rgb(71, 71, 71);
-    font-size: 13px;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .container {

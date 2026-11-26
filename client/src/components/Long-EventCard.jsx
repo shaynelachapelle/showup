@@ -8,7 +8,7 @@ import DateBadge from "../components/DateBadge"
 import styles from "../css/Long-EventCard.module.css"
 
 // routing
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // function to get the time of event
 import { getFormattedTime } from "../helper-functions/dates"
@@ -26,11 +26,17 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
         ? "Free!"
         : "$" + cost.toString();
 
+    // so that we can make the card go to the event too
+    const navigate = useNavigate();
+
     return (
         <div className={styles.section}>
 
             {/* actual event card */}
-            <div className={styles.card}>
+            <div 
+                className={styles.card} 
+                onClick={() => navigate(`/events/${id}`)}
+            >
 
                 <DateBadge date={date}/>
 
@@ -40,7 +46,18 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                     <Link to={`/events/${id}`} className={styles.cardTitle}>{title}</Link>
                     {/* subheading div, which has a link to the organization */}
                     <div className={styles.cardSubtitle}>
-                        <Link to={`/organization/${organizationId}`} className={styles.cardSubtitleOrg}>{organization}</Link> • {getFormattedTime(date)} • {strCost}</div>
+                        <Link 
+                            to={`/organization/${organizationId}`} 
+                            className={styles.cardSubtitleOrg}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {organization}
+                        </Link> 
+                        {" • "} 
+                        {getFormattedTime(date)} 
+                        {" • "} 
+                        {strCost}
+                    </div>
                 </div>
                 
                 {/* RSVP button and put it on RHS */}
@@ -49,7 +66,10 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                         variant="page" 
                         status={status}
                         pending={pending}
-                        onClick={toggleRsvp}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            toggleRsvp();
+                        }}
                     />
                 </div>
 

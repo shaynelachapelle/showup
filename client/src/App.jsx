@@ -17,7 +17,6 @@ import Register from './pages/Register.jsx';
 import Home from './pages/Home.jsx';
 import AllEvents from './pages/AllEvents.jsx';
 import CategorizedEvents from './pages/CategorizedEvents.jsx';
-import AllOrgs from './pages/AllOrgs.jsx';
 import MyOrgs from './pages/MyOrgs.jsx';
 import MyEvents from './pages/MyEvents.jsx';
 import EventPage from './pages/EventPage.jsx';
@@ -43,7 +42,6 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/allevents" element={<AllEvents />} />
         <Route path="/allevents/:category" element={<CategorizedEvents />} />
-        <Route path="/allorgs" element={<AllOrgs />} />
         <Route path="/myorgs" element={<MyOrgs />} />
         <Route path="/myevents" element={<MyEvents />} />
         <Route path="/events/:id" element={<EventPage />} />
@@ -52,6 +50,7 @@ function App() {
         <Route path="/joinclub" element={<JoinClub/>} />
         <Route path="postevent" element={<PostEvent/>} />
         <Route path="/events/:id/eventattendees" element={<EventAttendees />} />
+        <Route path="/search" element={<SearchResults />} />
       </Route>
     </Route>
     </Routes>

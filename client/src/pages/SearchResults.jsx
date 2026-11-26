@@ -9,6 +9,7 @@ import { api } from "../api/client";
 
 // component
 import EventCard from "../components/EventCard";
+import ClubCard from "../components/ClubCard";
 
 // css styling
 import styles from "../css/SearchResults.module.css"
@@ -21,42 +22,74 @@ function SearchResults() {
 
     const query = searchParams.get("q") ?? "";
 
-    // GET call
+    const [loading, setLoading] = useState(true);
+
+    // GET call for events and organizations
+
+    // event constants
     const [events, setEvents] = useState([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [pageEvent, setPageEvent] = useState(1);
+    const [totalPagesEvent, setTotalPagesEvent] = useState(1);
+
+    // org constants
+    const [organizations, setOrganizations] = useState([]);
+    const [pageOrganization, setPageOrganization] = useState(1);
+    const [totalPagesOrganization, setTotalPagesOrganization] = useState(1);
 
     useEffect (() => {
 
         async function loadResults() {
 
+            setLoading(true);
+            
             try {
-                // get the data from api
-                const data = await api.get(
-                    `/api/events/search?q=${encodeURIComponent(query)}&page=${page}&limit=20`
+                // get the event data from api
+                const eventData = await api.get(
+                    `/api/events/search?q=${encodeURIComponent(query)}&page=${pageEvent}&limit=20`
                 );
 
-                setEvents(data.events);
-                setTotalPages(data.totalPages);
+                setEvents(eventData.events);
+                setTotalPagesEvent(eventData.totalPages);
+
+                // get the organization data from api
+                const orgData = await api.get(
+                    `/api/orgs/search?q=${encodeURIComponent(query)}&page=${pageOrganization}&limit=20`
+                );
+
+                setOrganizations(orgData.organizations);
+                setTotalPagesOrganization(orgData.totalPages);
 
             } catch(err) {
                 // log error if one happened
                 console.error(err);
+            } finally {
+                // we are no longer loading
+                setLoading(false);
             }
         }
         loadResults();
 
-    }, [query, page])
+    }, [query, pageEvent, pageOrganization])
 
     // reset the pagination when a new search occurs
     useEffect(() => {
 
-        setPage(1);
+        setPageEvent(1);
+        setPageOrganization(1);
 
     }, [query]);
 
+    // if we are loading, return loading
+    if (loading) {
+        return (
+            <div className={styles.page}>
+                Loading...
+            </div>
+        );
+    }
+
     // if no events are found, return no matches found
-    if (events.length === 0) {
+    if (events.length === 0 && organizations.length === 0) {
         return (
         <div className={styles.page}>
             <div className={styles.subheading}>No matches found for: {query}</div>
@@ -71,49 +104,112 @@ function SearchResults() {
                 {/* link to go back */}
                 <Link to="/allevents" className={styles.link}>Back to all events...</Link>
 
-                <div className={styles.heading}>Results:</div>
+                {/* events section */}
+                <div className={styles.heading}>Events:</div>
 
-                {/* grid of events */}
-                <div className={styles.events}>
-                    {events.map((event) => (
+                {/* If there are no events: return empty message */}
+                {/* If there are events: return the entire event section */}
+                {events.length === 0 ? (
+                    <>
+                        <div className={styles.subheading}>No event matches found for: {query}</div>
+                        <Link to="/allevents" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
+                    </>
+                ) : (
+                    <>
+                        <div className={styles.events}>
+                            {events.map((event) => (
 
-                        <EventCard
-                            key={event.id}
-                            id={event.id}
-                            organizationId={event.organizationId}
-                            title={event.title}
-                            date={event.date}
-                            organization={event.organization}
-                            image={event.image}
-                            cost={event.cost}
-                            can_rsvp={event.can_rsvp}
-                            isRsvped={event.isRsvped}
-                        />
+                                <EventCard
+                                    key={event.id}
+                                    id={event.id}
+                                    organizationId={event.organizationId}
+                                    title={event.title}
+                                    date={event.date}
+                                    organization={event.organization}
+                                    image={event.image}
+                                    cost={event.cost}
+                                    can_rsvp={event.can_rsvp}
+                                    isRsvped={event.isRsvped}
+                                />
 
-                    ))}
-                </div>
+                            ))}
+                        </div>
 
-                <div className={styles.pagination}>
+                        <div className={styles.pagination}>
 
-                    <button
-                        disabled={page === 1}
-                        onClick={() => setPage(page - 1)}
-                    >
-                        Previous
-                    </button>
+                            <button
+                                disabled={pageEvent === 1}
+                                onClick={() => setPageEvent(pageEvent - 1)}
+                            >
+                                Previous
+                            </button>
 
-                    <span>
-                        Page {page} of {totalPages}
-                    </span>
+                            <span>
+                                Page {pageEvent} of {totalPagesEvent}
+                            </span>
 
-                    <button
-                        disabled={page === totalPages}
-                        onClick={() => setPage(page + 1)}
-                    >
-                        Next
-                    </button>
+                            <button
+                                disabled={pageEvent === totalPagesEvent}
+                                onClick={() => setPageEvent(pageEvent + 1)}
+                            >
+                                Next
+                            </button>
 
-                </div>
+                        </div>
+                    </>
+                )
+                }
+
+
+
+
+
+
+                <div className={styles.heading}>Organizations:</div>
+
+                {/* If there are no events: return empty message */}
+                {/* If there are events: return the entire event section */}
+
+                {organizations.length === 0 ? (
+                    <>
+                        <div className={styles.subheading}>No organization matches found for: {query}</div>
+                        <Link to="/allevents" className={styles.moreEvents}>Check out some upcoming events here!</Link>
+                    </>
+
+                ) : (
+                    <>
+                        {/* ORGANIZATIONS */}
+                        <div className={styles.organizations}>
+                            {organizations.map((club) => (
+                                <ClubCard key={club._id || club.id} club={club} />
+                            ))}
+
+                        </div>
+
+                        <div className={styles.pagination}>
+
+                            <button
+                                disabled={pageOrganization === 1}
+                                onClick={() => setPageOrganization(pageOrganization - 1)}
+                            >
+                                Previous
+                            </button>
+
+                            <span>
+                                Page {pageOrganization} of {totalPagesOrganization}
+                            </span>
+
+                            <button
+                                disabled={pageOrganization === totalPagesOrganization}
+                                onClick={() => setPageOrganization(pageOrganization + 1)}
+                            >
+                                Next
+                            </button>
+
+                        </div>
+                    </>
+                )}
+
 
             </div>
         </div>

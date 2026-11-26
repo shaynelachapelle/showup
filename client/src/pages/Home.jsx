@@ -63,7 +63,7 @@ function Home() {
 
 
     return (
-    <div>
+    <div className={styles.page}>
         {/* show the banner  */}
         <img className={styles.banner} src={banner} alt={"image of McGIll mascot"}/>
 
@@ -93,8 +93,8 @@ function Home() {
             />
 
             {/* ADDED: The third row: Your Clubs */}
-            <section style={{ marginTop: "2rem", paddingLeft: "1rem", paddingRight: "1rem" }}>
-                <h2 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Your Clubs</h2>
+            <section style={{ marginTop: "2rem", paddingLeft: "2%", paddingRight: "1rem" }}>
+                <h2 style={{ fontSize: "30px", marginBottom: "0px" }}>Your Clubs</h2>
                 {followedClubs.length === 0 ? (
                     <p>You haven't followed any clubs yet!</p>
                 ) : (
