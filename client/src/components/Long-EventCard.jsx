@@ -61,15 +61,15 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                 </div>
                 
                 {/* RSVP button and put it on RHS */}
-                <div className={styles.Rsvp}> 
+                <div 
+                    className={styles.Rsvp}
+                    onClick={(e) => e.stopPropagation()}
+                > 
                     <RsvpButton 
                         variant="page" 
                         status={status}
                         pending={pending}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            toggleRsvp();
-                        }}
+                        onClick={toggleRsvp}
                     />
                 </div>
 

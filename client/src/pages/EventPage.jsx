@@ -15,6 +15,7 @@ import styles from "../css/EventPage.module.css"
 
 // components
 import RsvpButton from "../components/RsvpButton"
+import CalendarButton from "../components/CalendarButton";
 
 // for api
 import { useEffect, useState } from "react";
@@ -120,8 +121,10 @@ function EventPage() {
                             pending={pending}
                             onClick={toggleRsvp}
                         />
-                        <div className={styles.text}>{spotsLeft} spots left!</div>
 
+                        <CalendarButton />
+
+                        <div className={styles.text}>{spotsLeft} spots left!</div>
                     </div>
 
                     {/* Cost section */}
