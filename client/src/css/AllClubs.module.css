@@ -1,4 +1,4 @@
-/* Author: Rachel Ha */
+/* Author: Rachel Ha, Adam Ahmed */
 .clubsSection {
   display: flex;
   flex-direction: column;
@@ -52,4 +52,28 @@
 .emptyClubs {
   color: #666666;
   font-size: 1rem;
+}
+
+.clubsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.createClubBtn {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #ed1b2f;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.createClubBtn:hover {
+  background-color: #c91526;
 }

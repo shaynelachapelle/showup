@@ -31,7 +31,8 @@ router.get('/', async (req, res, next) => {
       organizations.map(org => ({
         id: String(org._id),
         name: org.name,
-        image: org.logoUrl ?? ''
+        image: org.logoUrl ?? '',
+        category: org.category
       }));
 
     if (page === undefined) {
