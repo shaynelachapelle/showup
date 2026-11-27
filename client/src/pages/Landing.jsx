@@ -1,8 +1,11 @@
 // Author: Rachel Ha
+import { useNavigate } from 'react-router-dom';
 import styles from '../css/Landing.module.css';
 import martyImage from '../assets/alpha_marty.jpg';
 
 export default function Landing() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.landingContainer}>
       
@@ -11,7 +14,13 @@ export default function Landing() {
         <div className={styles.logoSection}>
           <span className={styles.logoText}>Show</span>up
         </div>
-        <button className={styles.contactBtn}>Contact Us</button>
+        <button
+          type="button"
+          className={styles.contactBtn}
+          onClick={() => navigate('/contactus')}
+        >
+          Contact Us
+        </button>
       </nav>
 
       {/* Main Page Content */}
@@ -21,8 +30,20 @@ export default function Landing() {
           <h2>Only for students. Browse events near you.</h2>
           
           <div className={styles.authButtonsInline}>
-            <button className={styles.loginBtn}>Log In</button>
-            <button className={styles.signupBtn}>Sign Up</button>
+            <button
+              type="button"
+              className={styles.loginBtn}
+              onClick={() => navigate('/login')}
+            >
+              Log In
+            </button>
+            <button
+              type="button"
+              className={styles.signupBtn}
+              onClick={() => navigate('/register')}
+            >
+              Sign Up
+            </button>
           </div>
         </div>
 
