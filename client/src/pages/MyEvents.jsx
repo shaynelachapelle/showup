@@ -22,25 +22,23 @@ function MyEvents() {
     // GET call
     const [events, setEvents] = useState([]);
 
-    useEffect (() => {
+    async function loadEvents() {
+        try {
+            // Start by using 100 as a limit, if we see fit, will use pagnation
+            const data = await api.get(
+                "/api/events/my-orgs?limit=100"
+            );
 
-        async function loadEvents() {
-
-            try {
-                // Start by using 100 as a limit, if we see fit, will use pagnation
-                const data = await api.get(
-                    "/api/events/my-orgs?limit=100"
-                );
-
-                setEvents(data);
-            } catch (err) {
-                console.error(err);
-            }
-
+            setEvents(data);
+        } catch (err) {
+            console.error(err);
         }
+    }
+
+    useEffect (() => {
         loadEvents();
     }
-    , []);
+    , [filter]);
 
     // default use all events
     let todayEvents = events.filter(
@@ -68,6 +66,19 @@ function MyEvents() {
 
         laterEvents = laterEvents.filter(
             event => event.isRsvped
+        );
+    // then all not RSVP'd
+    } else if ((filter === "not RSVP")) {
+        todayEvents = todayEvents.filter(
+            event => (!(event.isRsvped) && event.can_rsvp)
+        );
+
+        thisWeekEvents = thisWeekEvents.filter(
+            event => (!(event.isRsvped) && event.can_rsvp) 
+        );
+
+        laterEvents = laterEvents.filter(
+            event => (!(event.isRsvped) && event.can_rsvp) 
         );
     }
 
@@ -98,6 +109,14 @@ function MyEvents() {
                             onClick={() => setFilter("RSVP")}
                         >
                             Going
+                        </button>
+                        <button 
+                            className={`${styles.button} ${
+                                filter === "not RSVP" ? styles.active : ""
+                            }`}
+                            onClick={() => setFilter("not RSVP")}
+                        >
+                            Can RSVP
                         </button>
                     </div>
                     <div className={styles.item}>

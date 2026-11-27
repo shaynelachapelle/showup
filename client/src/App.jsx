@@ -26,6 +26,7 @@ import MyClubs from './pages/MyClubs';
 import JoinClub from './pages/JoinClub.jsx';
 import PostEvent from './pages/PostEvent.jsx';
 import EventAttendees from './pages/EventAttendees.jsx';
+import EditEvent from './pages/EditEvent.jsx'
 import ContactUs from "./pages/ContactUs";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="postevent" element={<PostEvent/>} />
         <Route path="/events/:id/eventattendees" element={<EventAttendees />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/events/:id/edit" element={<EditEvent />} />
       </Route>
     </Route>
     </Routes>
