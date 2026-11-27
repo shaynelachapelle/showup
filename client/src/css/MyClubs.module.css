@@ -95,3 +95,21 @@
   color: #FFFFFF;
   border-color: #ED1B2F;
 }
+
+/* Club Logo */
+.clubLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Club Navigation */
+.clubLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.clubLink:hover {
+  color: #ED1B2F;
+}
