@@ -1,12 +1,15 @@
+/* Author: Grace Yuzwin */
+
 .page{
     padding-left: 30px;
+    background-color: #F0F2F5;
 }
 
 .link {
     color: rgb(103, 103, 103);
     text-decoration: none;
 
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 30px;
 
     display: block;
@@ -19,22 +22,19 @@
 .content {
     max-width: 1240px;
     margin: 0 auto;
-
+    background-color: #F0F2F5;
 }
 
 .subheading {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 500;
 
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .heading {
     font-size: 40px;
     font-weight: 600;
-
-    margin-top: -7px;
-    margin-bottom: 10px;
 }
 
 .noEvents {
@@ -44,13 +44,23 @@
 .moreEvents {
     color: rgb(0, 0, 0);
 
-    font-size: 14px;
+    font-size: 17px;
+
+    padding-bottom: 40px;
 }
 
 .events {
     display: grid;
 
     grid-template-columns: repeat(auto-fit, 300px);
+
+    justify-content: start;
+}
+
+.organizations {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, 200px);
 
     justify-content: start;
 }

@@ -1,5 +1,11 @@
+/* Author: Grace Yuzwin */
+
 .pageContainer {
-    margin: 25px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: #F0F2F5;
 }
 
 .title {
@@ -10,20 +16,72 @@
 
 .subtitle {
     color: rgb(71, 71, 71);
-    font-size: 13px;
+    font-weight: 500;
+    font-size: 14px;
 }
 
-.container {
+.eventContainer {
     display: flex;
     flex-direction: column;
+}
+
+.calendarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5%
 }
 
 .item {
     flex: 1;
 }
 
+.buttonRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.buttonTag {
+    font-weight: 400;
+    color: rgb(89, 89, 89);
+    margin-top: 20px;
+
+    height: auto;
+}
+
+.button, .active {
+    width: auto;
+    height: 40px;
+    margin-top: 20px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    border-radius: 25px;
+
+    font-weight: 400;
+}
+
+.button {
+    background-color: transparent;
+    border: 1px solid rgb(175, 175, 175);
+
+    color: black;
+}
+
+.active {
+    background-color: #ed1b30;
+    border: 1px solid #ed1b30;
+
+    color: white;
+}
+
 @media (min-width: 800px) {
-    .container {
-        width: 60%;
+    .eventContainer {
+        width: 63%;
+    }
+
+    .calendarContainer {
+        flex-direction: row-reverse;
     }
 }

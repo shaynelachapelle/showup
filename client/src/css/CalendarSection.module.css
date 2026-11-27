@@ -1,0 +1,40 @@
+/* Author: Grace Yuzwin */
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+
+    align-self: flex-start;
+
+    width: 80%;
+
+    padding: 3%;
+
+    margin-top: 20px;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 10px;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: 400;
+
+    margin-bottom: 10px;
+}
+
+.addButton {
+    height: 30px;
+    width: 100%;
+}
+
+@media (min-width: 800px) {
+    .container {
+        width: 30%;
+        padding: 2%;
+    }
+}
