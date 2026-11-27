@@ -1,7 +1,7 @@
 // Author: Grace Yuzwin, Shayne Lachapelle
 
 // needed router imports
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 
 // stock image
 import stock from "../assets/no-image.webp"
@@ -24,9 +24,11 @@ import { api } from "../api/client"
 function EventPage() {
     const { id } = useParams();
 
-    {/* TO BE IMPLEMENTED */}
+    const navigate = useNavigate();
+
+    // Cacel event handler
     const cancelEvent = async () => {
-        {/* confirm the user wants to cancel the event */}
+        // confirm admin wants to cancel the event
         const confirmed = window.confirm(
             "Are you sure you want to cancel this event?"
         );
@@ -35,12 +37,35 @@ function EventPage() {
             return;
         }
 
-        // API call here
+        // API call
+        try {
+            await api.post(
+                `/api/events/${id}/cancel`
+            );
+            // alert that it was cancelled successfully
+            alert("Event cancelled successfully.");
+            // go to all events
+            navigate("/myevents");
+
+        } catch (err) {
+            // log error
+            console.error(err);
+            // 409 means already canceled
+            if (err.response?.status === 409) {
+                alert(
+                    "This event has already been cancelled."
+                );
+            } else {
+                alert(
+                    "Unable to cancel event."
+                );
+            }
+        }
     };
 
-    {/* TO BE IMPLEMENTED */}
+    // delete event handler
     const deleteEvent = async () => {
-        {/* confirm the user wants to delete the event */}
+        // Confirm that the user wants to delete the event
         const confirmed = window.confirm(
             "Are you sure you want to permanently delete this event?"
         );
@@ -49,9 +74,33 @@ function EventPage() {
             return;
         }
 
-        // API call here
-    };
+        // the API call
+        try {
 
+            await api.delete(
+                `/api/events/${id}`
+            );
+            // show it was deleted
+            alert("Event deleted successfully.");
+            // go back to the all events page
+            navigate(`/organization/${event.organizationId}`);
+
+        } catch (err) {
+            // if there is an error, log it
+            console.error(err);
+
+            // 409 means it cannot be deleted as there are existing RSVPs 
+            if (err.response?.status === 409) {
+                alert(
+                    "Events with RSVP records cannot be deleted. Cancel the event instead."
+                );
+            } else {
+                alert(
+                    "Unable to delete event."
+                );
+            }
+        }
+    };
 
     // GET event
     const [event, setEvent] = useState({});
@@ -109,9 +158,11 @@ function EventPage() {
     }, []);
 
     // check if the user is an admin of this events organization
-    const isAdmin = adminOrganizations.some(
-        org => org.id === event.organizationId
-    );
+    const isAdmin =
+        event.organizationId &&
+        adminOrganizations.some(
+            org => org.id === event.organizationId
+        );
 
     // if no image was passed, make image the stock image
     const imageSrc = event.image ?? stock;
