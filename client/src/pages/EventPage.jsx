@@ -19,12 +19,41 @@ import CalendarButton from "../components/CalendarButton";
 
 // for api
 import { useEffect, useState } from "react";
-import {api} from "../api/client"
+import { api } from "../api/client"
 
 function EventPage() {
     const { id } = useParams();
 
-    // GET call
+    {/* TO BE IMPLEMENTED */}
+    const cancelEvent = async () => {
+        {/* confirm the user wants to cancel the event */}
+        const confirmed = window.confirm(
+            "Are you sure you want to cancel this event?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        // API call here
+    };
+
+    {/* TO BE IMPLEMENTED */}
+    const deleteEvent = async () => {
+        {/* confirm the user wants to delete the event */}
+        const confirmed = window.confirm(
+            "Are you sure you want to permanently delete this event?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        // API call here
+    };
+
+
+    // GET event
     const [event, setEvent] = useState({});
     const [notFound, setNotFound] = useState(false);
 
@@ -50,8 +79,7 @@ function EventPage() {
         loadEvents();
 
     }, [id]);
-    
-    
+
     // button appearance and action, plus the live attendee count
     const { status, attendeeCount, pending, toggleRsvp } = useRsvp(event);
 
@@ -59,6 +87,31 @@ function EventPage() {
     if(notFound) {
         return (<Navigate to="/home" replace />)
     }
+
+    // GET orgs and the user is admin of
+    const [adminOrganizations, setAdminOrganizations] = useState([]);
+
+    useEffect(() => {
+        async function loadAdminOrganizations() {
+            try {
+                const data = await api.get(
+                    "/api/orgs/administered"
+                );
+
+                setAdminOrganizations(data);
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        loadAdminOrganizations();
+    }, []);
+
+    // check if the user is an admin of this events organization
+    const isAdmin = adminOrganizations.some(
+        org => org.id === event.organizationId
+    );
 
     // if no image was passed, make image the stock image
     const imageSrc = event.image ?? stock;
@@ -79,9 +132,33 @@ function EventPage() {
                 event.capacity - attendeeCount
             ).toString();
 
+
     return (
         <div className={styles.page}>
             <Link to="/allevents" className={styles.back}>Back to all events...</Link>
+
+            {/* if the user is an admin, show the edit button */}
+            {isAdmin && (
+                <div className={styles.adminControls}>
+
+                    <Link className={styles.adminButtons} to={`/events/${id}/edit`}>
+                        Edit Event
+                    </Link>
+
+                    {attendeeCount > 0 && (
+                        <button className={styles.adminButtons} onClick={cancelEvent}>
+                            Cancel Event
+                        </button>
+                    )}
+
+                    {attendeeCount === 0 && (
+                        <button className={styles.adminButtons} onClick={deleteEvent}>
+                            Delete Event
+                        </button>
+                    )}
+
+                </div>
+            )}
 
             <img className={styles.banner} src={imageSrc} alt={event.title}></img>
             

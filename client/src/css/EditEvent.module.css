@@ -1,0 +1,267 @@
+/* Author: Grace Yuzwin, Rachel Ha */
+.pageContainer {
+  background-color: #F0F2F5;
+  min-height: 100vh;
+  padding: 3rem 1.5rem 5rem;
+  box-sizing: border-box;
+}
+
+.pageWrapper {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* Header */
+.pageHeader {
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #222222;
+  margin: 0 0 0.4rem 0;
+  letter-spacing: -1px;
+}
+
+.highlight {
+  color: #ED1B2F;
+}
+
+.pageSubtitle {
+  font-size: 1.05rem;
+  color: #666666;
+  margin: 0;
+}
+
+/* Two-Column Grid */
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Form Card */
+.formCard {
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  padding: 2.25rem;
+  border-top: 5px solid #ED1B2F;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+.sectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+.sectionBlock:last-of-type {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.sectionHeading {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888888;
+  margin: 0;
+}
+
+.twoColRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #222222;
+}
+
+.optionalTag {
+  font-weight: 400;
+  color: #888888;
+  font-size: 0.85rem;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222222;
+  background-color: #F9FAFB;
+  border: 1.5px solid #E2E5E9;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #ED1B2F;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(237, 27, 47, 0.12);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.5;
+}
+
+.noSelect {
+  background-color: #9d9d9d;
+}
+
+.noSelect:hover {
+  cursor:not-allowed;
+}
+
+/* Category Pills */
+.pillGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.categoryPill {
+  width: auto;
+  height: auto;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #555555;
+  background-color: #F3F4F6;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.categoryPill:hover {
+  background-color: #EAECEF;
+  color: #222222;
+}
+
+.categoryPillActive {
+  background-color: #FDE8EA;
+  color: #ED1B2F;
+  border-color: #ED1B2F;
+}
+
+/* Form Action Buttons */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.clearBtn,
+.submitBtn {
+  width: auto;
+  height: auto;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn {
+    margin-bottom: 10px;
+    font-size: 25px;
+    background-color: transparent;
+    color: #979797;
+    width: auto;
+    border: none;
+    box-shadow: none;
+}
+
+.cancelBtn:hover {
+    color: #6a6a6a;
+    text-decoration: none;
+    border: none;
+    box-shadow: none;
+}
+
+.cancelBtn:active {
+    color:#3a3a3a;
+    background-color: transparent;
+}
+
+.clearBtn {
+  background-color: #FFFFFF;
+  color: #555555;
+  border: 1.5px solid #DDDDDD;
+}
+
+.clearBtn:hover {
+  color: #222222;
+}
+
+.clearBtn:active {
+    background-color: #e0e0e0;
+}
+
+.submitBtn {
+  background-color: #ED1B2F;
+  color: #FFFFFF;
+  border: 1.5px solid #ED1B2F;
+}
+
+.submitBtn:hover {
+  border-color: #C91425;
+  box-shadow: 0 6px 14px rgba(237, 27, 47, 0.25);
+  transform: translateY(-1px);
+}
+
+.submitBtn:active {
+    background-color: #C91425;
+}
+
+.moneyInput {
+    position: relative;
+}
+
+.moneyInput span {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.moneyInput input {
+    padding-left: 28px;
+}
