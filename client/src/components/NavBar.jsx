@@ -75,7 +75,7 @@ function NavBar() {
                 <button 
                     className={styles.hamburger}
                     onClick={() => setMenuOpen(!menuOpen)}
-                > ☰
+                > ≡
                 </button>
 
             </div>
