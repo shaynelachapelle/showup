@@ -2,6 +2,7 @@
 
 // components
 import EventRow from "../components/EventRow";
+import AllClubs from "../components/AllClubs";
 
 // css styles
 import styles from "../css/AllEvents.module.css"
@@ -149,6 +150,9 @@ function AllEvents() {
 
             {/* Religion and Culture row */}
             <EventRow title="Religion and Culture" events={religionEvents} linkTo="/allevents/Religion+and+Culture" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+
+            {/* All Clubs section */}
+            <AllClubs />
         </div>
     </div>
     );
