@@ -366,11 +366,10 @@ router.get('/my-orgs', async (req, res, next) => {
     const collection = db.collection('events');
     const filter = {
       $or: [
-        { orgId: { $in: orgIds } },
+        { orgId: { $in: orgIds }, status: 'active'},
         { _id: { $in: rsvpedEventIds } }
       ],
       start: { $gt: new Date() },
-      status: 'active'
     };
 
     // Limited events: return a plain array.
