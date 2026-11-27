@@ -186,7 +186,7 @@ function EventPage() {
 
     return (
         <div className={styles.page}>
-            <Link to="/allevents" className={styles.back}>Back to all events...</Link>
+            <Link to="/allevents" className={styles.back}>Go to all events...</Link>
 
             {/* if the user is an admin, show the edit button */}
             {isAdmin && (
@@ -220,7 +220,25 @@ function EventPage() {
 
                     {/* makes a horizontal line under the hosted by */}
                     <div className={styles.divider}>
-                        <Link to={`/organization/${event.organizationId}`} className={styles.organization} title="Go see the organization page!">Hosted by {event.organizationName}</Link>
+                        <Link 
+                            to={`/organization/${event.organizationId}`} 
+                            className={styles.organization} 
+                            title="Go see the organization page!"
+                        >
+                            Hosted by {event.organizationName}
+                        </Link>
+                    </div>
+
+                    {/* RSVP section */}
+                    <div className={`${styles.divider} ${styles.containerCentered}`}>
+                        <RsvpButton 
+                            variant="page" 
+                            status={status}
+                            pending={pending}
+                            onClick={toggleRsvp}
+                        />
+                            
+                        <div className={styles.text}>{spotsLeft} spots left!</div>
                     </div>
 
                     {/* the flexbox for when and where */}
@@ -242,18 +260,18 @@ function EventPage() {
                     </div>
 
                     <div className={`${styles.divider} ${styles.containerCentered}`}>
-                        {/* RSVP section */}
-                        <RsvpButton 
-                            variant="page" 
-                            status={status}
-                            pending={pending}
-                            onClick={toggleRsvp}
-                        />
 
                         {/* hidden while loading and for cancelled events */}
                         {event.status === "active" && <CalendarButton eventId={event.id} />}
 
-                        <div className={styles.text}>{spotsLeft} spots left!</div>
+                        <button 
+                            className={styles.attendees}
+                            onClick={() =>
+                                navigate(`/events/${event.id}/eventattendees`)
+                            }
+                        >
+                            View Attendees
+                        </button>
                     </div>
 
                     {/* Cost section */}

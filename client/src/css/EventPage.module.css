@@ -144,6 +144,24 @@
     color: black;
 }
 
+.attendees {
+    width: 140px;
+    height: 40px;
+
+    font-weight: 400;
+    color: rgb(157, 157, 157);
+    border: 1px solid rgb(157, 157, 157);
+    background-color: rgb(246, 246, 246);
+}
+
+.attendees:hover {
+    border: 1px solid rgb(143, 143, 143);
+}
+
+.attendees:active {
+    background-color: rgb(208, 208, 208);
+}
+
 @media (min-width: 950px) {
     .outerContainer {
         flex-direction: row;
