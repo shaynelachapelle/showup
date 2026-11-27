@@ -27,56 +27,6 @@
     margin-bottom: 10px;
 }
 
-.subheading {
-    font-size: 13px;
-    font-weight: 600;
-    color: rgb(107, 107, 107);
-
-    margin-bottom: 10px;
-}
-
-.copyRow {
-    display: flex;
-    gap: 10px;
-
-    width: 100%;
-
-    margin-bottom: 10px;
-}
-
-.link {
-    background-color: rgb(248, 248, 248);
-    border-radius: 8px;
-    color: black;
-    padding: 0px 4px;
-
-    height: 30px;
-    width: 80%;
-
-    border: 1px solid rgb(163, 163, 163);
-}
-
-.copyButton {
-    height: 32px;
-    width: 20%;
-
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(177, 177, 177);
-
-    color: rgb(120, 120, 120);
-    font-weight: 400;
-    font-size: 13px;
-}
-
-.copyButton:hover {
-    border: 1px solid rgb(177, 177, 177);
-}
-
-.copyButton:active {
-    border: 1px solid rgb(177, 177, 177);
-    background-color: rgb(184, 184, 184);
-}
-
 .addButton {
     height: 30px;
     width: 100%;
