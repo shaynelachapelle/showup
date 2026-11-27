@@ -51,7 +51,7 @@ function App() {
         <Route path="/organization/:organizationId" element={<OrganizationPage />} />
         <Route path="/myclubs" element={<MyClubs />} />
         <Route path="/joinclub" element={<JoinClub/>} />
-        <Route path="postevent" element={<PostEvent/>} />
+        <Route path="/organization/:organizationId/postevent" element={<PostEvent />} />
         <Route path="/events/:id/eventattendees" element={<EventAttendees />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/events/:id/edit" element={<EditEvent />} />

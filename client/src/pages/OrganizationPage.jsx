@@ -261,7 +261,15 @@ export default function OrganizationPage() {
           </div>
 
           <div className={styles.headerActions}>
-            {/* TODO: Connect Post Event functionality for organization admins */}
+            {/* Only organization administrators can post events */}
+            {isOwner && (
+              <Link
+                to={`/organization/${organizationId}/postevent`}
+                className={styles.primaryBtn}
+              >
+                Post Event
+              </Link>
+            )}
 
             {/* Only organization administrators can edit club information */}
             {isOwner && (
