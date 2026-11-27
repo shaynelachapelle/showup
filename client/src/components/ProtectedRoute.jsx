@@ -4,7 +4,6 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function ProtectedRoute() {
-  return <Outlet />;
   const { user } = useAuth();
   const location = useLocation();
 
