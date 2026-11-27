@@ -26,11 +26,13 @@ import MyClubs from './pages/MyClubs';
 import JoinClub from './pages/JoinClub.jsx';
 import PostEvent from './pages/PostEvent.jsx';
 import EventAttendees from './pages/EventAttendees.jsx';
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/contactus" element={<ContactUs />} />
 
     <Route element={<LogoLayout />}>
       <Route path="/login" element={<Login />} />

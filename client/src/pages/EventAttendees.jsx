@@ -1,13 +1,12 @@
 // Author: Rachel Ha
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import styles from '../css/EventAttendees.module.css';
 
-// TODO (Backend): Replace MOCK_EVENT and INITIAL_PEOPLE with a GET request using `id` from useParams()
+// TODO (Backend): Replace MOCK_EVENT and INITIAL_ATTENDEES with a GET request using `id` from useParams()
 // e.g., GET /api/events/:id/attendees
 // Expected event fields: { id, title, organization, date, location, capacity }
-// Expected people fields: [{ id, name, initials, isAttendee, isMember, role, checkedIn }]
-// Temporary mock data until connected to MongoDB
+// Expected attendee fields: [{ id, name, initials, checkedIn }]
 const MOCK_EVENT = {
   id: '1',
   title: 'Winter Technical Interview Workshop',
@@ -17,34 +16,41 @@ const MOCK_EVENT = {
   capacity: 60
 };
 
-const INITIAL_PEOPLE = [
-  { id: 1, name: 'Rachel Ha', initials: 'RH', isAttendee: true, isMember: true, role: 'Exec', checkedIn: true },
-  { id: 2, name: 'Adam Ahmed', initials: 'AA', isAttendee: true, isMember: true, role: 'Member', checkedIn: true },
-  { id: 3, name: 'Grace Yuzwin', initials: 'GY', isAttendee: true, isMember: false, role: 'Guest', checkedIn: false },
-  { id: 4, name: 'Shayne Lachapelle', initials: 'SL', isAttendee: true, isMember: false, role: 'Guest', checkedIn: false },
-  { id: 5, name: 'Joseph Vybihal', initials: 'JV', isAttendee: false, isMember: true, role: 'Exec', checkedIn: false },
-  { id: 6, name: 'Kim Jong', initials: 'KJ', isAttendee: false, isMember: true, role: 'Member', checkedIn: false }
+const INITIAL_ATTENDEES = [
+  { id: 1, name: 'Rachel Ha', initials: 'RH', checkedIn: true },
+  { id: 2, name: 'Adam Ahmed', initials: 'AA', checkedIn: true },
+  { id: 3, name: 'Grace Yuzwin', initials: 'GY', checkedIn: false },
+  { id: 4, name: 'Shayne Lachapelle', initials: 'SL', checkedIn: false }
 ];
 
 export default function EventAttendees() {
   const { id } = useParams();
-  const [people, setPeople] = useState(INITIAL_PEOPLE);
-  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'attendees' | 'members'
+  const location = useLocation();
 
-  const attendeesCount = people.filter((p) => p.isAttendee).length;
-  const membersCount = people.filter((p) => p.isMember).length;
-  const checkedInCount = people.filter((p) => p.isAttendee && p.checkedIn).length;
+  // Checks if the user came from Owner View or Student View (defaults to Student View)
+  // TODO (Backend): Verify if the logged-in user owns this club
+  const isOwner = location.state?.isOwner ?? false;
 
-  const filteredPeople = people.filter((person) => {
-    if (activeTab === 'attendees') return person.isAttendee;
-    if (activeTab === 'members') return person.isMember;
+  const [attendees, setAttendees] = useState(INITIAL_ATTENDEES);
+  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'checkedIn' | 'notCheckedIn'
+
+  const checkedInCount = attendees.filter((p) => p.checkedIn).length;
+  const notCheckedInCount = attendees.length - checkedInCount;
+
+  // Students see everyone going; owners can filter by check-in status
+  const filteredAttendees = attendees.filter((person) => {
+    if (!isOwner) return true;
+    if (activeTab === 'checkedIn') return person.checkedIn;
+    if (activeTab === 'notCheckedIn') return !person.checkedIn;
     return true;
   });
 
   const toggleCheckIn = (personId) => {
-    // TODO (Backend): Persist check-in status in MongoDB
+    if (!isOwner) return;
+
+    // TODO (Backend): Save check-in status in MongoDB
     // e.g., PATCH /api/events/:id/attendees/:personId with { checkedIn: !currentStatus }
-    setPeople((prev) =>
+    setAttendees((prev) =>
       prev.map((p) =>
         p.id === personId ? { ...p, checkedIn: !p.checkedIn } : p
       )
@@ -54,13 +60,14 @@ export default function EventAttendees() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.pageWrapper}>
-        {/* Back Link & Event Header */}
+        {/* Back Link */}
         <div className={styles.topBar}>
           <Link to={id ? `/events/${id}` : '/allevents'} className={styles.backLink}>
             ← Back to Event
           </Link>
         </div>
 
+        {/* Event Header & Stats */}
         <header className={styles.headerCard}>
           <div>
             <p className={styles.orgName}>{MOCK_EVENT.organization}</p>
@@ -73,94 +80,89 @@ export default function EventAttendees() {
           <div className={styles.statsRow}>
             <div className={styles.statBox}>
               <span className={styles.statNumber}>
-                {attendeesCount}/{MOCK_EVENT.capacity}
+                {attendees.length}/{MOCK_EVENT.capacity}
               </span>
               <span className={styles.statLabel}>RSVP&apos;d</span>
             </div>
-            <div className={styles.statBox}>
-              <span className={styles.statNumber}>{checkedInCount}</span>
-              <span className={styles.statLabel}>Checked In</span>
-            </div>
-            <div className={styles.statBox}>
-              <span className={styles.statNumber}>{membersCount}</span>
-              <span className={styles.statLabel}>Club Members</span>
-            </div>
+
+            {isOwner && (
+              <div className={styles.statBox}>
+                <span className={styles.statNumber}>{checkedInCount}</span>
+                <span className={styles.statLabel}>Checked In</span>
+              </div>
+            )}
           </div>
         </header>
 
-        {/* Tabs & Roster List */}
+        {/* Tabs & Attendee List */}
         <section className={styles.rosterCard}>
           <div className={styles.tabsBar}>
-            <button
-              type="button"
-              onClick={() => setActiveTab('all')}
-              className={
-                activeTab === 'all'
-                  ? `${styles.tabBtn} ${styles.tabBtnActive}`
-                  : styles.tabBtn
-              }
-            >
-              All ({people.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('attendees')}
-              className={
-                activeTab === 'attendees'
-                  ? `${styles.tabBtn} ${styles.tabBtnActive}`
-                  : styles.tabBtn
-              }
-            >
-              Attendees ({attendeesCount})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('members')}
-              className={
-                activeTab === 'members'
-                  ? `${styles.tabBtn} ${styles.tabBtnActive}`
-                  : styles.tabBtn
-              }
-            >
-              Club Members ({membersCount})
-            </button>
+            {isOwner ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('all')}
+                  className={
+                    activeTab === 'all'
+                      ? `${styles.tabBtn} ${styles.tabBtnActive}`
+                      : styles.tabBtn
+                  }
+                >
+                  All ({attendees.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('checkedIn')}
+                  className={
+                    activeTab === 'checkedIn'
+                      ? `${styles.tabBtn} ${styles.tabBtnActive}`
+                      : styles.tabBtn
+                  }
+                >
+                  Checked In ({checkedInCount})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('notCheckedIn')}
+                  className={
+                    activeTab === 'notCheckedIn'
+                      ? `${styles.tabBtn} ${styles.tabBtnActive}`
+                      : styles.tabBtn
+                  }
+                >
+                  Not Checked In ({notCheckedInCount})
+                </button>
+              </>
+            ) : (
+              <span className={`${styles.tabBtn} ${styles.tabBtnActive}`}>
+                Attendees ({attendees.length})
+              </span>
+            )}
           </div>
 
-          {filteredPeople.length === 0 ? (
+          {filteredAttendees.length === 0 ? (
             <div className={styles.emptyState}>
-              No one listed in this category yet.
+              No attendees in this category yet.
             </div>
           ) : (
             <div className={styles.peopleList}>
-              {filteredPeople.map((person) => (
+              {filteredAttendees.map((person) => (
                 <div key={person.id} className={styles.personRow}>
                   <div className={styles.personInfo}>
-                    <div
-                      className={
-                        person.isMember
-                          ? styles.avatarMember
-                          : styles.avatarGuest
-                      }
-                    >
+                    {/* Swap to styles.avatarMember if you prefer red circles over gray */}
+                    <div className={styles.avatarGuest}>
                       {person.initials}
                     </div>
                     <div>
                       <div className={styles.nameLine}>
                         <h3 className={styles.personName}>{person.name}</h3>
-                        {person.isMember && (
-                          <span className={styles.memberBadge}>
-                            {person.role === 'Exec' ? 'Club Exec' : 'Club Member'}
-                          </span>
-                        )}
-                        {person.isAttendee && (
-                          <span className={styles.rsvpBadge}>RSVP&apos;d</span>
-                        )}
+                        <span className={styles.rsvpBadge}>RSVP&apos;d</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className={styles.rowActions}>
-                    {person.isAttendee ? (
+                  {isOwner && (
+                    <div className={styles.rowActions}>
                       <button
                         type="button"
                         onClick={() => toggleCheckIn(person.id)}
@@ -172,10 +174,8 @@ export default function EventAttendees() {
                       >
                         {person.checkedIn ? 'Checked In ✓' : 'Check In'}
                       </button>
-                    ) : (
-                      <span className={styles.notRsvpdLabel}>Not RSVP&apos;d</span>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
