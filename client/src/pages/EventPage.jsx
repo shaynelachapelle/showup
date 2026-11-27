@@ -199,7 +199,8 @@ function EventPage() {
                             onClick={toggleRsvp}
                         />
 
-                        <CalendarButton />
+                        {/* hidden while loading and for cancelled events */}
+                        {event.status === "active" && <CalendarButton eventId={event.id} />}
 
                         <div className={styles.text}>{spotsLeft} spots left!</div>
                     </div>

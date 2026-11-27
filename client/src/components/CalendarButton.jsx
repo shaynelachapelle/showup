@@ -1,4 +1,4 @@
-// Author: Grace Yuzwin
+// Author: Grace Yuzwin, Shayne Lachapelle
 
 // css styling
 import styles from "../css/CalendarButton.module.css"
@@ -6,22 +6,31 @@ import styles from "../css/CalendarButton.module.css"
 // state
 import { useState } from "react";
 
-function CalendarButton() {
+// helper functions
+import { downloadIcs } from "../helper-functions/calendar";
+
+function CalendarButton({ eventId }) {
     const [open, setOpen] = useState(false);
 
-    {/* TO BE IMPLEMENTED */}
+    // The server redirects to a pre-filled Google Calendar event.
     const addToGoogleCalendar = () => {
-        
+        setOpen(false);
+        window.open(`/api/events/${eventId}/google-calendar`, "_blank", "noopener");
     };
-    {/* TO BE IMPLEMENTED */}
-    const downloadICS = () => {
-        
+
+    const downloadICS = async () => {
+        setOpen(false);
+        try {
+            await downloadIcs(`/api/events/${eventId}/calendar.ics`, "showup-event.ics");
+        } catch (err) {
+            alert(err.message);
+        }
     };
 
     return (
         <div>
-            <button 
-                className={styles.main} 
+            <button
+                className={styles.main}
                 onClick={() => setOpen(!open)}
             >
                 Add to Calendar ▼

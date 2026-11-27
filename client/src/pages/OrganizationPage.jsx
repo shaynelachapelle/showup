@@ -4,14 +4,13 @@ import { useParams, Link } from 'react-router-dom';
 import styles from '../css/OrganizationPage.module.css';
 
 // TODO (Backend): Replace MOCK_CLUBS with GET /api/organizations/:organizationId
-// Expected club fields: { _id, name, initials, category, memberCount, email, description, ownerId, upcomingEvents: [{ id, title, date, location, rsvpCount }] }
+// Expected club fields: { _id, name, initials, category, email, description, ownerId, upcomingEvents: [{ id, title, date, location, rsvpCount }] }
 const MOCK_CLUBS = {
   csus: {
     id: 'csus',
     name: 'Computer Science Undergraduate Society',
     initials: 'CSUS',
     category: 'Academic',
-    memberCount: 420,
     email: 'csus@cs.mcgill.ca',
     description:
       'Representing all undergraduate Computer Science students at McGill. We host tech talks, hackathons, study nights, and social mixers throughout the semester.',
@@ -25,7 +24,6 @@ const MOCK_CLUBS = {
     name: 'DriveSafe',
     initials: 'DS',
     category: 'Service',
-    memberCount: 115,
     email: 'drivesafe@ssmu.ca',
     description:
       'A free student-run safe ride service getting McGill students home safely anywhere on the Island of Montreal.',
@@ -38,7 +36,6 @@ const MOCK_CLUBS = {
     name: 'McGill Esports',
     initials: 'ME',
     category: 'Gaming',
-    memberCount: 260,
     email: 'esports@ssmu.ca',
     description:
       'McGill’s competitive and casual gaming community. Join us for weekly watch parties, in-house tournaments, and collegiate teams.',
@@ -108,7 +105,7 @@ export default function OrganizationPage() {
               </div>
               <h1 className={styles.clubName}>{club.name}</h1>
               <p className={styles.clubMeta}>
-                {club.memberCount} members • {club.email}
+                {club.email}
               </p>
             </div>
           </div>
@@ -128,21 +125,16 @@ export default function OrganizationPage() {
                 </button>
               </>
             ) : (
-              <>
-                <button
-                  type="button"
-                  className={isFollowing ? styles.followingBtn : styles.primaryBtn}
-                  onClick={() => {
-                    // TODO (Backend): POST/DELETE /api/organizations/:organizationId/follow
-                    setIsFollowing((prev) => !prev);
-                  }}
-                >
-                  {isFollowing ? 'Following ✓' : 'Follow'}
-                </button>
-                <Link to="/joinclub" className={styles.secondaryBtn}>
-                  Join Club
-                </Link>
-              </>
+              <button
+                type="button"
+                className={isFollowing ? styles.followingBtn : styles.primaryBtn}
+                onClick={() => {
+                  // TODO (Backend): POST/DELETE /api/organizations/:organizationId/follow
+                  setIsFollowing((prev) => !prev);
+                }}
+              >
+                {isFollowing ? 'Following ✓' : 'Follow'}
+              </button>
             )}
           </div>
         </header>
@@ -208,20 +200,18 @@ export default function OrganizationPage() {
                   <div>
                     <h3 className={styles.eventTitle}>{event.title}</h3>
                     <p className={styles.eventMeta}>
-                      {event.date} • {event.location}
-                      {isOwner && ` • ${event.rsvpCount} RSVP'd`}
+                      {event.date} • {event.location} • {event.rsvpCount} RSVP'd
                     </p>
                   </div>
 
                   <div className={styles.eventActions}>
-                    {isOwner && (
-                      <Link
-                        to={`/events/${event.id}/eventattendees`}
-                        className={styles.attendeesBtn}
-                      >
-                        Attendees
-                      </Link>
-                    )}
+                    <Link
+                      to={`/events/${event.id}/eventattendees`}
+                      state={{ isOwner }}
+                      className={styles.attendeesBtn}
+                    >
+                      Attendees
+                    </Link>
                     <Link to={`/events/${event.id}`} className={styles.viewEventBtn}>
                       View Event
                     </Link>
