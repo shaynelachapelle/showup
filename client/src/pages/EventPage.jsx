@@ -46,6 +46,8 @@ function EventPage() {
             alert("Event cancelled successfully.");
             // go to all events
             navigate(`/events/${id}`);
+            // reload to show cancelled
+            window.location.reload();
 
         } catch (err) {
             // log error
