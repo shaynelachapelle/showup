@@ -93,7 +93,7 @@ function SearchResults() {
         return (
         <div className={styles.page}>
             <div className={styles.subheading}>No matches found for: {query}</div>
-            <Link to="/allevents" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
+            <Link to="/explore" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
         </div>
     )
     }
@@ -102,7 +102,7 @@ function SearchResults() {
         <div className={styles.page}>
             <div className={styles.content}>
                 {/* link to go back */}
-                <Link to="/allevents" className={styles.link}>Back to all events...</Link>
+                <Link to="/explore" className={styles.link}>Back to all events...</Link>
 
                 {/* events section */}
                 <div className={styles.heading}>Events:</div>
@@ -112,7 +112,7 @@ function SearchResults() {
                 {events.length === 0 ? (
                     <>
                         <div className={styles.subheading}>No event matches found for: {query}</div>
-                        <Link to="/allevents" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
+                        <Link to="/explore" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
                     </>
                 ) : (
                     <>
@@ -173,7 +173,7 @@ function SearchResults() {
                 {organizations.length === 0 ? (
                     <>
                         <div className={styles.subheading}>No organization matches found for: {query}</div>
-                        <Link to="/allevents" className={styles.moreEvents}>Check out some upcoming events here!</Link>
+                        <Link to="/explore" className={styles.moreEvents}>Check out some upcoming events here!</Link>
                     </>
 
                 ) : (
