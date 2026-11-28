@@ -87,7 +87,7 @@ function Home() {
             <EventRow
                 title="Check Out Some Events!"
                 events={moreEvents}
-                linkTo="/allevents"
+                linkTo="/explore"
                 emptyMessage="You are RSVP'd to all events!!"
                 moreMessage="Find more events!"
             />

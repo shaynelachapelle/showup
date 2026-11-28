@@ -45,7 +45,7 @@ function EventPage() {
             // alert that it was cancelled successfully
             alert("Event cancelled successfully.");
             // go to all events
-            navigate("/myevents");
+            navigate(`/events/${id}`);
 
         } catch (err) {
             // log error
@@ -182,11 +182,23 @@ function EventPage() {
                 0,
                 event.capacity - attendeeCount
             ).toString();
+    
+    // see if event is cancelled
+    const cancelled = 
+        (event.status === "cancelled") 
+            ? true : false
 
 
     return (
         <div className={styles.page}>
-            <Link to="/allevents" className={styles.back}>Go to all events...</Link>
+            <Link to="/explore" className={styles.back}>← explore</Link>
+
+            {/* if the event is cancelled, show that */}
+            {cancelled && (
+                <div className={styles.cancelledBanner}>
+                    EVENT CANCELLED
+                </div>
+            )}
 
             {/* if the user is an admin, show the edit button */}
             {isAdmin && (

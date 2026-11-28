@@ -113,6 +113,9 @@ function AllEvents() {
     return (
     <div>
         <div className={styles.page}>
+            {/* All Clubs section */}
+            <AllClubs />
+            
 
             {/* page title */}
             <div className={styles.title}>All Events</div>
@@ -122,37 +125,34 @@ function AllEvents() {
 
 
             {/* Athletics and Recreation row */}
-            <EventRow title="Athletics and Recreation" events={athleticsEvents} linkTo="/allevents/Athletics+and+Recreation" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Athletics and Recreation" events={athleticsEvents} linkTo="/explore/Athletics+and+Recreation" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Charity and Environment row */}
-            <EventRow title="Charity and Environment" events={charityEvents} linkTo="/allevents/Charity+and+Environment" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Charity and Environment" events={charityEvents} linkTo="/explore/Charity+and+Environment" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Community Outreach and Volunteering row */}
-            <EventRow title="Community Outreach and Volunteering" events={communityEvents} linkTo="/allevents/Community+Outreach+and+Volunteering" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Community Outreach and Volunteering" events={communityEvents} linkTo="/explore/Community+Outreach+and+Volunteering" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Fine Arts, Dance and Performance row */}
-            <EventRow title="Fine Arts, Dance and Performance" events={artsEvents} linkTo="/allevents/Fine Arts,+Dance+and+Performance" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Fine Arts, Dance and Performance" events={artsEvents} linkTo="/explore/Fine Arts,+Dance+and+Performance" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Health and Wellness row */}
-            <EventRow title="Health and Wellness" events={healthEvents} linkTo="/allevents/Health+and+Wellness" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Health and Wellness" events={healthEvents} linkTo="/explore/Health+and+Wellness" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Language and Publications row */}
-            <EventRow title="Language and Publications" events={languageEvents} linkTo="/allevents/Language+and+Publications" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Language and Publications" events={languageEvents} linkTo="/explore/Language+and+Publications" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Leisure and Hobbies row */}
-            <EventRow title="Leisure and Hobbies" events={leisureEvents} linkTo="/allevents/Leisure+and+Hobbies" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Leisure and Hobbies" events={leisureEvents} linkTo="/explore/Leisure+and+Hobbies" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Networking and Leadership row */}
-            <EventRow title="Networking and Leadership" events={networkEvents} linkTo="/allevents/Networking+and+Leadership" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Networking and Leadership" events={networkEvents} linkTo="/explore/Networking+and+Leadership" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Political and Social Activism row */}
-            <EventRow title="Political and Social Activism" events={politicalEvents} linkTo="/allevents/Political+and+Social+Activism" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
+            <EventRow title="Political and Social Activism" events={politicalEvents} linkTo="/explore/Political+and+Social+Activism" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
 
             {/* Religion and Culture row */}
-            <EventRow title="Religion and Culture" events={religionEvents} linkTo="/allevents/Religion+and+Culture" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
-
-            {/* All Clubs section */}
-            <AllClubs />
+            <EventRow title="Religion and Culture" events={religionEvents} linkTo="/explore/Religion+and+Culture" emptyMessage="There are currently no events in this category!" moreMessage="More events"/>
         </div>
     </div>
     );

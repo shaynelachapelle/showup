@@ -38,6 +38,7 @@ function EventColumn({ heading, events, emptyMessage}) {
                 cost={event.cost}
                 can_rsvp={event.can_rsvp}
                 isRsvped={event.isRsvped}
+                eventStatus={event.status}
             />
         ))} 
         </div>

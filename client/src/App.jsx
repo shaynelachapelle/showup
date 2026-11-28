@@ -43,8 +43,8 @@ function App() {
     <Route element={<ProtectedRoute />}>
     <Route element={<NavLayout />}>
         <Route path="/home" element={<Home />} />
-        <Route path="/allevents" element={<AllEvents />} />
-        <Route path="/allevents/:category" element={<CategorizedEvents />} />
+        <Route path="/explore" element={<AllEvents />} />
+        <Route path="/explore/:category" element={<CategorizedEvents />} />
         <Route path="/myorgs" element={<MyOrgs />} />
         <Route path="/myevents" element={<MyEvents />} />
         <Route path="/events/:id" element={<EventPage />} />
