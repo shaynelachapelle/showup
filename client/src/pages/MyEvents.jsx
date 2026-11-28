@@ -53,19 +53,19 @@ function MyEvents() {
         event => getEventCategory(event.date) === "later"
     );
 
-    // check filter to see if we want only RSVP'd events
+    // check filter to see if we want only RSVP'd events that are not cancelled
     if (filter === "RSVP") {
 
         todayEvents = todayEvents.filter(
-            event => event.isRsvped 
+            event => (event.isRsvped && (event.status !== "cancelled"))
         );
 
         thisWeekEvents = thisWeekEvents.filter(
-            event => event.isRsvped
+            event => (event.isRsvped && (event.status !== "cancelled"))
         );
 
         laterEvents = laterEvents.filter(
-            event => event.isRsvped
+            event => (event.isRsvped && (event.status !== "cancelled"))
         );
     // then all not RSVP'd
     } else if ((filter === "not RSVP")) {

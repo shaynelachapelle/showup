@@ -26,10 +26,10 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
             ? "Free!"
             : "$" + cost.toString();
     
-    // if the event is canceled, make the background red
+    // if the event is cancelled, make the background red
     const activity =
-        (eventStatus === "canceled")
-            ? "canceled" : "active";
+        (eventStatus === "cancelled")
+            ? "cancelled" : "active";
 
     // so that we can make the card go to the event too
     const navigate = useNavigate();
@@ -72,16 +72,21 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                     </div>
                 </div>
                 
-                {/* RSVP button and put it on RHS */}
+                {/* RSVP button or CANCELLED message and put it on RHS */}
                 <div 
                     className={styles.Rsvp}
                     onClick={(e) => e.stopPropagation()}
                 > 
-                    <RsvpButton 
-                        variant="page" 
+                    <RsvpButton
+                        variant="page"
                         status={status}
                         pending={pending}
                         onClick={toggleRsvp}
+                        label={
+                            (activity === "cancelled" && status === "going")
+                                ? "CANCELLED"
+                                : undefined
+                        }
                     />
                 </div>
 

@@ -46,6 +46,8 @@ function EventPage() {
             alert("Event cancelled successfully.");
             // go to all events
             navigate(`/events/${id}`);
+            // reload to show cancelled
+            window.location.reload();
 
         } catch (err) {
             // log error
@@ -208,7 +210,8 @@ function EventPage() {
                         Edit Event
                     </Link>
 
-                    {attendeeCount > 0 && (
+                    {/* only show cancel button if the event is not cancelled */}
+                    {attendeeCount > 0 && !cancelled && (
                         <button className={styles.adminButtons} onClick={cancelEvent}>
                             Cancel Event
                         </button>
@@ -241,17 +244,19 @@ function EventPage() {
                         </Link>
                     </div>
 
-                    {/* RSVP section */}
-                    <div className={`${styles.divider} ${styles.containerCentered}`}>
-                        <RsvpButton 
-                            variant="page" 
-                            status={status}
-                            pending={pending}
-                            onClick={toggleRsvp}
-                        />
-                            
-                        <div className={styles.text}>{spotsLeft} spots left!</div>
-                    </div>
+                    {/* Only show attendees to admin */}
+                    {isAdmin && 
+                        <div className={`${styles.divider}`}>
+                            <button 
+                                className={styles.attendees}
+                                onClick={() =>
+                                    navigate(`/events/${event.id}/eventattendees`)
+                                }
+                            >
+                                View Attendees
+                            </button>
+                        </div>
+                    }
 
                     {/* the flexbox for when and where */}
                     <div className={`${styles.divider} ${styles.container}`}>
@@ -271,19 +276,27 @@ function EventPage() {
                         </div>
                     </div>
 
+                    {/* RSVP section */}
                     <div className={`${styles.divider} ${styles.containerCentered}`}>
+
+                        <RsvpButton
+                        variant="page"
+                        status={status}
+                        pending={pending}
+                        onClick={toggleRsvp}
+                        label={
+                            (cancelled && status == "going")
+                                ? "CANCELLED"
+                                : undefined
+                        }
+                        />
 
                         {/* hidden while loading and for cancelled events */}
                         {event.status === "active" && <CalendarButton eventId={event.id} />}
 
-                        <button 
-                            className={styles.attendees}
-                            onClick={() =>
-                                navigate(`/events/${event.id}/eventattendees`)
-                            }
-                        >
-                            View Attendees
-                        </button>
+                        {/* only show sport left if the event has not been cancelled */}
+                        {!cancelled && (<div className={styles.text}>{spotsLeft} spots left!</div>)}
+
                     </div>
 
                     {/* Cost section */}
