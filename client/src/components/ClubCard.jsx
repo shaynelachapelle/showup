@@ -2,18 +2,16 @@
 import { Link } from 'react-router-dom';
 import styles from '../css/ClubCard.module.css';
 
-// TODO (Backend): Pass a club object from MongoDB with `_id` (or `id`) and `name`.
-// Optional fields: `initials`, `category`, `imageUrl`.
-// Example: <ClubCard club={{ _id: "1", name: "CSUS", initials: "CS", category: "Academic", imageUrl: "" }} />
 export default function ClubCard({ club }) {
-  const clubId = club._id || club.id;
+  const clubId = club.id || club._id;
+  const clubImage = club.image || club.imageUrl;
 
   return (
     <Link to={`/organization/${clubId}`} className={styles.card}>
       <div className={styles.avatarWrapper}>
-        {club.imageUrl ? (
+        {clubImage ? (
           <img
-            src={club.imageUrl}
+            src={clubImage}
             alt={`${club.name} logo`}
             className={styles.avatarImg}
           />

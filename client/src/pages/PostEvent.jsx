@@ -1,31 +1,18 @@
-// Author: Rachel Ha
-import { useState } from 'react';
+// Author: Rachel Ha, Adam Ahmed
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { api } from '../api/client';
 import styles from '../css/PostEvent.module.css';
-
-const ORGANIZATIONS = [
-  "Computer Science Undergraduate Society (CSUS)",
-  "DriveSafe",
-  "McGill Esports",
-  "McGill Students' Culinary Society",
-  "Canadian Asian Society"
-];
-
-const CATEGORIES = [
-  "Academic",
-  "Social",
-  "Workshop",
-  "Networking",
-  "Sports & Wellness",
-  "Other"
-];
 
 const INITIAL_FORM = {
   title: '',
-  organization: ORGANIZATIONS[0],
-  category: CATEGORIES[0],
   date: '',
   time: '',
+  endDate: '',
+  endTime: '',
   location: '',
+  cost: '0',
+  capacity: '',
   imageUrl: '',
   description: ''
 };
@@ -57,41 +44,227 @@ function formatPreviewDate(dateStr, timeStr) {
 }
 
 export default function PostEvent() {
+  const { organizationId } = useParams();
+
+  // Event form and submission state
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
+  const [createdEventId, setCreatedEventId] = useState(null);
+
+  // Organization information and admin permissions
+  const [organization, setOrganization] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
+
+  // Loading, submission and error states
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+
+  // Retrieve the hosting organization and verify admin permissions
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadOrganization() {
+      setLoading(true);
+      setError('');
+      setOrganization(null);
+      setIsOwner(false);
+
+      // Reset the form when navigating to another organization
+      setFormData(INITIAL_FORM);
+      setSubmitted(false);
+      setCreatedEventId(null);
+      setSubmitError('');
+
+      try {
+        const [orgData, administeredOrgs] = await Promise.all([
+          api.get(`/api/orgs/${organizationId}`),
+          api.get('/api/orgs/administered')
+        ]);
+
+        if (ignore) return;
+
+        setOrganization(orgData);
+
+        // Check whether the user administers this specific organization
+        setIsOwner(
+          administeredOrgs.some((org) => org.id === organizationId)
+        );
+      } catch (err) {
+        if (!ignore) {
+          setError(err.message);
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadOrganization();
+
+    return () => {
+      ignore = true;
+    };
+  }, [organizationId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // Validate and publish the event through the backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: POST formData to your Node/MongoDB backend with fetch()
-    console.log('New event posted:', formData);
-    setSubmitted(true);
+
+    if (!isOwner || submitting) return;
+
+    setSubmitError('');
+    setSubmitting(true);
+
+    try {
+      // Convert the selected start date and time to ISO format
+      const start = new Date(`${formData.date}T${formData.time}`);
+
+      if (Number.isNaN(start.getTime())) {
+        throw new Error('Please enter a valid start date and time.');
+      }
+
+      // Prepare the event information required by the API
+      const eventData = {
+        orgId: organizationId,
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+        date: start.toISOString(),
+        location: formData.location.trim(),
+        cost: Number(formData.cost),
+        capacity: formData.capacity.trim() === ''
+          ? null
+          : Number(formData.capacity),
+        image: formData.imageUrl.trim() || null
+      };
+
+      // Validate the event cost
+      if (!Number.isFinite(eventData.cost) || eventData.cost < 0) {
+        throw new Error('Cost must be a non-negative number.');
+      }
+
+      // Validate the optional capacity
+      if (
+        eventData.capacity !== null &&
+        (!Number.isSafeInteger(eventData.capacity) ||
+          eventData.capacity <= 0)
+      ) {
+        throw new Error('Capacity must be a positive whole number.');
+      }
+
+      // Include an end date and time if provided
+      if (formData.endDate || formData.endTime) {
+        if (!formData.endDate || !formData.endTime) {
+          throw new Error('Please provide both an end date and time.');
+        }
+
+        const end = new Date(
+          `${formData.endDate}T${formData.endTime}`
+        );
+
+        if (Number.isNaN(end.getTime()) || end <= start) {
+          throw new Error('End time must be after the start time.');
+        }
+
+        eventData.end = end.toISOString();
+      }
+
+      // Create the event in MongoDB through the API
+      const result = await api.post('/api/events', eventData);
+
+      setCreatedEventId(result.eventId);
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
+  // Reset the form to allow another event to be created
   const handleReset = () => {
     setFormData(INITIAL_FORM);
     setSubmitted(false);
+    setCreatedEventId(null);
+    setSubmitError('');
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className={styles.pageContainer}>
+        <p>Loading organization...</p>
+      </div>
+    );
+  }
+
+  // Organization retrieval error
+  if (error) {
+    return (
+      <div className={styles.pageContainer}>
+        <p>{error}</p>
+        <Link to="/myorgs">Back to My Organizations</Link>
+      </div>
+    );
+  }
+
+  // Prevent non-admins from accessing the event creation form
+  if (!isOwner) {
+    return (
+      <div className={styles.pageContainer}>
+        <p>Only organization administrators can post events.</p>
+        <Link to={`/organization/${organizationId}`}>
+          Back to Organization
+        </Link>
+      </div>
+    );
+  }
+
+  // Display confirmation after successfully publishing an event
   if (submitted) {
     return (
       <div className={styles.pageContainer}>
         <div className={styles.successCard}>
           <div className={styles.successIcon}>✓</div>
+
           <h1 className={styles.successTitle}>
             Event <span className={styles.highlight}>Published</span>
           </h1>
+
           <p className={styles.successSubtitle}>
-            <strong>{formData.title}</strong> hosted by {formData.organization} is now live on Showup.
+            <strong>{formData.title}</strong> hosted by{' '}
+            {organization.name} is now live on Showup.
           </p>
+
           <div className={styles.successActions}>
-            <button type="button" className={styles.submitBtn} onClick={handleReset}>
+            <Link
+              to={`/events/${createdEventId}`}
+              className={styles.submitBtn}
+            >
+              View Event
+            </Link>
+
+            <button
+              type="button"
+              className={styles.clearBtn}
+              onClick={handleReset}
+            >
               Post Another Event
             </button>
+
+            <Link
+              to={`/organization/${organizationId}`}
+              className={styles.clearBtn}
+            >
+              Back to Organization
+            </Link>
           </div>
         </div>
       </div>
@@ -131,39 +304,19 @@ export default function PostEvent() {
                 />
               </div>
 
+              {/* Display the organization hosting this event */}
               <div className={styles.fieldGroup}>
-                <label htmlFor="organization" className={styles.label}>Hosting Club</label>
-                <select
-                  id="organization"
-                  name="organization"
-                  value={formData.organization}
-                  onChange={handleChange}
-                  className={styles.input}
-                >
-                  {ORGANIZATIONS.map((org) => (
-                    <option key={org} value={org}>{org}</option>
-                  ))}
-                </select>
-              </div>
+                <label htmlFor="organization" className={styles.label}>
+                  Hosting Club
+                </label>
 
-              <div className={styles.fieldGroup}>
-                <span className={styles.label}>Category</span>
-                <div className={styles.pillGroup}>
-                  {CATEGORIES.map((cat) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => setFormData((prev) => ({ ...prev, category: cat }))}
-                      className={
-                        formData.category === cat
-                          ? `${styles.categoryPill} ${styles.categoryPillActive}`
-                          : styles.categoryPill
-                      }
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
+                <input
+                  id="organization"
+                  type="text"
+                  value={organization.name}
+                  readOnly
+                  className={styles.input}
+                />
               </div>
             </div>
 
@@ -199,6 +352,37 @@ export default function PostEvent() {
                 </div>
               </div>
 
+              {/* Optional event end date and time */}
+              <div className={styles.twoColRow}>
+                <div className={styles.fieldGroup}>
+                  <label htmlFor="endDate" className={styles.label}>
+                    End Date <span className={styles.optionalTag}>(Optional)</span>
+                  </label>
+                  <input
+                    id="endDate"
+                    name="endDate"
+                    type="date"
+                    value={formData.endDate}
+                    onChange={handleChange}
+                    className={styles.input}
+                  />
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label htmlFor="endTime" className={styles.label}>
+                    End Time <span className={styles.optionalTag}>(Optional)</span>
+                  </label>
+                  <input
+                    id="endTime"
+                    name="endTime"
+                    type="time"
+                    value={formData.endTime}
+                    onChange={handleChange}
+                    className={styles.input}
+                  />
+                </div>
+              </div>
+
               <div className={styles.fieldGroup}>
                 <label htmlFor="location" className={styles.label}>Location</label>
                 <input
@@ -211,6 +395,43 @@ export default function PostEvent() {
                   onChange={handleChange}
                   className={styles.input}
                 />
+              </div>
+
+              {/* Event cost and capacity */}
+              <div className={styles.twoColRow}>
+                <div className={styles.fieldGroup}>
+                  <label htmlFor="cost" className={styles.label}>
+                    Cost ($)
+                  </label>
+                  <input
+                    id="cost"
+                    name="cost"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    required
+                    value={formData.cost}
+                    onChange={handleChange}
+                    className={styles.input}
+                  />
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label htmlFor="capacity" className={styles.label}>
+                    Capacity <span className={styles.optionalTag}>(Optional)</span>
+                  </label>
+                  <input
+                    id="capacity"
+                    name="capacity"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="Unlimited"
+                    value={formData.capacity}
+                    onChange={handleChange}
+                    className={styles.input}
+                  />
+                </div>
               </div>
             </div>
 
@@ -248,16 +469,29 @@ export default function PostEvent() {
               </div>
             </div>
 
+            {/* Display any event submission errors */}
+            {submitError && (
+              <p role="alert" style={{ color: 'red' }}>
+                {submitError}
+              </p>
+            )}
+
             <div className={styles.formActions}>
               <button
                 type="button"
                 className={styles.clearBtn}
-                onClick={() => setFormData(INITIAL_FORM)}
+                onClick={handleReset}
+                disabled={submitting}
               >
                 Clear
               </button>
-              <button type="submit" className={styles.submitBtn}>
-                Publish Event
+
+              <button
+                type="submit"
+                className={styles.submitBtn}
+                disabled={submitting}
+              >
+                {submitting ? 'Publishing...' : 'Publish Event'}
               </button>
             </div>
           </form>
@@ -279,11 +513,10 @@ export default function PostEvent() {
                     <span>Showup</span>
                   </div>
                 )}
-                <span className={styles.previewCategoryBadge}>{formData.category}</span>
               </div>
 
               <div className={styles.previewBody}>
-                <p className={styles.previewOrg}>{formData.organization}</p>
+                <p className={styles.previewOrg}>{organization.name}</p>
                 <h3 className={styles.previewTitle}>
                   {formData.title.trim() || 'Your Event Title'}
                 </h3>
