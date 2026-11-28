@@ -72,7 +72,7 @@ export default function EventAttendees() {
         {/* Back Link */}
         <div className={styles.topBar}>
           <Link
-            to={id ? `/events/${id}` : '/allevents'}
+            to={id ? `/events/${id}` : '/explore'}
             className={styles.backLink}
           >
             ← Back to Event

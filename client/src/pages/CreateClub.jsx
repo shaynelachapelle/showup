@@ -78,7 +78,7 @@ export default function CreateClub() {
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
         <div className={styles.topBar}>
-          <Link to="/allevents" className={styles.backLink}>
+          <Link to="/explore" className={styles.backLink}>
             ← Back to Events &amp; Clubs
           </Link>
         </div>
@@ -178,7 +178,7 @@ export default function CreateClub() {
 
             {/* Submit & Cancel Actions */}
             <div className={styles.actions}>
-              <Link to="/allevents" className={styles.cancelBtn}>
+              <Link to="/explore" className={styles.cancelBtn}>
                 Cancel
               </Link>
               <button
