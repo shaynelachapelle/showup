@@ -12,6 +12,7 @@ import Landing from './pages/Landing.jsx';
 // Pages with just logo in nav bar
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
+import ContactUs from "./pages/ContactUs";
 
 // Pages with NavBar and Footer
 import Home from './pages/Home.jsx';
@@ -27,7 +28,7 @@ import JoinClub from './pages/JoinClub.jsx';
 import PostEvent from './pages/PostEvent.jsx';
 import EventAttendees from './pages/EventAttendees.jsx';
 import EditEvent from './pages/EditEvent.jsx'
-import ContactUs from "./pages/ContactUs";
+import CreateClub from './pages/CreateClub.jsx';
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
         <Route path="/organization/:organizationId" element={<OrganizationPage />} />
         <Route path="/myclubs" element={<MyClubs />} />
         <Route path="/joinclub" element={<JoinClub/>} />
-        <Route path="postevent" element={<PostEvent/>} />
+        <Route path="/createclub" element={<CreateClub />} />
+        <Route path="/organization/:organizationId/postevent" element={<PostEvent />} />
         <Route path="/events/:id/eventattendees" element={<EventAttendees />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/events/:id/edit" element={<EditEvent />} />

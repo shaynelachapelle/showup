@@ -3,64 +3,44 @@
 // components
 import EventRow from "../components/EventRow";
 import CategoryRow from "../components/CategoryRow";
-import ClubCard from "../components/ClubCard"; // <-- ADDED
+import ClubCard from "../components/ClubCard";
 
 // needed images
-import banner from "../assets/banner.jpg"
+import banner from "../assets/banner.jpg";
 
 // css styles
-import styles from "../css/Home.module.css"
+import styles from "../css/Home.module.css";
 
 // api needed
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
 
 function Home() {
-    // use state for the events
+    // use state for the events and followed clubs
     const [rsvpedEvents, setRsvpedEvents] = useState([]);
     const [moreEvents, setMoreEvents] = useState([]);
-
-    // ADDED: temporary mock data for "Your Clubs"
-    // TODO (Backend): Replace with api.get("/api/organizations/my-orgs?limit=10") inside loadEvents()
-    const [followedClubs, setFollowedClubs] = useState([
-        { _id: "csus", name: "Computer Science Undergraduate Society", initials: "CSUS", category: "Academic" },
-        { _id: "drivesafe", name: "DriveSafe", initials: "DS", category: "Service" },
-        { _id: "esports", name: "McGill Esports", initials: "ME", category: "Gaming" }
-    ]);
+    const [followedClubs, setFollowedClubs] = useState([]);
 
     // GET call
     useEffect(() => {
-
-        async function loadEvents() {
-
+        async function loadHomeData() {
             try {
+                const [rsvpData, allEventsData, myOrgsData] = await Promise.all([
+                    api.get("/api/events/my-rsvps?limit=10"),
+                    api.get("/api/events?limit=10"),
+                    api.get("/api/orgs/my-organizations?limit=10"),
+                ]);
 
-                // GET the rsvp data
-                const rsvpData =
-                    await api.get(
-                        "/api/events/my-rsvps?limit=10"
-                    );
-
-                // GET the all events data
-                const allEventsData =
-                    await api.get(
-                        "/api/events?limit=10"
-                    );
-
-                // set the events data
                 setRsvpedEvents(rsvpData);
                 setMoreEvents(allEventsData);
-
-            // if there is an error, log it
+                setFollowedClubs(myOrgsData);
             } catch (err) {
                 console.error(err);
             }
         }
 
-        loadEvents();
-
+        loadHomeData();
     }, []);
-
 
     return (
     <div className={styles.page}>
@@ -106,7 +86,6 @@ function Home() {
                 )}
             </section>
         </div>
-    </div>
     );
 }
 

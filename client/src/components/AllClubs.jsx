@@ -1,8 +1,9 @@
-// Author: Rachel Ha
+// Author: Rachel Ha, Adam Ahmed
 import { useEffect, useState } from "react";
 import ClubCard from "./ClubCard";
 import styles from "../css/AllClubs.module.css";
 import { api } from "../api/client";
+import { Link } from "react-router-dom";
 
 // List of categories for the dropdown filter
 const CATEGORIES = [
@@ -19,19 +20,11 @@ const CATEGORIES = [
     "Religion and Culture"
 ];
 
-// Fake clubs for testing until the backend is connected
-const MOCK_CLUBS = [
-    { _id: "csus", name: "Computer Science Undergraduate Society", initials: "CSUS", category: "Networking and Leadership" },
-    { _id: "drivesafe", name: "DriveSafe", initials: "DS", category: "Community Outreach and Volunteering" },
-    { _id: "esports", name: "McGill Esports", initials: "ME", category: "Leisure and Hobbies" },
-    { _id: "outdoors", name: "McGill Outdoors Club", initials: "MOC", category: "Athletics and Recreation" },
-    { _id: "dance", name: "McGill Dance Pack", initials: "MDP", category: "Fine Arts, Dance and Performance" },
-    { _id: "green", name: "McGill Sustainability Network", initials: "MSN", category: "Charity and Environment" }
-];
-
 export default function AllClubs() {
     // Save the list of clubs, search text, and selected category
-    const [clubs, setClubs] = useState(MOCK_CLUBS);
+    const [clubs, setClubs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [clubSearch, setClubSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -39,13 +32,29 @@ export default function AllClubs() {
     useEffect(() => {
         async function loadClubs() {
             try {
-                // Backend TODO: uncomment these 2 lines when the clubs API is ready
-                // const clubsData = await api.get("/api/organizations");
-                // setClubs(clubsData);
+                const allClubs = [];
+                let page = 1;
+                let totalPages = 1;
+
+                do {
+                    const data = await api.get(
+                        `/api/orgs?page=${page}&limit=100`
+                    );
+
+                    allClubs.push(...data.organizations);
+                    totalPages = data.totalPages;
+                    page++;
+                } while (page <= totalPages);
+
+                setClubs(allClubs);
             } catch (err) {
                 console.error(err);
+                setError("Unable to load clubs.");
+            } finally {
+                setLoading(false);
             }
         }
+
         loadClubs();
     }, []);
 
@@ -58,7 +67,13 @@ export default function AllClubs() {
 
     return (
         <div className={styles.clubsSection}>
-            <h2 className={styles.clubsTitle}>All Clubs</h2>
+            <div className={styles.clubsHeader}>
+                <h2 className={styles.clubsTitle}>All Clubs</h2>
+
+                <Link to="/createclub" className={styles.createClubBtn}>
+                    + Make a Club
+                </Link>
+            </div>
 
             {/* Search bar and category dropdown */}
             <div className={styles.clubFilters}>
@@ -80,13 +95,17 @@ export default function AllClubs() {
                 </select>
             </div>
 
-            {/* Show a message if no clubs match, otherwise show the club cards */}
-            {filteredClubs.length === 0 ? (
+            {/* Show loading, error, empty state, or club cards */}
+            {loading ? (
+                <p className={styles.emptyClubs}>Loading clubs...</p>
+            ) : error ? (
+                <p className={styles.emptyClubs}>{error}</p>
+            ) : filteredClubs.length === 0 ? (
                 <p className={styles.emptyClubs}>No clubs match your search.</p>
             ) : (
                 <div className={styles.clubsGrid}>
                     {filteredClubs.map((club) => (
-                        <ClubCard key={club._id || club.id} club={club} />
+                        <ClubCard key={club.id} club={club} />
                     ))}
                 </div>
             )}
