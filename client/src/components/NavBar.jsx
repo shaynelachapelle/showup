@@ -42,14 +42,14 @@ function NavBar() {
                     </NavLink>
 
                     <NavLink
-                        to="/allevents"
+                        to="/explore"
                         className={({ isActive }) =>
                             isActive
                                 ? `${styles.allEvents} ${styles.active}`
                                 : styles.allEvents
                         }
                     >
-                        Explore events
+                        Explore
                     </NavLink>
 
                     <NavLink
@@ -93,11 +93,11 @@ function NavBar() {
                     </NavLink>
 
                     <NavLink
-                        to="/allevents"
+                        to="/explore"
                         className={styles.hamburgerLink}
                         onClick={() => setMenuOpen(false)}
                     >
-                        Explore events
+                        Explore 
                     </NavLink>
 
                     <NavLink

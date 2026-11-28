@@ -43,49 +43,48 @@ function Home() {
     }, []);
 
     return (
-        <div className={styles.page}>
-            {/* show the banner */}
-            <img className={styles.banner} src={banner} alt={"image of McGIll mascot"} />
+    <div className={styles.page}>
+        {/* show the banner  */}
+        <img className={styles.banner} src={banner} alt={"image of McGIll mascot"}/>
 
-            {/* add the icons for all of the organization types */}
-            <div className={styles.events}>
-                <CategoryRow />
-            </div>
+        {/* add the icons for all of the organization types */}
+        <div className={styles.events}>
+            <CategoryRow />
+        </div>
 
-            {/* event rows */}
-            <div className={styles.events}>
-                {/* The first row is the events RSVPed to */}
-                <EventRow
-                    title="My RSVPs"
-                    events={rsvpedEvents}
-                    linkTo="/myevents"
-                    emptyMessage="You are currently not attending any events!"
-                    moreMessage="More of your events"
-                />
+        {/* event rows */}
+        <div className={styles.events}>
+            {/* The first row is the events RSVPed to */}
+            <EventRow 
+                title="My RSVPs" 
+                events={rsvpedEvents} 
+                linkTo="/myevents" 
+                emptyMessage="You are currently not attending any events!" 
+                moreMessage="More of your events"
+            />
 
-                {/* The second row is all events */}
-                <EventRow
-                    title="Check Out Some Events!"
-                    events={moreEvents}
-                    linkTo="/allevents"
-                    emptyMessage="You are RSVP'd to all events!!"
-                    moreMessage="Find more events!"
-                />
+            {/* The second row is all events */}
+            <EventRow
+                title="Check Out Some Events!"
+                events={moreEvents}
+                linkTo="/explore"
+                emptyMessage="You are RSVP'd to all events!!"
+                moreMessage="Find more events!"
+            />
 
-                {/* The third row: Your Clubs */}
-                <section style={{ marginTop: "2rem", paddingLeft: "2%", paddingRight: "1rem" }}>
-                    <h2 style={{ fontSize: "30px", marginBottom: "0px" }}>Your Clubs</h2>
-                    {followedClubs.length === 0 ? (
-                        <p>You haven't followed any clubs yet!</p>
-                    ) : (
-                        <div style={{ display: "flex", gap: "1rem", overflowX: "auto", padding: "8px 4px 0.75rem" }}>
-                            {followedClubs.map((club) => (
-                                <ClubCard key={club._id || club.id} club={club} />
-                            ))}
-                        </div>
-                    )}
-                </section>
-            </div>
+            {/* ADDED: The third row: Your Clubs */}
+            <section style={{ marginTop: "2rem", paddingLeft: "2%", paddingRight: "1rem" }}>
+                <h2 style={{ fontSize: "30px", marginBottom: "0px" }}>Your Clubs</h2>
+                {followedClubs.length === 0 ? (
+                    <p>You haven't followed any clubs yet!</p>
+                ) : (
+                    <div style={{ display: "flex", gap: "1rem", overflowX: "auto", padding: "8px 4px 0.75rem" }}>
+                        {followedClubs.map((club) => (
+                            <ClubCard key={club._id || club.id} club={club} />
+                        ))}
+                    </div>
+                )}
+            </section>
         </div>
     );
 }

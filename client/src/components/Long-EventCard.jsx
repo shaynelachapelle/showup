@@ -15,16 +15,21 @@ import { getFormattedTime } from "../helper-functions/dates"
 import { useRsvp } from "../helper-functions/rsvp"
 
 
-function EventCard ( { id, organizationId, title, date, organization, cost, can_rsvp, isRsvped} ) {
+function EventCard ( { id, organizationId, title, date, organization, cost, can_rsvp, isRsvped, eventStatus } ) {
     
     // button appearance and action
     const { status, pending, toggleRsvp } = useRsvp({ id, can_rsvp, isRsvped });
 
     // if the cost is 0, say free
     const strCost =
-    cost === 0
-        ? "Free!"
-        : "$" + cost.toString();
+        (cost === 0)
+            ? "Free!"
+            : "$" + cost.toString();
+    
+    // if the event is canceled, make the background red
+    const activity =
+        (eventStatus === "canceled")
+            ? "canceled" : "active";
 
     // so that we can make the card go to the event too
     const navigate = useNavigate();
@@ -34,7 +39,7 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
 
             {/* actual event card */}
             <div 
-                className={styles.card} 
+                className={`${styles.card} ${styles[activity]}`} 
                 onClick={() => navigate(`/events/${id}`)}
             >
 
@@ -43,7 +48,14 @@ function EventCard ( { id, organizationId, title, date, organization, cost, can_
                 {/* title and event info div */}
                 <div>
                     {/* link to the event */}
-                    <Link to={`/events/${id}`} className={styles.cardTitle}>{title}</Link>
+                    <Link 
+                        to={`/events/${id}`} 
+                        className={styles.cardTitle}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {title}
+                        
+                    </Link>
                     {/* subheading div, which has a link to the organization */}
                     <div className={styles.cardSubtitle}>
                         <Link 

@@ -21,16 +21,16 @@ import imageReligion from "../assets/network.png"
 function CategoryRow () {
     return (
         <div className={styles.categories}>
-            <CategoryIcon title="Athletics and Recreation" icon={imageRunning} link="/allevents/Athletics+and+Recreation" />
-            <CategoryIcon title="Charity and Environment" icon={imageCharity} link="/allevents/Charity+and+Environment" />
-            <CategoryIcon title="Community Outreach and Volunteering" icon={imageCommunity} link="/allevents/Community+Outreach+and+Volunteering" />
-            <CategoryIcon title="Fine Arts, Dance and Performance" icon={imageArts} link="/allevents/Fine+Arts,+Dance+and+Performance" />
-            <CategoryIcon title="Health and Wellness" icon={imageHealth} link="/allevents/Health+and+Wellness" />
-            <CategoryIcon title="Language and Publications" icon={imageLanguage} link="/allevents/Language+and+Publications" />
-            <CategoryIcon title="Leisure and Hobbies" icon={imageLeisure} link="/allevents/Leisure+and+Hobbies" />   
-            <CategoryIcon title="Networking and Leadership" icon={imageNetworking} link="/allevents/Networking+and+Leadership" />
-            <CategoryIcon title="Political and Social Activism" icon={imagePolitical} link="/allevents/Political+and+Social+Activism" />
-            <CategoryIcon title="Religion and Culture" icon={imageReligion} link="/allevents/Religion+and+Culture" />
+            <CategoryIcon title="Athletics and Recreation" icon={imageRunning} link="/explore/Athletics+and+Recreation" />
+            <CategoryIcon title="Charity and Environment" icon={imageCharity} link="/explore/Charity+and+Environment" />
+            <CategoryIcon title="Community Outreach and Volunteering" icon={imageCommunity} link="/explore/Community+Outreach+and+Volunteering" />
+            <CategoryIcon title="Fine Arts, Dance and Performance" icon={imageArts} link="/explore/Fine+Arts,+Dance+and+Performance" />
+            <CategoryIcon title="Health and Wellness" icon={imageHealth} link="/explore/Health+and+Wellness" />
+            <CategoryIcon title="Language and Publications" icon={imageLanguage} link="/explore/Language+and+Publications" />
+            <CategoryIcon title="Leisure and Hobbies" icon={imageLeisure} link="/explore/Leisure+and+Hobbies" />   
+            <CategoryIcon title="Networking and Leadership" icon={imageNetworking} link="/explore/Networking+and+Leadership" />
+            <CategoryIcon title="Political and Social Activism" icon={imagePolitical} link="/explore/Political+and+Social+Activism" />
+            <CategoryIcon title="Religion and Culture" icon={imageReligion} link="/explore/Religion+and+Culture" />
         </div>
     );
 }

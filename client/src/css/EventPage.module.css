@@ -7,13 +7,25 @@
 
 .back {
     color: rgb(109, 109, 109);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     text-decoration: none;
 }
 
 .back:hover {
     color: red;
+}
+
+.cancelledBanner {
+    width: 100%;
+    background-color: #d32f2f;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
 }
 
 .adminControls {

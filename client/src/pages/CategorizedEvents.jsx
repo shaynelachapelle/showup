@@ -36,7 +36,7 @@ function CategorizedEvents() {
     ]
     // if the category is not valid, send back to allevents page
     if (!validCategories.includes(formatted)) {
-        return <Navigate to="/allevents" replace/>
+        return <Navigate to="/explore" replace/>
     }
 
     // GET and pagnation
@@ -75,11 +75,11 @@ function CategorizedEvents() {
         return(
             
             <div className={styles.page}>
-                <Link to="/allevents" className={styles.link}>Back to all events...</Link>
+                <Link to="/explore" className={styles.link}>← explore</Link>
 
                 <div className={styles.heading}>{formatted}</div>
                 <div className={styles.noEvents}>Sorry, there are no upcoming events in this category</div>
-                <Link to="/allevents" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
+                <Link to="/explore" className={styles.moreEvents}>Check out some other upcoming events here!</Link>
             </div>
         );
     }
@@ -90,7 +90,7 @@ function CategorizedEvents() {
             {/* headings and grid */}
             <div className={styles.content}>
                 {/* link to go back */}
-                <Link to="/allevents" className={styles.link}>Back to all events...</Link>
+                <Link to="/explore" className={styles.link}>← explore</Link>
 
                 {/* headings */}
                 <div className={styles.subheading}>Here you can find all events related to:</div>
